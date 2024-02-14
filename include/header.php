@@ -31,7 +31,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-  <!-- <link href="assets/css/style.css" rel="stylesheet"> -->
+  <link href="assets/css/style.css" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: Yummy
@@ -42,6 +42,7 @@
   ======================================================== -->
 </head>
 <?php
+session_start();
 include('services/connect_data.php');
 
 ?>

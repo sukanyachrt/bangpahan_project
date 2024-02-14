@@ -2,6 +2,9 @@
 include("include/header.php");
 ?>
 
+<style>
+
+</style>
 
 <body>
     <?php
@@ -50,9 +53,18 @@ include("include/header.php");
                                     <h5 class="card-title"><?= $rsconnect['product_name'] ?></h5>
                                     <p class="card-text"><?php echo $rsconnect['product_detail'] ?></p>
                                     <h5 class="card-title text-danger pb-3">
-                                        <?= $rsconnect['product_price'] . " บาท" ?>
+                                        <?= number_format($rsconnect['product_price'], 2) . " บาท" ?>
                                     </h5>
-                                    <a href="../projectYummy/order_confirmation.php" class="btn btn-outline-danger me-2">ใส่ตะกร้า</a>
+                                    <div class="quantity">
+                                        <button class="minus-btn" type="button" name="button">
+                                            <img src="assets/img/minus.svg" alt="" />
+                                        </button>
+                                        <input type="text" name="quantity" class="quantity-input" value="1">
+                                        <button class="plus-btn" type="button" name="button">
+                                            <img src="assets/img/plus.svg" alt="" />
+                                        </button>
+                                    </div>
+                                    <a href="#" onclick="addToCart(<?php echo $rsconnect['product_id']; ?>, this)" class="btn btn-outline-danger me-2">ใส่ตะกร้า</a>
                                     <a href="../projectYummy/order_confirmation.php" class="btn btn-danger">สั่งซื้อ</a>
                                 </div>
 
@@ -69,9 +81,68 @@ include("include/header.php");
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <div id="preloader"></div>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <?php include("include/script.php"); ?>
+    <script type="text/javascript">
+        $('.minus-btn').on('click', function(e) { //ลบจำนวนสินค้า
+            e.preventDefault();
+            var $this = $(this);
+            var $input = $this.closest('div').find('input');
+            var value = parseInt($input.val());
 
+            if (value > 1) {
+                value = value - 1;
+            } else {
+                value = 0;
+            }
+
+            $input.val(value);
+
+        });
+
+        $('.plus-btn').on('click', function(e) { //เพิ่มจำนวนสินค้า
+            e.preventDefault();
+            var $this = $(this);
+            var $input = $this.closest('div').find('input');
+            var value = parseInt($input.val());
+            value = value + 1;
+            $input.val(value);
+        });
+
+        function addToCart(productId, e) { //เพิ่มสินค้าลงในตะกร้า
+            var quantity = $(e).closest('.card-body').find('.quantity-input').val();
+            $.ajax({
+                type: 'POST',
+                url: 'services/addToCart.php',
+                data: {
+                    productId: productId,
+                    quantity: quantity
+                },
+                success: function(response) {
+                    console.log(response)
+                    updateCartCount();
+                    alert('Item added to cart successfully!');
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+
+        function updateCartCount() {
+            $.ajax({
+                type: 'GET',
+                url: 'services/getCartCount.php',
+                success: function(response) {
+                    console.log(response)
+                    $('.count').text(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

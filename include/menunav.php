@@ -4,6 +4,9 @@ $productgroup->connectData();
 $product = new Connect_Data();
 $product->connectData();
 ?>
+<style>
+    
+</style>
 <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
         <a href="index.php" class="logo d-flex align-items-center me-auto me-lg-0">
@@ -28,7 +31,7 @@ $product->connectData();
                                 <li class="dropdown"><a href="#"><span><?= $rsproductgroup['protype_name'] ?></span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                                     <ul>
                                         <?php
-                                             $product->sql = "SELECT
+                                        $product->sql = "SELECT
                                              productgroup.progroup_id, 
                                              productgroup.progroup_name
                                          FROM
@@ -38,17 +41,17 @@ $product->connectData();
                                              ON 
                                                  producttype.protype_id = productgroup.protype_id
                                          WHERE
-                                             productgroup.progroup_status = 1 AND productgroup.protype_id='".$rsproductgroup['protype_id']."'
+                                             productgroup.progroup_status = 1 AND productgroup.protype_id='" . $rsproductgroup['protype_id'] . "'
                                          ";
-                                         $product->queryData();
-                                         while ($rsproduct = $product->fetch_AssocData()) {
-                                            ?>
-                                                <li><a href="product.php?id=<?=$rsproduct['progroup_id']?>"><?=$rsproduct['progroup_name']?></a></li>
-                                            <?php
-                                         }
+                                        $product->queryData();
+                                        while ($rsproduct = $product->fetch_AssocData()) {
+                                        ?>
+                                            <li><a href="product.php?id=<?= $rsproduct['progroup_id'] ?>"><?= $rsproduct['progroup_name'] ?></a></li>
+                                        <?php
+                                        }
 
                                         ?>
-                                       
+
                                     </ul>
                                 <?php
                             } else {
@@ -62,13 +65,13 @@ $product->connectData();
                                 ON 
                                     producttype.protype_id = productgroup.protype_id
                             WHERE
-                                productgroup.progroup_status = 1 AND productgroup.protype_id='".$rsproductgroup['protype_id']."'
+                                productgroup.progroup_status = 1 AND productgroup.protype_id='" . $rsproductgroup['protype_id'] . "'
                             ";
-                            $product->queryData();
-                            $rsproduct = $product->fetch_AssocData();
+                                $product->queryData();
+                                $rsproduct = $product->fetch_AssocData();
 
                                 ?>
-                                <li><a href="product.php?id=<?=$rsproduct['progroup_id']?>"><?= $rsproductgroup['protype_name'] ?></a></li>
+                                <li><a href="product.php?id=<?= $rsproduct['progroup_id'] ?>"><?= $rsproductgroup['protype_name'] ?></a></li>
                             <?php
                             }
                             ?>
@@ -77,23 +80,21 @@ $product->connectData();
                         }
                         ?>
 
-                        <!-- <li class="dropdown"><a href="#product"><span>วัตถุดิบ</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-                            <ul>
-                                <li><a href="../projectYummy/flour.php">แป้ง</a></li>
-                                <li><a href="../projectYummy/chocolate.php">ช็อคโกแลต</a></li>
-                                <li><a href="../projectYummy/butter.php">เนย</a></li>
-                                <li><a href="../projectYummy/flavors-and-foodcoloring.php">กลิ่นและสีผสมอาหาร</a></li>
-                                <li><a href="../projectYummy/whipping.php">วิปปิ้งครีม</a></li>
-                                <li><a href="../projectYummy/powder.php">ผงฟู/ผงวุ้น/เจลาติน</a></li>
-                                <li><a href="../projectYummy/powdercho.php">ผงโกโก้</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="../projectYummy/equipment.php">อุปกรณ์</a></li> -->
+                        
                     </ul>
                 </li>
                 <li><a href="index.php#contact">ช่องทางติดต่อ</a></li>
-                <li><a href="../projectYummy/payment.php">ชำระเงิน</a></li>
+                <!-- <li><a href="../projectYummy/payment.php">ชำระเงิน</a></li> -->
                 <li><a href="../projectYummy/order_confirmation.php">ติดตามสินค้า</a></li>
+                <li>
+                    <a href="cart.php" > ตะกร้าสินค้า
+                        <div class="cart">
+                            <span class="count"><?php echo  array_sum($_SESSION['cart']) ?></span>
+                            <i class="bi bi-cart2 material-icons"></i>
+                        </div>
+                    </a>
+                </li>
+
                 <!-- <li><a href="../projectYummy/login.php">Login</a></li> -->
                 <!-- <li><a href="#contact">Sign-up</a></li> -->
             </ul>
