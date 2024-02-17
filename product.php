@@ -65,7 +65,7 @@ include("include/header.php");
                                         </button>
                                     </div>
                                     <a href="#" onclick="addToCart(<?php echo $rsconnect['product_id']; ?>, this)" class="btn btn-outline-danger me-2">ใส่ตะกร้า</a>
-                                    <a href="../projectYummy/order_confirmation.php" class="btn btn-danger">สั่งซื้อ</a>
+                                    <a href="#" onclick="addToCartTocart(<?php echo $rsconnect['product_id']; ?>, this)" class="btn btn-danger">สั่งซื้อ</a>
                                 </div>
 
                             </div>
@@ -121,7 +121,7 @@ include("include/header.php");
                 success: function(response) {
                     console.log(response)
                     updateCartCount();
-                    alert('Item added to cart successfully!');
+                    
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
@@ -129,6 +129,28 @@ include("include/header.php");
             });
             
         }
+        function addToCartTocart(productId, e) { //เพิ่มสินค้าลงในตะกร้า
+            var quantity = $(e).closest('.card-body').find('.quantity-input').val();
+            $.ajax({
+                type: 'POST',
+                url: 'services/addToCart.php?v=addcart',
+                data: {
+                    productId: productId,
+                    quantity: quantity
+                },
+                success: function(response) {
+                    console.log(response)
+                    updateCartCount();
+                    window.location.href='cart.php';
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+            
+        }
+
+        
 
         function updateCartCount() {
             $.ajax({

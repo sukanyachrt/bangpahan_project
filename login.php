@@ -6,6 +6,7 @@ include("include/header.php");
 
 <body>
   <?php
+  
   include("include/menunav.php");
   ?>
   <section class="d-flex justify-content-center align-items-center vh-100" style="background-image: url(assets/img/bg/bg4.jpg); background-size: cover; background-position: center;">
@@ -110,11 +111,11 @@ include("include/header.php");
 
     function postSession(data) {
       $.ajax({
-        url: "./createsession.php",
+        url: "./createsession.php?v=<?php echo isset($_GET['v']) ? $_GET['v'] : '' ?>",
         type: "POST",
         data: data, // ใช้ข้อมูลจากการร้องขอแรก
         success: function(Res) {
-          sessionStorage.removeItem('menu');
+
           window.location.replace(Res.page);
         },
 

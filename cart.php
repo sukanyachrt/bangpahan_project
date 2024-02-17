@@ -1,8 +1,9 @@
 <?php
+error_reporting(0);
 include("include/header.php");
 ?>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
-        
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+
 <style>
 
 </style>
@@ -12,143 +13,171 @@ include("include/header.php");
     include("include/menunav.php");
     ?>
     <section id="material" class="material">
-       
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-8">
-                    <?php
-                    $sumAllmoney = 0;
-                    foreach ($_SESSION['cart'] as $index => $value) {
-                        $product->sql = "SELECT  *  FROM  product  WHERE product_id ='" . $index . "'";
-                        $product->queryData();
-                        $result = $product->fetch_AssocData();
-                        $sumAllmoney += $result['product_price'] * $value;
-                    ?>
-                        <div class="card border shadow-none">
-                            <div class="card-body" data-product-id="<?= $result['product_id'] ?>">
+        <?php
+        
+        if ($_SESSION['cart']) {
+        ?>
 
-                                <div class="d-flex align-items-start border-bottom">
-                                    <div class="me-4">
-                                        <img src="assets/img/<?= $result['product_image'] ?>" alt="" class="avatar-lg rounded">
-                                    </div>
-                                    <div class="flex-grow-1 align-self-center overflow-hidden">
-                                        <div>
-                                            <h5 class="text-truncate font-size-18"><a href="#" class="text-dark"><?= $result['product_name'] ?> </a></h5>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-8">
+                        <?php
+                        $sumAllmoney = 0;
+                        foreach ($_SESSION['cart'] as $index => $value) {
+                            $product->sql = "SELECT  *  FROM  product  WHERE product_id ='" . $index . "'";
+                            $product->queryData();
+                            $result = $product->fetch_AssocData();
+                            $sumAllmoney += $result['product_price'] * $value;
+                        ?>
 
-                                            <p class="mb-0 mt-1"><span class="fw-medium"><?= $result['product_detail'] ?></span></p>
+
+                            <div class="card border shadow-none">
+                                <div class="card-body" data-product-id="<?= $result['product_id'] ?>">
+
+                                    <div class="d-flex align-items-start border-bottom">
+                                        <div class="me-4">
+                                            <img src="assets/img/<?= $result['product_image'] ?>" alt="" class="avatar-lg rounded">
                                         </div>
-                                    </div>
-                                    <div class="flex-shrink-0 ms-2">
-                                        <ul class="list-inline mb-0 font-size-16">
-                                            <li class="list-inline-item">
-                                                <a href="#" class="text-muted px-1 delete-product">
-                                                    <i class="mdi mdi-trash-can-outline"></i>
-                                                </a>
-                                            </li>
+                                        <div class="flex-grow-1 align-self-center overflow-hidden">
+                                            <div>
+                                                <h5 class="text-truncate font-size-18"><a href="#" class="text-dark"><?= $result['product_name'] ?> </a></h5>
 
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="mt-1">
-                                                <p class="text-muted mb-2">Price</p>
-                                                <h5 class="mb-0 mt-2"><span class="text-muted me-2"><?= "฿" . $result['product_price'] ?></h5>
+                                                <p class="mb-0 mt-1"><span class="fw-medium"><?= $result['product_detail'] ?></span></p>
                                             </div>
                                         </div>
-                                        <div class="col-md-5">
-                                            <div class="mt-1">
-                                                <p class="text-muted mb-2">Quantity</p>
-                                                <div class="d-inline-flex">
-                                                    <div class="quantity">
-                                                        <button class="minus-btn" type="button" name="button">
-                                                            -
-                                                        </button>
+                                        <div class="flex-shrink-0 ms-2">
+                                            <ul class="list-inline mb-0 font-size-16">
+                                                <li class="list-inline-item">
+                                                    <a href="#" class="text-muted px-1 delete-product">
+                                                        <i class="mdi mdi-trash-can-outline"></i>
+                                                    </a>
+                                                </li>
 
-                                                        <input type="text" name="name" value="<?= $value ?>">
-                                                        <button class="plus-btn" type="button" name="button">
-                                                            +
-                                                        </button>
-                                                    </div>
+                                            </ul>
+                                        </div>
+                                    </div>
 
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="mt-1">
+                                                    <p class="text-muted mb-2">Price</p>
+                                                    <h5 class="mb-0 mt-2"><span class="text-muted me-2"><?= "฿" . $result['product_price'] ?></h5>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="mt-1">
-                                                <p class="text-muted mb-2">Total</p>
-                                                <h5 class="mb-0 mt-2 product-price" data-price="<?= $result['product_price'] ?>">
-                                                    <?= "฿" . number_format($result['product_price'] * $value, 2) ?>
-                                                </h5>
+                                            <div class="col-md-5">
+                                                <div class="mt-1">
+                                                    <p class="text-muted mb-2">Quantity</p>
+                                                    <div class="d-inline-flex">
+                                                        <div class="quantity">
+                                                            <button class="minus-btn px-2" type="button" name="button">
+                                                                -
+                                                            </button>
+
+                                                            <input type="text" name="name" value="<?= $value ?>">
+                                                            <button class="plus-btn" type="button" name="button">
+                                                                +
+                                                            </button>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <div class="col-md-3">
+                                                <div class="mt-1">
+                                                    <p class="text-muted mb-2">Total</p>
+                                                    <h5 class="mb-0 mt-2 product-price" data-price="<?= $result['product_price'] ?>">
+                                                        <?= "฿" . number_format($result['product_price'] * $value, 2) ?>
+                                                    </h5>
+                                                </div>
+                                            </div>
+
+
                                         </div>
-
-
                                     </div>
+
                                 </div>
-
                             </div>
-                        </div>
-                    <?php
-                    }
-                    ?>
-                    <!-- end card -->
+                        <?php
+                        }
+
+                        ?>
+                        <!-- end card -->
 
 
 
 
 
-                </div>
+                    </div>
 
-                <div class="col-xl-4">
-                    <div class="mt-5 mt-lg-0">
-                        <div class="card border shadow-none">
-                            <div class="card-header bg-gray border-bottom py-3 px-4">
-                                <h5 class="font-size-16 mb-0">รายการสินค้า <span class="float-end"></span></h5>
-                            </div>
-                            <div class="card-body p-4 pt-2">
-
-                                <div class="table-responsive">
-                                    <table class="table mb-0">
-                                        <tbody>
-                                            <tr>
-                                                <td>สินค้าทั้งหมด :</td>
-                                                <td class="sumAllitemcart text-end"><?= array_sum($_SESSION['cart']) ?></td>
-                                            </tr>
-
-                                            <tr class="bg-light">
-                                                <th>ยอดรวม :</th>
-                                                <td class="text-end">
-                                                    <span class="sumAllmoney fw-bold">
-                                                        <?= "฿" . $sumAllmoney ?>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                    <div class="col-xl-4">
+                        <div class="mt-5 mt-lg-0">
+                            <div class="card border shadow-none">
+                                <div class="card-header bg-gray border-bottom py-3 px-4">
+                                    <h5 class="font-size-16 mb-0">รายการสินค้า <span class="float-end"></span></h5>
                                 </div>
-                                <!-- end table-responsive -->
-                            </div>
-                            <div class="card-footer bg-white">
-                                <div class="col-12">
-                                   
+                                <div class="card-body p-4 pt-2">
+
+                                    <div class="table-responsive">
+                                        <table class="table mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <td>สินค้าทั้งหมด :</td>
+                                                    <td class="sumAllitemcart text-end"><?= array_sum($_SESSION['cart']) ?></td>
+                                                </tr>
+
+                                                <tr class="bg-light">
+                                                    <th>ยอดรวม :</th>
+                                                    <td class="text-end">
+                                                        <span class="sumAllmoney fw-bold">
+                                                            <?= "฿" . $sumAllmoney ?>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- end table-responsive -->
+                                </div>
+                                <div class="card-footer bg-white">
+                                    <div class="col-12">
+
                                         <div class="text-center mt-2 mt-sm-0">
                                             <a href="orderconfirm.php" class="btn btn-danger btn-block">
                                                 <i class="mdi mdi-cart-outline me-1"></i> Checkout
                                             </a>
                                         </div>
-                                        
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- end row -->
+                <!-- end row -->
+            <?php } else {
+            ?> <div class="container pt-5">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card text-center p-5">
+                                <div class="card-body">
+                                    
+                                    <div class="align-items-center">
+                                        <span class="cart-blank-icon"><img src="https://s2.konvy.com/static/img/order/cart-blank-icon.png" alt=""></span>
+                                        
+                                    </div>
+                                    <h5 class="card-title m-2">ไม่มีรายการสินค้า</h5>
+                                    <a href="index.php#product" class="btn btn-danger"><i class="bi bi-plus-circle"></i> เลือกสินค้าเพิ่ม</a>
+                                </div>
 
-        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php
+        }
+            ?>
+            </div>
     </section>
     <?php include("include/footer.php"); ?>
 
@@ -236,30 +265,31 @@ include("include/header.php");
             });
         }
         $('.delete-product').on('click', function(e) {
-    e.preventDefault();
-    var $this = $(this);
-    var $cardBody = $this.closest('.card-body');
-    var productId = $cardBody.data('product-id');
+            e.preventDefault();
+            var $this = $(this);
+            var $cardBody = $this.closest('.card-body');
+            var productId = $cardBody.data('product-id');
 
-    // ลบสินค้าออกจาก session โดยส่ง productId ไปยังไฟล์ PHP ที่จะดำเนินการลบข้อมูล
-    $.ajax({
-        type: 'POST',
-        url: 'services/addToCart.php?v=removecartByid', // ตั้งค่า URL ของไฟล์ PHP ที่จะลบสินค้า
-        data: {
-            productId: productId
-        },
-        success: function(response) {
-            // หลังจากลบสำเร็จ ให้ลบ card ที่มีข้อมูลสินค้าที่ถูกลบออกจาก DOM
-            $cardBody.closest('.card').remove();
-            // อัพเดตราคารวมสินค้าและจำนวนสินค้าในตะกร้า
-            updateTotalSum();
-            updateCartCount();
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
-});
+            // ลบสินค้าออกจาก session โดยส่ง productId ไปยังไฟล์ PHP ที่จะดำเนินการลบข้อมูล
+            $.ajax({
+                type: 'POST',
+                url: 'services/addToCart.php?v=removecartByid', // ตั้งค่า URL ของไฟล์ PHP ที่จะลบสินค้า
+                data: {
+                    productId: productId
+                },
+                success: function(response) {
+                    // หลังจากลบสำเร็จ ให้ลบ card ที่มีข้อมูลสินค้าที่ถูกลบออกจาก DOM
+                    $cardBody.closest('.card').remove();
+                    // อัพเดตราคารวมสินค้าและจำนวนสินค้าในตะกร้า
+                    updateTotalSum();
+                    updateCartCount();
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+
         function updateTotalSum() {
             var totalSum = 0;
             $('.product-price').each(function() {

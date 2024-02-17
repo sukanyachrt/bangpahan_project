@@ -114,7 +114,7 @@ $product->connectData();
         <!-- <a class="btn-cart" href="../projectYummy/order_confirmation.php">
           <img src="assets/img/shopping.png" alt="Cart Icon" style="width: 24px; height: 24px;">
         </a> -->
-        <a class="btn-book-a-table" href="../projectYummy/login.php">log in</a>
+        <a class="btn-book-a-table" href="login.php">log in</a>
         <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
         <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
     </div>

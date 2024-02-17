@@ -3,14 +3,21 @@ include("include/header.php");
 ?>
 <link rel="stylesheet" href="assets/bs-stepper/css/bs-stepper.min.css">
 <style>
-.active .bs-stepper-title{
-    color: red;
-}
-.active .bs-stepper-circle {
-  background-color: red !important;
-}
+    .active .bs-stepper-title {
+        color: red;
+    }
+
+    .active .bs-stepper-circle {
+        background-color: red !important;
+    }
 </style>
 <?php
+if (!isset($_SESSION['customer_id'])) {
+    header('location:login.php?v=orderconfirm');
+}
+if (!isset($_SESSION['cart'])) {
+    header('location:index.php#product');
+}
 $connect = new Connect_Data();
 $connect->connectData();
 ?>
@@ -23,11 +30,10 @@ $connect->connectData();
         <div class="container mt-4">
             <div class="row">
                 <div class="col-12">
-
                     <div class="bs-stepper wizard-modern wizard-modern-example">
                         <div class="bs-stepper-header table-responsive">
 
-                            <div class="step" data-target="#project-detail">
+                            <div class="step" data-target="#data-address">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle">
                                         <i class="bi bi-plus"></i>
@@ -37,7 +43,7 @@ $connect->connectData();
                                 </button>
                             </div>
                             <div class="line"></div>
-                            <div class="step" data-target="#contract-register-detail">
+                            <div class="step" data-target="#data-payment">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle">2</span>
                                     <span class="text-sm bs-stepper-title">ชำระเงิน</span>
@@ -47,100 +53,214 @@ $connect->connectData();
                             <div class="step" data-target="#installation-work-detail">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle">3</span>
-                                    <span class="text-sm bs-stepper-title">การยืนยัน</span>
+                                    <span class="text-sm bs-stepper-title">สังซื้อเสร็จสมบูรณ์</span>
                                 </button>
                             </div>
                         </div>
                         <div class="bs-stepper-content">
-                            <div id="project-detail" class="content">
-                                <div class="col-6">
-                                    <div class="mb-4">
-                                        <h6>ที่อยู่สำหรับจัดส่ง</h6>
-                                        <?php
-                                        $connect->sql = "SELECT * FROM 	customers  WHERE customer_id ='" . $_SESSION['customer_id'] . "'";
-                                        $connect->queryData();
-                                        $rsconnect = $connect->fetch_AssocData();
-                                        ?>
-                                        <div class="col mt-3">
-                                            <div class="card radius-10 border-start border-0 border-3 border-danger">
-                                                <div class="card-body">
-                                                    <div class="d-flex justify-content-between">
-                                                        <div class="d-flex align-items-center">
-                                                            <div>
-                                                                <p class="mb-0 text-secondary"><?= $rsconnect['customer_fname'] . " " . $rsconnect['customer_lname'] ?></p>
-                                                                <p class="my-1"><?= $rsconnect['c_address'] ?></p>
-                                                                <p class="mb-0 font-13"><?= $rsconnect['customer_telephone'] ?></p>
+                            <div id="data-address" class="content">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="mb-4">
+                                            <h6>ที่อยู่สำหรับจัดส่ง</h6>
+                                            <?php
+
+                                            $connect->sql = "SELECT * FROM 	customers  WHERE customer_id ='" . $_SESSION['customer_id'] . "'";
+                                            $connect->queryData();
+                                            $rsconnect = $connect->fetch_AssocData();
+                                            ?>
+                                            <div class="col mt-3">
+                                                <div class="card radius-10 border-start border-0 border-3 border-danger">
+                                                    <div class="card-body">
+                                                        <div class="d-flex justify-content-between">
+                                                            <div class="d-flex align-items-center">
+                                                                <div>
+                                                                    <p class="mb-0 text-secondary"><?= $rsconnect['customer_fname'] . " " . $rsconnect['customer_lname'] ?></p>
+                                                                    <p class="my-1"><?= $rsconnect['c_address'] ?></p>
+                                                                    <p class="mb-0 font-13"><?= $rsconnect['customer_telephone'] ?></p>
+                                                                </div>
+                                                                <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa fa-shopping-cart"></i>
+                                                                </div>
                                                             </div>
-                                                            <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa fa-shopping-cart"></i>
+                                                            <div class="col-md-4 mt-4 mt-sm-0 d-none d-md-block">
+                                                                <div class="text-center text-md-end">
+                                                                    <a href="#" class="text-danger">แก้ไข
+                                                                        <i class="bi bi-pencil-square"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4 mt-4 mt-sm-0 d-none d-md-block">
-                                                            <div class="text-center text-md-end">
-                                                                <a href="#" class="text-danger">แก้ไข
-                                                                <i class="bi bi-pencil-square"></i>
-                                                                </a>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div class="col-12 text-end">
+                                            <a href="#" onclick="history.back()" class="btn btn-secondary"><i class="bi bi-arrow-left-circle"></i> ย้อนกลับ</a>
+                                            <a href="#" onclick="stepper.next()" class="btn btn-danger"><i class="bi bi-arrow-right-circle"></i> ต่อไป</a>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="data-payment" class="content">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6>ข้อมูลการชำระเงิน</h6>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="">
+                                                <div class="col">
+                                                    <div class="card radius-10 border-start border-0 border-3 border-danger">
+                                                        <div class="card-body">
+                                                            <h6>บัญชีธนาคารที่ใช้รับชำระค่าบริการ</h6>
+                                                            <div class="table-responsive">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th></th>
+                                                                            <th>ธนาคาร</th>
+                                                                            <th>สาขา</th>
+                                                                            <th>เลขที่บัญชี</th>
+                                                                            <th>ชื่อบัญชี </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr class="odd">
+                                                                            <td><img src="assets/img/bank/kbank.gif" width="50" align="absmiddle"></td>
+                                                                            <td>กสิกรไทย</td>
+                                                                            <td>สำนักสีลม</td>
+                                                                            <td>1234567890</td>
+                                                                            <td>บจก. บางปะหันบรรจุภัณฑ์</td>
+                                                                        </tr>
+                                                                        <tr class="">
+                                                                            <td><img src="assets/img/bank/bbl.gif" width="50" align="absmiddle"></td>
+                                                                            <td>กรุงเทพ</td>
+                                                                            <td>สำนักงานใหญ่สีลม</td>
+                                                                            <td>1234567890</td>
+                                                                            <td>บจก. บางปะหันบรรจุภัณฑ์</td>
+                                                                        </tr>
+                                                                        <tr class="odd">
+                                                                            <td><img src="assets/img/bank/ktb.gif" width="50" align="absmiddle"></td>
+                                                                            <td>กรุงไทย</td>
+                                                                            <td>สีลม</td>
+                                                                            <td>1234567890</td>
+                                                                            <td>บจก. บางปะหันบรรจุภัณฑ์</td>
+                                                                        </tr>
+                                                                        <tr class="">
+                                                                            <td><img src="assets/img/bank/scb.gif" width="50" align="absmiddle"></td>
+                                                                            <td>ไทยพาณิชย์</td>
+                                                                            <td>ปาโซ่ ทาวเวอร์</td>
+                                                                            <td>1234567890</td>
+                                                                            <td>บจก. บางปะหันบรรจุภัณฑ์</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div class="card">
-                                            <form>
-                                                <div class="card-body">
-                                                    <?php
-                                                    $connect->sql = "SELECT * FROM 	customers  WHERE customer_id ='" . $_SESSION['customer_id'] . "'";
-                                                    $connect->queryData();
-                                                    $rsconnect = $connect->fetch_AssocData();
-                                                    ?>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="mt-5 mt-lg-0">
+                                                <div class="card border shadow-none">
+                                                    <div class="card-header bg-gray border-bottom py-3 px-4">
+                                                        <h5 class="font-size-16 mb-0">รายการสินค้า <span class="float-end"></span></h5>
+                                                    </div>
+                                                    <div class="card-body p-4 pt-2">
 
-                                                    <div class="d-flex justify-content-between">
-                                                        <div class="d-flex flex-row align-items-center">
-                                                            <div class="icon"> <i class="bx bxl-mailchimp"></i> </div>
-                                                            <div class="ms-2 c-details">
-                                                                <p><?= $rsconnect['customer_fname'] . " " . $rsconnect['customer_lname'] ?></p>
-                                                                <p><?= $rsconnect['c_address'] ?></p>
-                                                                <p><?= $rsconnect['customer_telephone'] ?></p>
-                                                            </div>
+                                                        <div class="table-responsive">
+                                                            <table class="table mb-0">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>สินค้าทั้งหมด :</td>
+                                                                        <td class="sumAllitemcart text-end"><?= array_sum($_SESSION['cart']) ?></td>
+                                                                    </tr>
+
+                                                                    <tr class="bg-light">
+                                                                        <th>ยอดเงินสุทธิต้องชำระ คือ :</th>
+                                                                        <td class="text-end">
+                                                                            <span class="sumAllmoney fw-bold">
+                                                                                <?php
+                                                                                $sumAllmoney = 0;
+                                                                                foreach ($_SESSION['cart'] as $index => $value) {
+                                                                                    $product->sql = "SELECT  *  FROM  product  WHERE product_id ='" . $index . "'";
+                                                                                    $product->queryData();
+                                                                                    $result = $product->fetch_AssocData();
+                                                                                    $sumAllmoney += $result['product_price'] * $value;
+                                                                                }
+                                                                                ?>
+
+                                                                                <?= "฿" . $sumAllmoney ?>
+                                                                            </span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
-                                                        <div class="text-danger">
-                                                            <a href="#">
-                                                            <i class="bi bi-pencil-square"></i>
-                                                            </a>
-                                                       
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div class="col-12 text-end">
+                                            <a href="#" onclick="history.back()" class="btn btn-secondary"><i class="bi bi-arrow-left-circle"></i> ย้อนกลับ</a>
+                                            <a href="#" onclick="confirmorder()" class="btn btn-danger"><i class="bi bi-arrow-right-circle"></i> ยืนยันการสั่งซื้อ</a>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="installation-work-detail" class="content">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6>ข้อมูลการสั่งซื้อ</h6>
+                                        <div class="mt-5 mt-lg-0">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="">
+                                                        <div class="col">
+                                                            <div class="card radius-10 border-start border-0 border-3 border-danger">
+                                                                <div class="card-body">
+                                                                    <div class="text-center ">
+                                                                        <span class="cart-blank-icon"><img src="https://s2.konvy.com/static/img/order/cart-blank-icon.png" alt=""></span>
+
+                                                                    </div>
+                                                                    <h5 class="card-title m-2 text-center">การสั่งซื้อเสร็จสมบูรณ์</h5>
+                                                                    <p class="order_id">เลขที่สั่งซื้อ : -</p>
+                                                                    <p class="order_date">เวลาการสั่งซื้อ : -</p>
+                                                                    <div class="text-center">
+                                                                        <a href="index.php#product" class="btn btn-primary"><i class="bi bi-plus-circle"></i> เลือกสินค้าเพิ่ม</a>
+                                                                        <a href="uploadpayment.php" class="btn btn-danger"><i class="bi bi-file-earmark-arrow-up-fill"></i> แจ้งชำระเงิน</a>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div> -->
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div id="contract-register-detail" class="content">
-                                    <div class="col-xxl">
-                                        <div class="mb-4">
-
-                                            <div class="card-body">
-                                                <form id="contract-register-form">
-                                                    <div id="load-contract-register-form">
-                                                        aaaaa
-                                                    </div>
-                                                </form>
                                             </div>
+
+
                                         </div>
-                                    </div>
-                                </div>
-                                <div id="installation-work-detail" class="content">
-                                    <div class="col-xxl">
-                                        <div class="mb-4">
-                                            <div class="card-body">
-                                                <form id="installation-work-form">
-                                                    <div id="load-installation-work-form">
-                                                        ssss
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
+
                                     </div>
 
                                 </div>
@@ -169,6 +289,20 @@ $connect->connectData();
             })
 
         });
+
+        function confirmorder() {
+            $.ajax({
+                type: 'POST',
+                url: "services/cart/order.php?v=confirmorder",
+                success: function(response) {
+                    if (response.status == "ok") {
+                        $('.order_id').text('เลขที่สั่งซื้อ : ' + response.order_id)
+                        $('.order_date').text('เวลาการสั่งซื้อ : '+ response.order_date)
+                        stepper.next()
+                    }
+                }
+            });
+        }
     </script>
 </body>
 
