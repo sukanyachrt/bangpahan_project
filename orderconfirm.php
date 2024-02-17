@@ -245,6 +245,7 @@ $connect->connectData();
                                                                     </div>
                                                                     <h5 class="card-title m-2 text-center">การสั่งซื้อเสร็จสมบูรณ์</h5>
                                                                     <p class="order_id">เลขที่สั่งซื้อ : -</p>
+                                                                    <p class="order_money">จำนวนเงิน : -</p>
                                                                     <p class="order_date">เวลาการสั่งซื้อ : -</p>
                                                                     <div class="text-center">
                                                                         <a href="index.php#product" class="btn btn-primary"><i class="bi bi-plus-circle"></i> เลือกสินค้าเพิ่ม</a>
@@ -297,7 +298,9 @@ $connect->connectData();
                 success: function(response) {
                     if (response.status == "ok") {
                         $('.order_id').text('เลขที่สั่งซื้อ : ' + response.order_id)
-                        $('.order_date').text('เวลาการสั่งซื้อ : '+ response.order_date)
+                        $('.order_date').text('เวลาการสั่งซื้อ : '+ response.order_date);
+                        $('.order_money').text('จำนวนเงิน : '+ response.order_money);
+                        
                         stepper.next()
                     }
                 }

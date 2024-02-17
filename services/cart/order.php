@@ -15,21 +15,21 @@ if ($data == "confirmorder") {
     $connect->sql = "INSERT INTO `orders`  VALUES (null,'" . $_SESSION['customer_id'] . "','" . $order_date. "','1')";
     $connect->queryData();
     $order_id = $connect->id_insertrows();
-
+    $order_money=0;
     foreach($_SESSION['cart'] as $index => $order_qty){
         $product_id=$index;
         $product->sql = "SELECT  *  FROM  product  WHERE product_id ='" . $product_id . "'";
         $product->queryData();
         $result = $product->fetch_AssocData();
         $product_price=$result['product_price'];
-
+        $order_money+=$product_price*$order_qty;
         $connect->sql = "INSERT INTO `orders_detail` VALUES 
         (null,'".$order_id."','".$product_id."','".$order_qty."','".$product_price."')";
         $connect->queryData();
     }
     if($order_id>0){
         unset($_SESSION['cart']);
-        echo json_encode(["status"=>"ok","order_id"=>$order_id,"order_date"=>$order_date]);
+        echo json_encode(["status"=>"ok","order_id"=>$order_id,"order_date"=>$order_date,'order_money'=>number_format($order_money,2)]);
     }
     else{
         echo json_encode(["status"=>"no"]);
