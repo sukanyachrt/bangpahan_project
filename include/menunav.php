@@ -89,7 +89,17 @@ $product->connectData();
                 <li>
                     <a href="cart.php" > ตะกร้าสินค้า
                         <div class="cart">
-                            <span class="count"><?php echo  array_sum($_SESSION['cart']) ?></span>
+                            <span class="count">
+                                <?php 
+                                    if($_SESSION['cart']){
+                                        echo  array_sum($_SESSION['cart']);
+                                    }
+                                    else{
+                                        echo "";
+                                    }
+                                   
+                                ?>
+                            </span>
                             <i class="bi bi-cart2 material-icons"></i>
                         </div>
                     </a>

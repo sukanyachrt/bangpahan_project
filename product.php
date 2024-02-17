@@ -56,11 +56,11 @@ include("include/header.php");
                                         <?= number_format($rsconnect['product_price'], 2) . " บาท" ?>
                                     </h5>
                                     <div class="quantity">
-                                        <button class="minus-btn" type="button" name="button">
+                                        <button class="minus-btn addcart" type="button" name="button">
                                             <img src="assets/img/minus.svg" alt="" />
                                         </button>
                                         <input type="text" name="quantity" class="quantity-input" value="1">
-                                        <button class="plus-btn" type="button" name="button">
+                                        <button class="plus-btn addcart" type="button" name="button">
                                             <img src="assets/img/plus.svg" alt="" />
                                         </button>
                                     </div>
@@ -113,7 +113,7 @@ include("include/header.php");
             var quantity = $(e).closest('.card-body').find('.quantity-input').val();
             $.ajax({
                 type: 'POST',
-                url: 'services/addToCart.php',
+                url: 'services/addToCart.php?v=addcart',
                 data: {
                     productId: productId,
                     quantity: quantity
@@ -127,6 +127,7 @@ include("include/header.php");
                     console.error(xhr.responseText);
                 }
             });
+            
         }
 
         function updateCartCount() {
