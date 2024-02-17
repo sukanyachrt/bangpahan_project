@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2024 at 04:48 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.0.28
+-- Generation Time: Feb 17, 2024 at 05:16 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,6 +39,13 @@ CREATE TABLE `customers` (
   `c_status` varchar(1) NOT NULL COMMENT 'สถานะลูกค้า'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`customer_id`, `customer_fname`, `customer_lname`, `customer_telephone`, `c_address`, `c_email`, `c_password`, `customer_username`, `c_status`) VALUES
+(1, 'สุกัญญา', 'ไชยรัตน์', '0123456789', '909 หมู่ที่ 2 ', 'sukanya.chrt@gmail.com', '123456', 'sukanya', '1');
+
 -- --------------------------------------------------------
 
 --
@@ -53,6 +60,61 @@ CREATE TABLE `employees` (
   `employee_password` varchar(100) NOT NULL COMMENT 'password',
   `employee_status` varchar(1) NOT NULL COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `order_id` int(11) NOT NULL COMMENT 'รหัสการสั่งซื้อ',
+  `customer_id` int(11) NOT NULL COMMENT 'รหัสผู้สั่งซื้อ',
+  `order_date` datetime NOT NULL COMMENT 'วันที่สั่งซื้อ',
+  `order_status` varchar(1) NOT NULL COMMENT 'สถานะการสั่งซื้อ'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `order_status`) VALUES
+(1, 0, '2024-02-17 00:00:00', '1'),
+(2, 1, '2024-02-17 16:45:26', '1'),
+(3, 1, '2024-02-17 22:49:00', '1'),
+(4, 1, '2024-02-17 22:50:00', '1'),
+(5, 1, '2024-02-17 22:50:00', '1'),
+(6, 1, '2024-02-17 22:55:00', '1'),
+(7, 1, '2024-02-17 22:58:00', '1'),
+(8, 1, '2024-02-17 23:07:00', '1'),
+(9, 1, '2024-02-17 23:07:00', '1'),
+(10, 1, '2024-02-17 23:14:00', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders_detail`
+--
+
+CREATE TABLE `orders_detail` (
+  `orderdetail_id` int(11) NOT NULL COMMENT 'รหัสการสั่งซื้อสินค้า',
+  `order_id` int(11) NOT NULL COMMENT 'รหัสการสั่งซื้อสินค้า',
+  `product_id` int(11) NOT NULL COMMENT 'รหัสสินค้า',
+  `order_qty` varchar(10) NOT NULL COMMENT 'จำนวนสินค้า',
+  `product_price` varchar(10) NOT NULL COMMENT 'ราคาสินค้า'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `orders_detail`
+--
+
+INSERT INTO `orders_detail` (`orderdetail_id`, `order_id`, `product_id`, `order_qty`, `product_price`) VALUES
+(1, 6, 5, '3', '46'),
+(2, 7, 5, '3', '46'),
+(3, 8, 5, '3', '46'),
+(4, 9, 6, '1', '36'),
+(5, 10, 2, '2', '80'),
+(6, 10, 5, '3', '46');
 
 -- --------------------------------------------------------
 
@@ -158,6 +220,18 @@ ALTER TABLE `employees`
   ADD PRIMARY KEY (`employee_id`);
 
 --
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`order_id`);
+
+--
+-- Indexes for table `orders_detail`
+--
+ALTER TABLE `orders_detail`
+  ADD PRIMARY KEY (`orderdetail_id`,`order_id`,`product_id`) USING BTREE;
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -183,13 +257,25 @@ ALTER TABLE `producttype`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
   MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อ', AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `orders_detail`
+--
+ALTER TABLE `orders_detail`
+  MODIFY `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อสินค้า', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `product`
