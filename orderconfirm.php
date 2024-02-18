@@ -16,7 +16,7 @@ if (!isset($_SESSION['customer_id'])) {
     header('location:login.php?v=orderconfirm');
 }
 if (!isset($_SESSION['cart'])) {
-    header('location:index.php#product');
+    header('location:uploadpayment.php');
 }
 $connect = new Connect_Data();
 $connect->connectData();
@@ -249,7 +249,7 @@ $connect->connectData();
                                                                     <p class="order_date">เวลาการสั่งซื้อ : -</p>
                                                                     <div class="text-center">
                                                                         <a href="index.php#product" class="btn btn-primary"><i class="bi bi-plus-circle"></i> เลือกสินค้าเพิ่ม</a>
-                                                                        <a href="uploadpayment.php" class="btn btn-danger"><i class="bi bi-file-earmark-arrow-up-fill"></i> แจ้งชำระเงิน</a>
+                                                                        <button onclick="orderdetail()" id="orderdetail" class="btn btn-danger"><i class="bi bi-file-earmark-arrow-up-fill"></i> แจ้งชำระเงิน</button>
 
                                                                     </div>
                                                                 </div>
@@ -297,14 +297,18 @@ $connect->connectData();
                 url: "services/cart/order.php?v=confirmorder",
                 success: function(response) {
                     if (response.status == "ok") {
-                        $('.order_id').text('เลขที่สั่งซื้อ : ' + response.order_id)
-                        $('.order_date').text('เวลาการสั่งซื้อ : '+ response.order_date);
-                        $('.order_money').text('จำนวนเงิน : '+ response.order_money);
-                        
+                        $('.order_id').text('เลขที่สั่งซื้อ : ' + response.order_id);
+                        $('#orderdetail').val(response.order_id)
+                        $('.order_date').text('เวลาการสั่งซื้อ : ' + response.order_date);
+                        $('.order_money').text('จำนวนเงิน : ' + response.order_money);
+
                         stepper.next()
                     }
                 }
             });
+        }
+        function orderdetail(){
+            window.location.replace=$('#orderdetail').val;
         }
     </script>
 </body>

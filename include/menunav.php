@@ -85,7 +85,7 @@ $product->connectData();
                 </li>
                 <li><a href="index.php#contact">ช่องทางติดต่อ</a></li>
                 <!-- <li><a href="../projectYummy/payment.php">ชำระเงิน</a></li> -->
-                <li><a href="../projectYummy/order_confirmation.php">ติดตามสินค้า</a></li>
+                <li><a href="order.php">ออเดอร์ของฉัน</a></li>
                 <li>
                     <a href="cart.php" > ตะกร้าสินค้า
                         <div class="cart">
