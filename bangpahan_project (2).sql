@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2024 at 05:16 PM
+-- Generation Time: Feb 18, 2024 at 01:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -115,6 +115,23 @@ INSERT INTO `orders_detail` (`orderdetail_id`, `order_id`, `product_id`, `order_
 (4, 9, 6, '1', '36'),
 (5, 10, 2, '2', '80'),
 (6, 10, 5, '3', '46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `pay_id` int(11) NOT NULL COMMENT 'เลขที่การชำระเงิน',
+  `order_id` int(11) NOT NULL COMMENT 'รหัสการสั่งซื้อ',
+  `pay_date` date NOT NULL COMMENT 'วันที่ชำระเงิน',
+  `pay_total` varchar(20) NOT NULL COMMENT 'ยอดในการชำระ',
+  `pay_bank` varchar(100) NOT NULL COMMENT 'ธนาคารที่ชำระ',
+  `pay_image` varchar(255) NOT NULL COMMENT 'รูปภาพสลิปในการชำระ',
+  `pay_time` datetime NOT NULL COMMENT 'เวลาที่ทำการชำระ',
+  `pay_detail` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -232,6 +249,12 @@ ALTER TABLE `orders_detail`
   ADD PRIMARY KEY (`orderdetail_id`,`order_id`,`product_id`) USING BTREE;
 
 --
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`pay_id`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -269,13 +292,19 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อ', AUTO_INCREMENT=11;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อ', AUTO_INCREMENT=10001;
 
 --
 -- AUTO_INCREMENT for table `orders_detail`
 --
 ALTER TABLE `orders_detail`
   MODIFY `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อสินค้า', AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'เลขที่การชำระเงิน';
 
 --
 -- AUTO_INCREMENT for table `product`
