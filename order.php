@@ -40,7 +40,7 @@ $orderdetail->connectData();
 
 
                     ?>
-                        <div class="row mb-2">
+                        <div class="row mb-2 mt-3">
                             <div class="col-md-8 text-start text-md-end">
                                 <p class="pt-1"> ค้นหาข้อมูล : </p>
                             </div>
@@ -56,9 +56,8 @@ $orderdetail->connectData();
 
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
+                            <table class="table table-bordered table-striped ">
                                 <thead>
-
                                     <tr>
                                         <th scope="col" class="text-center">#</th>
                                         <th scope="col" class="text-center">เลขที่สั่งซื้อ</th>
@@ -73,6 +72,18 @@ $orderdetail->connectData();
                                     $order->sql = "SELECT *  	FROM 	orders  WHERE customer_id ='" . $_SESSION['customer_id'] . "'";
                                     $order->queryData();
                                     $noid = 1;
+                                    $row = $order->num_rows();
+                                    if ($row == 0) {
+                                    ?>
+                                        <tr>
+                                            <td colspan="6" class="text-center">
+                                                <div class="card m-5">
+                                                    ยังไม่มีรายการสั่งซื้อ
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
                                     while ($rsorder = $order->fetch_AssocData()) {
                                         $sumprice = 0;
                                         if ($rsorder['order_id'] <= 9) {

@@ -94,9 +94,9 @@ section {
 
 .section-header p {
   margin: 0;
-  font-size: 48px;
+  font-size: 40px;
   font-weight: 400;
-  /* font-family: var(--font-primary); */
+  font-family: var(--font-primary);
 }
 
 .section-header p span {
