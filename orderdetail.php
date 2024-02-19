@@ -266,7 +266,7 @@ if ($_GET['id'] <= 9) {
                             <div class="d-flex justify-content-between">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <p class="mb-0 text-secondary"><?= $rsconnect['customer_fname'] . " " . $rsconnect['customer_lname'] ?></p>
+                                        <p class="mb-0"><?= $rsconnect['customer_fname'] . " " . $rsconnect['customer_lname'] ?></p>
                                         <p class="my-1"><?= $rsconnect['c_address'] ?></p>
                                         <p class="mb-0 font-13"><?= $rsconnect['customer_telephone'] ?></p>
                                     </div>
