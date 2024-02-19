@@ -5,7 +5,7 @@ include("include/header.php");
 <link rel="stylesheet" href="assets/toastr/toastr.min.css">
 <style>
   #toast-container>.toast-error {
-    background-color: red;
+    background-color: orange;
   }
 
   .form {
@@ -66,14 +66,12 @@ include("include/header.php");
   <section class="d-flex justify-content-center align-items-center" style="background-image: url(assets/img/bg/bg4.jpg); background-size: cover; background-position: center;">
     <div class="row col-md-9 col-12">
       <div class="col-12">
-        <div class="form">
 
+        <div class="form">
           <ul class="tab-group">
             <li class="tab  active"><a href="#login">Log In</a></li>
             <li class="tab bg-danger"><a href="#signup">Sign Up</a></li>
-
           </ul>
-
           <div class="tab-content">
             <div id="login">
               <form id="loginForm">
@@ -158,14 +156,28 @@ include("include/header.php");
               </form>
 
             </div>
-
-
-
-          </div><!-- tab-content -->
-
-        </div> <!-- /form -->
+          </div>
+        </div>
       </div>
 
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header bg-warning">
+            <h5 class="modal-title" id="exampleModalLabel">แจ้งเตือน</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body text-center">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">ตกลง</button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -196,6 +208,10 @@ include("include/header.php");
       $(target).fadeIn(600);
 
     });
+
+    function showModal() {
+      $('#exampleModal').modal('show')
+    }
 
 
     $('#loginForm').validate({
@@ -240,6 +256,8 @@ include("include/header.php");
               postSession(response);
 
             } else {
+              $('.modal-body').text(response.msg);
+              $('#exampleModal').modal('show')
               toastr.error(response.msg)
             }
           },
@@ -328,9 +346,11 @@ include("include/header.php");
               postSession(response);
 
             } else {
+              $('.modal-body').text(response.msg)
+              $('#exampleModal').modal('show')
               toastr.error(response.msg)
             }
-            
+
           },
           error: function(error) {
             console.log(error)
