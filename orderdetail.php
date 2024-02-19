@@ -1,6 +1,13 @@
 <?php
 include("include/header.php");
 ?>
+<link rel="stylesheet" href="assets/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<link rel="stylesheet" href="assets/toastr/toastr.min.css">
+<style>
+     #toast-container>.toast-success {
+        background-color: green;
+    }
+</style>
 <?php
 $product = new Connect_Data();
 $product->connectData();
@@ -36,7 +43,7 @@ if ($_GET['id'] <= 9) {
                     $rsconnect = $product->fetch_AssocData();
                     $order_status = $rsconnect['order_status'];
                     ?>
-                    <div class="card radius-10 border-top border-0 border-3 border-danger">
+                    <div class="card radius-10 border-top  border-3 border-danger">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-2">
@@ -121,10 +128,13 @@ if ($_GET['id'] <= 9) {
                                     </div>
                                 </div>
                             </div>
+                            <?php if ($order_status == 1) { ?>
                             <div class="row pt-5">
-                                <div class="col-12 bg-danger">
-                                    <p class="fs-6 pt-2 text-center text-white">แจ้งข้อมูลการชำระเงิน</p>
-                                </div>
+                              
+                                    <div class="col-12 bg-danger">
+                                        <p class="fs-6 pt-2 text-center text-white">แจ้งข้อมูลการชำระเงิน</p>
+                                    </div>
+                               
                                 <div class="col-12 my-2">
                                     <form id="paymentForm" name="paymentForm">
                                         <div class="form-group">
@@ -197,9 +207,9 @@ if ($_GET['id'] <= 9) {
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">เวลาที่โอน</label>
-                                                    <input type="text" class="form-control" readOnly id="pay_time" name="pay_time" placeholder="เวลาที่โอน" />
+                                                    <input type="text" autocomplete="off" class="form-control bs-timepicker" id="pay_time" name="pay_time" placeholder="เวลาที่โอน" />
                                                 </div>
-                                                
+
                                             </div>
                                         </div>
                                         <div class="row my-2">
@@ -214,7 +224,7 @@ if ($_GET['id'] <= 9) {
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">หลักฐานการโอน</label>
-                                                    <input type="file" id="pay_image" class="form-control" name="pay_image">
+                                                    <input type="file" id="pay_image" accept="image/*" class="form-control" name="pay_image">
                                                 </div>
                                             </div>
                                         </div>
@@ -237,6 +247,7 @@ if ($_GET['id'] <= 9) {
                                 </div>
 
                             </div>
+                             <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -244,7 +255,7 @@ if ($_GET['id'] <= 9) {
             <div class="row">
                 <div class="col-12">
                     <h6>ที่อยู่สำหรับจัดส่ง</h6>
-                    <div class="card radius-10 border-top border-0 border-3 border-danger">
+                    <div class="card radius-10 border-top  border-3 border-danger">
                         <div class="card-body">
                             <?php
 
@@ -365,6 +376,7 @@ if ($_GET['id'] <= 9) {
             </div>
         </div>
     </section>
+
     <?php include("include/footer.php"); ?>
 
     <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -374,15 +386,27 @@ if ($_GET['id'] <= 9) {
     <script src="assets/jquery-validation/jquery.validate.min.js"></script>
     <link href="assets/datepicker/css/bootstrap-datepicker.css" rel="stylesheet" />
     <script src="assets/datepicker/js/bootstrap-datepicker-custom.js"></script>
-    <script src="assets/js/moment.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.5.2/flatly/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/timepicker.min.css" />
+    <link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css" />
+    <script src="assets/js/timepicker.min.js"></script>
+    <script src="assets/sweetalert2/sweetalert2.min.js"></script>
+    <script src="assets/toastr/toastr.min.js"></script>
+
     <?php include("include/script.php"); ?>
     <script>
+        if (sessionStorage.getItem('toastrShown') === 'save') {
+            toastr.success("บันทึกข้อมูลการชำระเงินแล้วค่ะ !");
+            sessionStorage.removeItem('toastrShown');
+        }
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
             todayBtn: true,
-            
+            endDate: 'today'
+
         });
-       
+
+        $(".bs-timepicker").timepicker();
 
         $('#paymentForm').validate({
             rules: {
@@ -434,17 +458,22 @@ if ($_GET['id'] <= 9) {
                 $(element).removeClass('is-invalid');
             },
             submitHandler: function(form) {
+                var paymentForm = new FormData($('#paymentForm')[0]);
+                var files = $('#pay_image')[0].files[0];
+                paymentForm.append('pay_image', files);
                 $.ajax({
-                    type: 'POST',
-                    url: "services/auth/data.php?v=checkauth",
-                    data: $(form).serialize(),
+                    async: true,
+                    url: "services/cart/order.php?v=insertPayment&id=<?php echo $_GET['id'] ?>",
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: paymentForm,
                     success: function(response) {
                         console.log(response)
                         if (response.status == "ok") {
-                            postSession(response);
-
-                        } else {
-                            toastr.error(response.msg)
+                            sessionStorage.setItem('toastrShown', 'save');
+                            location.reload();
                         }
                     },
                     error: function(error) {
@@ -458,19 +487,6 @@ if ($_GET['id'] <= 9) {
         $.validator.addMethod("alphanumeric", function(value, element) {
             return this.optional(element) || /^[0-9.]+$/.test(value);
         }, "โปรดกรอกข้อมูลที่มีเฉพาะตัวเลข");
-
-        function postSession(data) {
-            $.ajax({
-                url: "./createsession.php?v=<?php echo isset($_GET['v']) ? $_GET['v'] : '' ?>",
-                type: "POST",
-                data: data, // ใช้ข้อมูลจากการร้องขอแรก
-                success: function(Res) {
-
-                    window.location.replace(Res.page);
-                },
-
-            });
-        }
     </script>
 </body>
 
