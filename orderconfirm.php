@@ -82,13 +82,13 @@ $connect->connectData();
                                                                 <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto"><i class="fa fa-shopping-cart"></i>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4 mt-4 mt-sm-0 d-none d-md-block">
+                                                            <!-- <div class="col-md-4 mt-4 mt-sm-0 d-none d-md-block">
                                                                 <div class="text-center text-md-end">
                                                                     <a href="#" class="text-danger">แก้ไข
                                                                         <i class="bi bi-pencil-square"></i>
                                                                     </a>
                                                                 </div>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
 
                                                     </div>
