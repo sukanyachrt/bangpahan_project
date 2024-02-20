@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 18, 2024 at 01:45 PM
+-- Generation Time: Feb 20, 2024 at 04:58 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,7 +44,10 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`customer_id`, `customer_fname`, `customer_lname`, `customer_telephone`, `c_address`, `c_email`, `c_password`, `customer_username`, `c_status`) VALUES
-(1, 'สุกัญญา', 'ไชยรัตน์', '0123456789', '909 หมู่ที่ 2 ', 'sukanya.chrt@gmail.com', '123456', 'sukanya', '1');
+(1, 'ทดสอบ', 'ทดสอบ', '0123456789', '909 หมู่ที่ 2 ', 'test.ck@gmail.comsss', '123456', 'test', '1'),
+(2, 'สุกัญญา', 'ไชยรัตน์', '0987150308', '85', 'sukanya.chrt@gmail.com', '123456', 'customer1', '1'),
+(3, 'สุกัญญา', 'ไชยรัตน์', '0987150308', '85', 'sukanya.chrt@gmail.com', '123456', 'customer1', '1'),
+(4, 'สุกัญญา', 'ไชยรัตน์', '0987150308', '85', 'sukanya.chrt@gmail.com', '123456', 'customer2', '1');
 
 -- --------------------------------------------------------
 
@@ -79,16 +82,11 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `order_status`) VALUES
-(1, 0, '2024-02-17 00:00:00', '1'),
-(2, 1, '2024-02-17 16:45:26', '1'),
-(3, 1, '2024-02-17 22:49:00', '1'),
-(4, 1, '2024-02-17 22:50:00', '1'),
-(5, 1, '2024-02-17 22:50:00', '1'),
-(6, 1, '2024-02-17 22:55:00', '1'),
-(7, 1, '2024-02-17 22:58:00', '1'),
-(8, 1, '2024-02-17 23:07:00', '1'),
-(9, 1, '2024-02-17 23:07:00', '1'),
-(10, 1, '2024-02-17 23:14:00', '1');
+(10, 1, '2024-02-17 23:14:00', '2'),
+(10002, 1, '2024-02-20 22:46:00', '2'),
+(10003, 1, '2024-02-20 22:48:00', '1'),
+(10004, 1, '2024-02-20 22:49:00', '1'),
+(10005, 1, '2024-02-20 22:50:00', '1');
 
 -- --------------------------------------------------------
 
@@ -109,12 +107,12 @@ CREATE TABLE `orders_detail` (
 --
 
 INSERT INTO `orders_detail` (`orderdetail_id`, `order_id`, `product_id`, `order_qty`, `product_price`) VALUES
-(1, 6, 5, '3', '46'),
-(2, 7, 5, '3', '46'),
-(3, 8, 5, '3', '46'),
-(4, 9, 6, '1', '36'),
 (5, 10, 2, '2', '80'),
-(6, 10, 5, '3', '46');
+(6, 10, 5, '3', '46'),
+(7, 10002, 5, '1', '46'),
+(8, 10003, 4, '1', '74'),
+(9, 10004, 11, '2', '50'),
+(10, 10005, 8, '2', '53');
 
 -- --------------------------------------------------------
 
@@ -129,9 +127,17 @@ CREATE TABLE `payment` (
   `pay_total` varchar(20) NOT NULL COMMENT 'ยอดในการชำระ',
   `pay_bank` varchar(100) NOT NULL COMMENT 'ธนาคารที่ชำระ',
   `pay_image` varchar(255) NOT NULL COMMENT 'รูปภาพสลิปในการชำระ',
-  `pay_time` datetime NOT NULL COMMENT 'เวลาที่ทำการชำระ',
+  `pay_time` time NOT NULL COMMENT 'เวลาที่ทำการชำระ',
   `pay_detail` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`pay_id`, `order_id`, `pay_date`, `pay_total`, `pay_bank`, `pay_image`, `pay_time`, `pay_detail`) VALUES
+(7, 10, '2024-02-19', '2000', 'kbank', 'Screenshot 2024-02-17 215456.png', '19:16:00', ''),
+(8, 10002, '2024-02-20', '2000', 'kbank', 'Screenshot 2024-02-17 215456.png', '22:55:00', '');
 
 -- --------------------------------------------------------
 
@@ -280,7 +286,7 @@ ALTER TABLE `producttype`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `employees`
@@ -292,19 +298,19 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อ', AUTO_INCREMENT=10001;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อ', AUTO_INCREMENT=10006;
 
 --
 -- AUTO_INCREMENT for table `orders_detail`
 --
 ALTER TABLE `orders_detail`
-  MODIFY `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อสินค้า', AUTO_INCREMENT=7;
+  MODIFY `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อสินค้า', AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'เลขที่การชำระเงิน';
+  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'เลขที่การชำระเงิน', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `product`
