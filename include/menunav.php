@@ -15,8 +15,7 @@ $product->connectData();
             <ul>
                 <li><a class="nav-link scrollto active" href="index.php#home">หน้าหลัก</a></li>
                 <li><a class="nav-link scrollto" href="index.php#about">เกี่ยวกับ</a></li>
-                <li class="dropdown"><a href="index.php#product"><span>รายการสินค้า</span> <i
-                            class="bi bi-chevron-down"></i></a>
+                <li class="dropdown"><a href="index.php#product"><span>รายการสินค้า</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
                         <?php
                         $productgroup->sql = "SELECT producttype.protype_id,producttype.protype_name,count(productgroup.protype_id) as numproducttype
@@ -26,7 +25,7 @@ $product->connectData();
                         $productgroup->queryData();
                         while ($rsproductgroup = $productgroup->fetch_AssocData()) {
                             if ($rsproductgroup['numproducttype'] > 1) {
-                                ?>
+                        ?>
                                 <li class="dropdown"><a href="#"><span>
                                             <?= $rsproductgroup['protype_name'] ?>
                                         </span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
@@ -46,17 +45,17 @@ $product->connectData();
                                          ";
                                         $product->queryData();
                                         while ($rsproduct = $product->fetch_AssocData()) {
-                                            ?>
+                                        ?>
                                             <li><a href="product.php?id=<?= $rsproduct['progroup_id'] ?>">
                                                     <?= $rsproduct['progroup_name'] ?>
                                                 </a></li>
-                                            <?php
+                                        <?php
                                         }
 
                                         ?>
 
                                     </ul>
-                                    <?php
+                                <?php
                             } else {
                                 $product->sql = "SELECT
                                 productgroup.progroup_id, 
@@ -77,65 +76,179 @@ $product->connectData();
                                 <li><a href="product.php?id=<?= $rsproduct['progroup_id'] ?>">
                                         <?= $rsproductgroup['protype_name'] ?>
                                     </a></li>
-                                <?php
+                            <?php
                             }
                             ?>
 
-                            <?php
+                        <?php
                         }
                         ?>
                     </ul>
                 </li>
                 <li><a class="nav-link scrollto" href="#contact">ช่องทางการติดต่อ</a></li>
-                <!-- <li>
-                    <a href="cart.php">
-                        <div class="cart">
-                            <span class="count">
-                                <?php
-                                if ($_SESSION['cart']) {
-                                    echo array_sum($_SESSION['cart']);
-                                } else {
-                                    echo "1";
-                                }
+                <li><a href="order.php">ออเดอร์ของฉัน</a></li>
+                <li class="cartNav"><a href="cart.php">ตะกร้าสินค้า
+                        <div>
+                            <i class="bi bi-cart2" style="font-size: 25px;"></i>
+                            <span class="badge bg-danger">
+                                <span class="cart">
+                                    <?php
+                                    if ($_SESSION['cart']) {
+                                        echo array_sum($_SESSION['cart']);
+                                    } else {
+                                    }
 
-                                ?>
+                                    ?>
+                                </span>
                             </span>
-                            <i class="bi bi-cart2 material-icons"></i>
                         </div>
                     </a>
+
                 </li>
-                <li><a class="getstarted scrollto" href="#about">Login</a></li> -->
+
             </ul>
-           
 
-        </nav><!-- .navbar -->
-        <!-- <div class="social-links text-end p-0 m-0">
 
-            <a href="login.php" class="twitter"><i class="bi bi-person" style=" color: #0b2341;
+        </nav>
+
+        <div class="social-links">
+            <?php
+            if (isset($_SESSION['customer_id'])) {
+            ?>
+                <div class="dropdown">
+                    <button class="dropbtn"><i class="bi bi-person" style="font-size: 20px;"></i>
+                        <?php
+                        if (isset($_SESSION['customer_id'])) {
+                            echo $_SESSION['customer_fname'];
+                        }
+                        ?>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#">ข้อมูลส่วนตัว</a>
+                        <a href="logout.php">ออกจากระบบ</a>
+
+                    </div>
+                </div>
+
+            <?php } else {
+            ?>
+                <a href="login.php" class="login text-center" style=" color: #0b2341;
+  font-size: 16px;"><i class="bi bi-person" style="font-size: 28px;"></i>
+                    <?php
+                    if (isset($_SESSION['customer_id'])) {
+                        echo $_SESSION['customer_fname'];
+                    } else {
+                        echo "บัญชีของฉัน";
+                    }
+                    ?>
+                </a>
+            <?php
+            } ?>
+
+
+
+            <a href="cart.php" class="cartlink" style=" color: #0b2341;
   font-size: 28px;
   cursor: pointer;
-                             
   line-height: 0;
-  transition: 0.5s;"></i>บัญชีของฉัน</a>
+  transition: 0.5s;">
+
+                <div class="cart">
+                    <span class="count">
+                        <?php
+                        if ($_SESSION['cart']) {
+                            echo array_sum($_SESSION['cart']);
+                        } else {
+                        }
+
+                        ?>
+                    </span>
+                    <i class="bi bi-cart2"></i>
+                </div>
+
+
+            </a>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+
+
 
         </div>
-        <div>
-            <a href="#" class="twitter"><i class="bi bi-cart2" style=" color: #0b2341;
-  font-size: 28px;
-  cursor: pointer;
-  line-height: 0;
-  transition: 0.5s;"></i> </a>
-        </div> -->
-        <div class="social-links">
-        <a href="login.php" class="twitter text-center pe-4" style=" color: #0b2341;
-  font-size: 16px;"><i class="bi bi-person" style="font-size: 28px;"></i> บัญชีของฉัน </a>
-        <a href="#" class="facebook" style=" color: #0b2341;
-  font-size: 28px;
-  cursor: pointer;
-  line-height: 0;
-  transition: 0.5s;"><i class="bi bi-cart2"></i></a>
-       
-      </div>
-       <i class="bi bi-list mobile-nav-toggle"></i>
+
     </div>
 </header>
+<style>
+    .social-links {
+        margin-left: auto;
+
+    }
+
+    .social-links a {
+        margin-left: 15px;
+
+    }
+
+    .login {
+        padding-right: 10px;
+    }
+
+    .cartNav {
+        display: none;
+    }
+
+    @media (max-width: 700px) {
+        .cartNav {
+            display: block;
+        }
+
+
+        .cartlink {
+            display: none;
+        }
+    }
+
+    .dropbtn {
+        background-color: #fff;
+        color: #000;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        font-weight: 400;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 20px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var cartCount = parseInt($(".cart .count").text());
+    if (cartCount === 0 || isNaN(cartCount)) {
+        $(".cart .count").css("background", "none");
+        $(".cart .count").css("width", "0");
+    }
+</script>

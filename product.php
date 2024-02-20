@@ -121,14 +121,15 @@ include("include/header.php");
                 success: function(response) {
                     console.log(response)
                     updateCartCount();
-                    
+
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
                 }
             });
-            
+
         }
+
         function addToCartTocart(productId, e) { //เพิ่มสินค้าลงในตะกร้า
             var quantity = $(e).closest('.card-body').find('.quantity-input').val();
             $.ajax({
@@ -141,16 +142,16 @@ include("include/header.php");
                 success: function(response) {
                     console.log(response)
                     updateCartCount();
-                    window.location.href='cart.php';
+                    window.location.href = 'cart.php';
                 },
                 error: function(xhr, status, error) {
                     console.error(xhr.responseText);
                 }
             });
-            
+
         }
 
-        
+
 
         function updateCartCount() {
             $.ajax({
@@ -158,6 +159,9 @@ include("include/header.php");
                 url: 'services/getCartCount.php',
                 success: function(response) {
                     console.log(response)
+
+                    $(".count").css("background", "#d60b28");
+                    $(".cart .count").css("width", "16px");
                     $('.count').text(response);
                 },
                 error: function(xhr, status, error) {

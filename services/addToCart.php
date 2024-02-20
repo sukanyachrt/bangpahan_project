@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 if($_GET['v']=="addcart"){
     if(isset($_POST['productId']) && isset($_POST['quantity'])) {
         $productId = $_POST['productId'];
@@ -7,8 +8,7 @@ if($_GET['v']=="addcart"){
     
         // Add product to session
         $_SESSION['cart'][$productId] += $quantity;
-        print_r($_SESSION['cart']);
-        //echo $quantity; // Send success response back to the client
+        
     } else {
         echo 'error'; // Send error response if data is missing
     }
@@ -20,8 +20,7 @@ else if($_GET['v']=="updatecart"){
     
         // Add product to session
         $_SESSION['cart'][$productId] = $quantity;
-        print_r($_SESSION['cart']);
-        //echo $quantity; // Send success response back to the client
+       
     } else {
         echo 'error'; // Send error response if data is missing
     }
@@ -32,7 +31,7 @@ else if($_GET['v']=="removecartByid"){
     
         // Remove product from session
         unset($_SESSION['cart'][$productId]);
-        print_r($_SESSION['cart']);
+        
         //echo $quantity; // Send success response back to the client
     } else {
         echo 'error'; // Send error response if data is missing
