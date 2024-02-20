@@ -370,7 +370,7 @@ include("include/header.php");
 
     function postSession(data) {
       $.ajax({
-        url: "./createsession.php?v=<?php echo isset($_GET['v']) ? $_GET['v'] : '' ?>",
+        url: "./createsession.php?d=createsession&v=<?php echo isset($_GET['v']) ? $_GET['v'] : '' ?>",
         type: "POST",
         data: data, // ใช้ข้อมูลจากการร้องขอแรก
         success: function(Res) {

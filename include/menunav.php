@@ -85,7 +85,7 @@ $product->connectData();
                         ?>
                     </ul>
                 </li>
-                <li><a class="nav-link scrollto" href="#contact">ช่องทางการติดต่อ</a></li>
+                <li><a class="nav-link scrollto" href="index.php#contact">ช่องทางการติดต่อ</a></li>
                 <li><a href="order.php">ออเดอร์ของฉัน</a></li>
                 <li class="cartNav"><a href="cart.php">ตะกร้าสินค้า
                         <div>
@@ -93,9 +93,10 @@ $product->connectData();
                             <span class="badge bg-danger">
                                 <span class="cart">
                                     <?php
-                                    if ($_SESSION['cart']) {
+                                    if (isset($_SESSION['cart'])) {
                                         echo array_sum($_SESSION['cart']);
                                     } else {
+                                        echo "0";
                                     }
 
                                     ?>
@@ -122,10 +123,11 @@ $product->connectData();
                             echo $_SESSION['customer_fname'];
                         }
                         ?>
+                        <i class="bi bi-caret-down-fill"></i>
                     </button>
                     <div class="dropdown-content">
-                        <a href="#">ข้อมูลส่วนตัว</a>
-                        <a href="logout.php">ออกจากระบบ</a>
+                        <a href="profile.php">ข้อมูลส่วนตัว</a>
+                        <a href="#"  data-bs-toggle="modal" data-bs-target="#modalConfirmlogout">ออกจากระบบ</a>
 
                     </div>
                 </div>
@@ -176,6 +178,24 @@ $product->connectData();
 
     </div>
 </header>
+<!-- Modal -->
+<div class="modal fade" id="modalConfirmlogout" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title" id="exampleModalLabel">แจ้งเตือน</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                        คุณต้องการออกจากระบบใช่ไหม ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-warning" onclick="confirmLogout()">ยืนยัน</button>
+            </div>
+        </div>
+    </div>
+</div>
 <style>
     .social-links {
         margin-left: auto;
@@ -193,6 +213,10 @@ $product->connectData();
 
     .cartNav {
         display: none;
+    }
+
+    .cartlink {
+        padding-right: 20px;
     }
 
     @media (max-width: 700px) {
@@ -250,5 +274,9 @@ $product->connectData();
     if (cartCount === 0 || isNaN(cartCount)) {
         $(".cart .count").css("background", "none");
         $(".cart .count").css("width", "0");
+    }
+
+    function confirmLogout(){
+        window.location="logout.php"
     }
 </script>

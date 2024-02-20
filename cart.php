@@ -18,7 +18,7 @@ include("include/header.php");
         if ($_SESSION['cart']) {
         ?>
 
-            <div class="container">
+            <div class="container mt-5">
                 <div class="row">
                     <div class="col-xl-8">
                         <?php

@@ -58,7 +58,7 @@ $connect->connectData();
     <section id="product" class="product">
 
       <div class="section-header">
-        <div class="mb-3"></div>
+        <div class="my-4"></div>
         <h2>สินค้า</h2>
         <p>รวมสินค้า<span>ร้านเรา!</span></p>
       </div>

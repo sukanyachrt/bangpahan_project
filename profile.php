@@ -1,76 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="custom.css">
-</head>
+<?php
+include("include/header.php");
+?>
+<style>
+
+</style>
+<?php
+$connect = new Connect_Data();
+$connect->connectData();
+if (!isset($_SESSION['customer_id'])) {
+  header('location:login.php');
+}
+?>
+
 <body>
+  <?php
+  include("include/menunav.php");
+  ?>
+  <section id="material" class="material">
+    <div class="container mt-5">
 
-    <div class="container">
-        <!-- Navbar -->
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-          <div class="col-md-3 mb-2 mb-md-0">
-            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-                BS5
-            </a>
-          </div>
-    
-          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="#" class="nav-link px-2">Features</a></li>
-            <li><a href="#" class="nav-link px-2">Pricing</a></li>
-            <li><a href="#" class="nav-link px-2">FAQs</a></li>
-            <li><a href="#" class="nav-link px-2">About</a></li>
-          </ul>
-    
-          <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-primary me-2">Login</button>
-            <button type="button" class="btn btn-primary">Sign-up</button>
-          </div>
-        </header>
-        <!-- Navbar -->
+      <div class="row d-flex justify-content-center">
 
-      </div>
+        <div class="col-md-9">
 
-      <main >
-        <div class="px-4 py-5 my-5 text-center">
-            <img src="https://fakeimg.pl/150x150?text=User" class="rounded-circle" alt="">
-            <br><br>
-            <h1 class="display-5 fw-bold text-body-emphasis">Profile Page</h1>
-            <div class="col-lg-6 mx-auto">
-              <p class="lead mb-4">
-                ยินดีต้อนรับคุณ, Patiphan Phengpao
-              </p>
-              <hr>
-              <p>Email: patiphan@gmail.com</p>
-              <p>Firstname: patiphan</p>
-              <p>Lastname: phengpao</p>
-              <a href="profile_edit.html" class="btn btn-success px-4 gap-3">แก้ไข Profile</a>
-              <a href="upload_profile_img.html" class="btn btn-primary px-4 gap-3">อัพโหลดรูป Profile</a>
+          <div class="card p-3 py-4 radius-10 border-start border-0 border-3 border-danger">
+
+            <div class="text-center">
+              <img src="assets/img/userprofile.png" width="100" class="rounded-circle">
             </div>
+
+            <div class="text-center mt-3">
+              <h5 class="mt-2 mb-0"><?= $_SESSION['customer_fname'] . " " . $_SESSION['customer_lname'] ?></h5>
+            </div>
+            <div>
+              <ul class="list-group mt-5">
+
+                <li class="list-group-item list-group-item-danger">รายละเอียด</li>
+                <?php
+                $connect->sql = "SELECT * FROM 	customers  WHERE customer_id  ='" . $_SESSION['customer_id'] . "'";
+                $connect->queryData();
+                $rsconnect = $connect->fetch_AssocData();
+                ?>
+
+                <li class="list-group-item">ชื่อ : <?= $rsconnect['customer_fname'] . " " . $rsconnect['customer_lname'] ?></li>
+                <li class="list-group-item">เบอร์โทรศัพท์ : <?= $rsconnect['customer_telephone'] ?></li>
+                <li class="list-group-item">ที่อยู่ :<?= $rsconnect['c_address'] ?></li>
+                <li class="list-group-item">email :<?= $rsconnect['c_email'] ?></li>
+                <li class="list-group-item">Username :<?= $rsconnect['customer_username'] ?></li>
+                <li class="list-group-item">Password :<?= $rsconnect['c_password'] ?></li>
+              </ul>
+            </div>
+            <div class="text-center mt-3">
+              <a href="editprofile.php"  class="btn btn-danger px-4">แก้ไขข้อมูล</a>
+              
+            </div>
+
+
+
           </div>
-      </main>
 
+        </div>
 
-      <div class="container">
-        <footer class="py-3 my-4">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-              <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-            </ul>
-            <p class="text-center text-body-secondary">© 2023 Company, Inc</p>
-          </footer>
       </div>
 
+    </div>
+  </section>
+  <?php include("include/footer.php"); ?>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-</body>
-</html>
+  <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <?php include("include/script.php"); ?>

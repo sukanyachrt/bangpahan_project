@@ -64,8 +64,8 @@ include("include/header.php");
                                             <img src="assets/img/plus.svg" alt="" />
                                         </button>
                                     </div>
-                                    <a href="#" onclick="addToCart(<?php echo $rsconnect['product_id']; ?>, this)" class="btn btn-outline-danger me-2">ใส่ตะกร้า</a>
-                                    <a href="#" onclick="addToCartTocart(<?php echo $rsconnect['product_id']; ?>, this)" class="btn btn-danger">สั่งซื้อ</a>
+                                    <button onclick="addToCart(<?php echo $rsconnect['product_id']; ?>, this)" class="btn btn-outline-danger me-2">ใส่ตะกร้า</button>
+                                    <button href="#" onclick="addToCartTocart(<?php echo $rsconnect['product_id']; ?>, this)" class="btn btn-danger">สั่งซื้อ</button>
                                 </div>
 
                             </div>

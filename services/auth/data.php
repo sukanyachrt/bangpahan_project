@@ -2,6 +2,7 @@
 header('Content-Type: application/json');
 include('../connect_data.php');
 error_reporting(0);
+session_start();
 $connect = new Connect_Data();
 $connect->connectData();
 $data = isset($_GET['v']) ? $_GET['v'] : '';
@@ -59,4 +60,18 @@ if ($data == "checkauth") {
             echo json_encode(["status" => "no", "msg" => "ไม่สามารถลงทะเบียนผู้ใช้ได้ค่ะ"]);
         }
     }
+}
+else if($data=="updateProfile"){
+    $post = $_POST;
+    $connect->sql = "UPDATE `customers` SET 
+    `customer_fname`='".$post['customer_fname']."',
+    `customer_lname`='".$post['customer_lname']."',
+    `customer_telephone`='".$post['customer_telephone']."',
+    `c_address`='".$post['c_address']."',
+    `c_email`='".$post['c_email']."',
+    `c_password`='".$post['c_password']."',
+    `customer_username`='".$post['customer_username']."'
+     WHERE customer_id='".$_SESSION['customer_id']."'";
+    $connect->queryData();
+    echo json_encode(["status" => "ok", 'data' => $post]);
 }
