@@ -127,7 +127,7 @@ $product->connectData();
   transition: 0.5s;"></i> </a>
         </div> -->
         <div class="social-links">
-        <a href="login.php" class="twitter text-center pe-5" style=" color: #0b2341;
+        <a href="login.php" class="twitter text-center pe-4" style=" color: #0b2341;
   font-size: 16px;"><i class="bi bi-person" style="font-size: 28px;"></i> บัญชีของฉัน </a>
         <a href="#" class="facebook" style=" color: #0b2341;
   font-size: 28px;
