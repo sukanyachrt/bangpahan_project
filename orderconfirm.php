@@ -16,7 +16,7 @@ if (!isset($_SESSION['customer_id'])) {
     header('location:login.php?v=orderconfirm');
 }
 if (!isset($_SESSION['cart'])) {
-    header('location:uploadpayment.php');
+    header('location:order.php');
 }
 $connect = new Connect_Data();
 $connect->connectData();
@@ -308,7 +308,8 @@ $connect->connectData();
             });
         }
         function orderdetail(){
-            window.location.replace=$('#orderdetail').val;
+            console.log($('#orderdetail').val())
+            window.location.href="orderdetail.php?id="+$('#orderdetail').val()
         }
     </script>
 </body>
