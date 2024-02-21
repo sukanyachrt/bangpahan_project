@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2024 at 04:58 PM
+-- Generation Time: Feb 21, 2024 at 05:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,7 +47,9 @@ INSERT INTO `customers` (`customer_id`, `customer_fname`, `customer_lname`, `cus
 (1, 'ทดสอบ', 'ทดสอบ', '0123456789', '909 หมู่ที่ 2 ', 'test.ck@gmail.comsss', '123456', 'test', '1'),
 (2, 'สุกัญญา', 'ไชยรัตน์', '0987150308', '85', 'sukanya.chrt@gmail.com', '123456', 'customer1', '1'),
 (3, 'สุกัญญา', 'ไชยรัตน์', '0987150308', '85', 'sukanya.chrt@gmail.com', '123456', 'customer1', '1'),
-(4, 'สุกัญญา', 'ไชยรัตน์', '0987150308', '85', 'sukanya.chrt@gmail.com', '123456', 'customer2', '1');
+(4, 'สุกัญญา', 'ไชยรัตน์', '0987150308', '85', 'sukanya.chrt@gmail.com', '123456', 'customer2', '1'),
+(5, 'ปัณ', 'ขำสุข', '0821234567', 'หอพัก', 'wry.2702@gmail.com', 'Pancharat2702', 'pancharat', '1'),
+(6, 'sdad', 'dasfadf', '0000000000', 'daadg', 'testt@mail.com', '0000000000', 'testt', '1');
 
 -- --------------------------------------------------------
 
@@ -63,6 +65,13 @@ CREATE TABLE `employees` (
   `employee_password` varchar(100) NOT NULL COMMENT 'password',
   `employee_status` varchar(1) NOT NULL COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `employees`
+--
+
+INSERT INTO `employees` (`employee_id`, `employee_fname`, `employee_lname`, `employee_username`, `employee_password`, `employee_status`) VALUES
+(1, 'admin', 'admin', 'admin', '123456', '1');
 
 -- --------------------------------------------------------
 
@@ -86,7 +95,26 @@ INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `order_status`) V
 (10002, 1, '2024-02-20 22:46:00', '2'),
 (10003, 1, '2024-02-20 22:48:00', '1'),
 (10004, 1, '2024-02-20 22:49:00', '1'),
-(10005, 1, '2024-02-20 22:50:00', '1');
+(10005, 1, '2024-02-20 22:50:00', '1'),
+(10006, 5, '2024-02-21 20:30:00', '1'),
+(10007, 5, '2024-02-21 20:33:00', '2'),
+(10008, 6, '2024-02-21 20:49:00', '2'),
+(10009, 6, '2024-02-21 20:58:00', '1'),
+(10010, 6, '2024-02-21 21:01:00', '1'),
+(10011, 6, '2024-02-21 21:02:00', '1'),
+(10012, 6, '2024-02-21 21:03:00', '1'),
+(10013, 6, '2024-02-21 21:21:00', '2'),
+(10014, 6, '2024-02-21 21:25:00', '2'),
+(10015, 6, '2024-02-21 21:26:00', '2'),
+(10016, 5, '2024-02-21 21:30:00', '1'),
+(10017, 5, '2024-02-21 21:31:00', '1'),
+(10018, 6, '2024-02-21 21:33:00', '1'),
+(10019, 6, '2024-02-21 21:34:00', '1'),
+(10020, 5, '2024-02-21 21:35:00', '1'),
+(10021, 6, '2024-02-21 21:35:00', '1'),
+(10022, 6, '2024-02-21 21:37:00', '1'),
+(10023, 5, '2024-02-21 21:37:00', '1'),
+(10024, 5, '2024-02-21 21:58:00', '1');
 
 -- --------------------------------------------------------
 
@@ -112,7 +140,51 @@ INSERT INTO `orders_detail` (`orderdetail_id`, `order_id`, `product_id`, `order_
 (7, 10002, 5, '1', '46'),
 (8, 10003, 4, '1', '74'),
 (9, 10004, 11, '2', '50'),
-(10, 10005, 8, '2', '53');
+(10, 10005, 8, '2', '53'),
+(11, 10006, 4, '1', '74'),
+(12, 10006, 5, '1', '46'),
+(13, 10006, 6, '1', '36'),
+(14, 10006, 7, '3', '53'),
+(15, 10006, 8, '3', '53'),
+(16, 10006, 9, '2', '46'),
+(17, 10006, 10, '1', '38'),
+(18, 10006, 11, '2', '50'),
+(19, 10007, 4, '1', '74'),
+(20, 10007, 5, '1', '46'),
+(21, 10008, 5, '1', '46'),
+(22, 10009, 2, '31', '80'),
+(23, 10010, 4, '4', '74'),
+(24, 10010, 5, '1', '46'),
+(25, 10010, 11, '88', '50'),
+(26, 10011, 16, '1', '60'),
+(27, 10011, 15, '1', '80'),
+(28, 10011, 12, '2', '80'),
+(29, 10011, 1, '2', '60'),
+(30, 10011, 2, '2', '80'),
+(31, 10012, 2, '98', '80'),
+(32, 10012, 3, '44', '65'),
+(33, 10013, 5, '33', '46'),
+(34, 10013, 11, '3', '50'),
+(35, 10013, 9, '1', '46'),
+(36, 10013, 8, '1', '53'),
+(37, 10014, 4, '1', '74'),
+(38, 10015, 5, '2', '46'),
+(39, 10016, 5, '1', '46'),
+(40, 10017, 6, '1', '36'),
+(41, 10018, 5, '1', '46'),
+(42, 10019, 5, '1', '46'),
+(43, 10020, 7, '1', '53'),
+(44, 10021, 5, '34', '46'),
+(45, 10022, 5, '1', '46'),
+(46, 10023, 6, '1', '36'),
+(47, 10024, 5, '6', '46'),
+(48, 10024, 4, '1', '74'),
+(49, 10024, 6, '1', '36'),
+(50, 10024, 9, '1', '46'),
+(51, 10024, 8, '1', '53'),
+(52, 10024, 7, '3', '53'),
+(53, 10024, 10, '3', '38'),
+(54, 10024, 11, '5', '50');
 
 -- --------------------------------------------------------
 
@@ -137,7 +209,22 @@ CREATE TABLE `payment` (
 
 INSERT INTO `payment` (`pay_id`, `order_id`, `pay_date`, `pay_total`, `pay_bank`, `pay_image`, `pay_time`, `pay_detail`) VALUES
 (7, 10, '2024-02-19', '2000', 'kbank', 'Screenshot 2024-02-17 215456.png', '19:16:00', ''),
-(8, 10002, '2024-02-20', '2000', 'kbank', 'Screenshot 2024-02-17 215456.png', '22:55:00', '');
+(8, 10002, '2024-02-20', '2000', 'kbank', 'Screenshot 2024-02-17 215456.png', '22:55:00', ''),
+(9, 10007, '2024-02-21', '120', 'scb', 'อุปกรณ์.png', '20:33:00', ''),
+(10, 10008, '2024-01-25', '500', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '20:50:00', ''),
+(11, 10014, '2024-02-14', '500', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:25:00', ''),
+(12, 10014, '2024-02-14', '500', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:25:00', ''),
+(13, 10014, '2024-02-14', '500', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:25:00', ''),
+(14, 10014, '2024-02-14', '500', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:25:00', ''),
+(15, 10014, '2024-02-14', '500', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:25:00', ''),
+(16, 10014, '2024-02-14', '500', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:25:00', ''),
+(17, 10014, '2024-02-14', '500', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:25:00', ''),
+(18, 10014, '2024-02-14', '500', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:25:00', ''),
+(19, 10014, '2024-02-14', '500', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:25:00', ''),
+(20, 10014, '2024-02-14', '500', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:25:00', ''),
+(21, 10014, '2024-02-14', '500', 'kbank', '', '21:25:00', ''),
+(22, 10015, '2024-02-15', '1651655151', 'kbank', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:25:00', ''),
+(23, 10013, '2024-02-20', '10', 'scb', '1_Hbyl7XGOd1-o7RBQzyg_CA.png', '21:27:00', '');
 
 -- --------------------------------------------------------
 
@@ -161,7 +248,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `progroup_id`, `product_name`, `product_detail`, `product_price`, `product_num`, `product_status`, `product_image`) VALUES
-(1, 8, 'ชุดช้อนตวง', 'ชุดช้อนตวงสแตนเลส 4 ชิ้น', '60', '50', '1', 'equipment/ชุดช้อนตวง.png'),
+(1, 8, 'ชุดช้อนตวง', 'ชุดช้อนตวงสแตนเลส 4 ชิ้น', '60', '500', '1', 'equipment/ชุดช้อนตวง.png'),
 (2, 8, 'ตะกร้อมือสแตนเลส M', 'ตะกร้อมือสแตนเลส อย่างหนา ไซส์ M', '80', '20', '1', 'equipment/ตะกร้อมือสแตนเลสM.png'),
 (3, 8, 'ตะกร้อมือสแตนเลส S', 'ตะกร้อมือสแตนเลส อย่างหนา ไซส์ S', '65', '20', '1', 'equipment/ตะกร้อมือสแตนเลสS.png'),
 (4, 3, 'T55 French Wheat Flour', 'แป้งอเนกประสงค์ฝรั่งเศส 1kg (แบ่งบรรจุ)', '74', '10', '1', 'flour/T55.png'),
@@ -176,7 +263,9 @@ INSERT INTO `product` (`product_id`, `progroup_id`, `product_name`, `product_det
 (13, 8, 'ตะแกรงร่อนแป้ง', 'ตะแกรงร่อนแป้งสแตนเลส', '55', '8', '1', 'equipment/ตะแกรงร่อนแป้ง.png'),
 (14, 8, 'ถ้วยตวงพลาสติก', 'ถ้วยตวงพลาสติก ขนาด 300 ml', '60', '7', '1', 'equipment/ถ้วยตวงพลาสติก300ml.png'),
 (15, 8, 'ถ้วยตวงพลาสติก', 'ถ้วยตวงพลาสติก ขนาด 600 ml', '80', '2', '1', 'equipment/ถ้วยตวงพลาสติก600ml.png'),
-(16, 8, 'เซ็ตถ้วยตวง 5 ชิ้น', 'ชุดเซ็ตถ้วยตวงพลาสติก 5 ชิ้น (คละสี)', '60', '15', '1', 'equipment/เซ็ตถ้วยตวง.png');
+(16, 8, 'เซ็ตถ้วยตวง 5 ชิ้น', 'ชุดเซ็ตถ้วยตวงพลาสติก 5 ชิ้น (คละสี)', '60', '15', '1', 'equipment/เซ็ตถ้วยตวง.png'),
+(17, 8, 'ชุดช้อนตวง', 'ชุดช้อนตวงสแตนเลส 4 ชิ้น', '60', '50', '1', 'equipment/ชุดช้อนตวง.png'),
+(18, 6, 'Barry Cocoa Powder Plein Arome 1kg', 'ผงโกโก้ Barry Cocoa Powder Arome (Dark Brown#2) 1KG', '540', '100', '1', '');
 
 -- --------------------------------------------------------
 
@@ -286,37 +375,37 @@ ALTER TABLE `producttype`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `employee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อ', AUTO_INCREMENT=10006;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อ', AUTO_INCREMENT=10025;
 
 --
 -- AUTO_INCREMENT for table `orders_detail`
 --
 ALTER TABLE `orders_detail`
-  MODIFY `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อสินค้า', AUTO_INCREMENT=11;
+  MODIFY `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อสินค้า', AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'เลขที่การชำระเงิน', AUTO_INCREMENT=9;
+  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'เลขที่การชำระเงิน', AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `productgroup`
