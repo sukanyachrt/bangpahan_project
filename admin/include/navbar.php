@@ -28,8 +28,8 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span class="fw-medium d-block"><?php echo $_SESSION['Salesperson_Name'] ?></span>
-                                    <small class="text-muted"><?php echo $_SESSION['Salesperson_position'] ?></small>
+                                    <span class="fw-medium d-block"><?php echo $_SESSION['employee_fname']." ".$_SESSION['employee_lname'] ?></span>
+                                    <small class="text-muted"><?php  if($_SESSION['employee_status']==1) { echo "Admin"; } else { echo "-" ;} ?></small>
                                 </div>
                             </div>
                         </a>

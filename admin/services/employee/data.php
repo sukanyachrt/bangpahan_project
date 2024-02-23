@@ -13,69 +13,51 @@ if ($data == "updateEmployStatus") {
     $connect->queryData();
     echo json_encode(["result" => $connect->affected_rows()]);
 } else if ($data == "updateEmployAll") {
-    #update table login
+    
     $post = $_POST;
-    $connect->sql = "UPDATE `login` SET `Login_Code`='" . $post['Login_Code'] . "',
-    `Password_ID`='" . $post['Password_ID'] . "' 
-    WHERE Salesperson_Code='" . $_GET['id'] . "'";
-    $connect->queryData();
-
-    #update table salesperson
-    $connect->sql = "UPDATE `salesperson` SET 
-    `Salesperson_Name`='" . $post['Salesperson_Name'] . "',
-    `Telephone_Number`='" . $post['Telephone_Number'] . "',
-    `Salesperson_position`='" . $post['Salesperson_position'] . "'
-    WHERE Salesperson_Code='" . $_GET['id'] . "'";
+    $connect->sql = "UPDATE `employees` SET 
+    `employee_fname`='" . $post['employee_fname'] . "',
+    `employee_lname`='" . $post['employee_lname'] . "',
+    `employee_username`='" . $post['employee_username'] . "',
+    `employee_password`='" . $post['employee_password'] . "',
+    `employee_status`='" . $post['employee_status'] . "'
+    WHERE employee_id='" . $_GET['id'] . "'";
     $connect->queryData();
 
     echo json_encode(["result" => $connect->affected_rows()]);
+
 } else if ($data == "insertemploy") {
+
     $post = $_POST;
-    $connect->sql = "SELECT	 Salesperson_Code AS maxid FROM salesperson WHERE Salesperson_Code='".$post['Salesperson_Code']."'";
+    $connect->sql = "INSERT INTO `employees`  VALUES
+     (null,
+    '" . $post['employee_fname'] . "',
+    '" . $post['employee_lname'] . "',
+    '" . $post['employee_username'] . "',
+    '" . $post['employee_password'] . "',
+    '" . $post['employee_status'] . "')";
     $connect->queryData();
-    $rsconnect = $connect->fetch_AssocData();
-    $maxid=$rsconnect['maxid'];
-    if(round($rsconnect['maxid'])>0){
-        $maxid=$rsconnect['maxid']+1;
-    }
-    else{
-        $maxid=$post['Salesperson_Code'];
-    }
-    $connect->sql = "INSERT INTO `salesperson` (`Salesperson_Code`, `Salesperson_Name`, `Telephone_Number`, `Salesperson_position`, `Salesperson_status`) VALUES
-     ('" . $maxid. "',
-    '" . $post['Salesperson_Name'] . "',
-    '" . $post['Telephone_Number'] . "',
-    '" . $post['Salesperson_position'] . "',
-    '1')";
-    $connect->queryData();
-
-    $connect->sql = "INSERT INTO `login`(`Login_Code`, `Password_ID`, `Salesperson_Code`) VALUES
-     ( '" . $post['Login_Code'] . "',
-      '" . $post['Password_ID'] . "',
-      '" . $maxid . "'
-    )";
-    $connect->queryData();
-
-
     echo json_encode(["result" => $connect->affected_rows()]);
 } else if ($data == "dataEmployByID") {
-    $connect->sql = "SELECT
-	t_sale.Salesperson_Code,
-	t_sale.Salesperson_Name,
-	t_sale.Telephone_Number,
-	t_sale.Salesperson_position,
-    t_sale.Salesperson_status,
-	t_login.Login_Code,
-	t_login.Password_ID 
-FROM
-	salesperson as t_sale
-	INNER JOIN login as t_login ON t_sale.Salesperson_Code = t_login.Salesperson_Code
-    WHERE t_sale.Salesperson_Code='" . $_GET['id'] . "'";
+    $connect->sql = "SELECT * FROM 	employees 
+    WHERE employee_id='" . $_GET['id'] . "'";
     $connect->queryData();
     $row = $connect->num_rows();
     if ($row > 0) {
         $rsconnect = $connect->fetch_AssocData();
-
+        $employee_id = $rsconnect['employee_id'];
+        if ($employee_id <= 9) {
+            $emp_id = "0000" . $employee_id;
+        } else if ($employee_id >= 10 && $employee_id <= 99) {
+            $emp_id = "000" . $employee_id;
+        } else if ($employee_id >= 100 && $employee_id <= 999) {
+            $emp_id = "00" . $employee_id;
+        } else if ($employee_id >= 1000 && $employee_id <= 9999) {
+            $emp_id = "0" . $employee_id;
+        } else {
+            $emp_id = $employee_id;
+        }
+        $rsconnect['employee_id'] = $emp_id;
         array_push($result, ["status" => "ok", "data" => $rsconnect]);
     } else {
         array_push($result, ["status" => "no"]);
@@ -83,19 +65,22 @@ FROM
 
     echo json_encode($result[0]);
 } else if ($data == "maxIdEmploy") {
-    $connect->sql = "SELECT	MAX( Salesperson_Code ) AS maxid FROM	salesperson";
+    $connect->sql = "SELECT	MAX( employee_id ) AS maxid FROM	employees";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
-    if(round($rsconnect['maxid'])==0){
-        $maxid="61001";
+
+    $employee_id = $rsconnect['maxid'] + 1;
+    if ($employee_id <= 9) {
+        $maxid = "0000" . $employee_id;
+    } else if ($employee_id >= 10 && $employee_id <= 99) {
+        $maxid = "000" . $employee_id;
+    } else if ($employee_id >= 100 && $employee_id <= 999) {
+        $maxid = "00" . $employee_id;
+    } else if ($employee_id >= 1000 && $employee_id <= 9999) {
+        $maxid = "0" . $employee_id;
+    } else {
+        $maxid = $employee_id;
     }
-    else if($rsconnect['maxid']<=61000){
-        $maxid="61001";
-    }
-    else{
-        $maxid=$rsconnect['maxid']+1;
-    }
-   
 
     $result = ["maxid" => $maxid];
     echo json_encode($result);

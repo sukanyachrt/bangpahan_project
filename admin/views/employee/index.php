@@ -10,7 +10,7 @@
                 <?php include("../../include/navbar.php"); ?>
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <h4 class="py-3 mb-0">ข้อมูลพนักงาน</h4>
+                        <h4 class="py-3 mb-0">ข้อมูลผู้ดูแลระบบ</h4>
 
                         <div class="row">
                             <div class="col-lg-12 mb-0 order-0 d-flex justify-content-end">
@@ -38,8 +38,8 @@
                                                     <tr>
                                                         <th class="text-center">รหัสพนักงาน</th>
                                                         <th class="text-center">ชื่อพนักงาน</th>
-                                                        <th class="text-center">เบอร์โทรศัพท์</th>
-                                                        <th class="text-center">ตำแหน่ง</th>
+                                                        <th class="text-center">username</th>
+                                                        <th class="text-center">password</th>
                                                         <th class="text-center">สถานะ</th>
                                                         <th class="text-center">จัดการข้อมูล</th>
                                                     </tr>
