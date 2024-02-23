@@ -47,7 +47,24 @@
                 </li>
             </ul>
         </li>
-
+        <li class="menu-item open" data-menu="general">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-box"></i>
+                <div data-i18n="User interface">จัดการข้อมูลทั่วไป</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item active" data-menu="customer">
+                    <a href="../customer/index.php" class="menu-link">
+                        <div data-i18n="Alerts">ข้อมูลลูกค้า</div>
+                    </a>
+                </li>
+                <li class="menu-item active" data-menu="employee">
+                    <a href="../employee/index.php" class="menu-link">
+                        <div data-i18n="Alerts">ข้อมูลผู้ดูแลระบบ</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
 
 
     </ul>

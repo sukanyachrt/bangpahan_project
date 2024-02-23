@@ -7,58 +7,66 @@ $connect->connectData();
 $data = isset($_GET['v']) ? $_GET['v'] : '';
 $result = array();
 if ($data == "customerStatus") {
-    $connect->sql = "UPDATE customer SET Customer_Status = '0' 
-     WHERE Customer_ID='" . $_GET['id'] . "'";
+    $connect->sql = "UPDATE customers SET c_status = '0' 
+     WHERE customer_id='" . $_GET['id'] . "'";
     $connect->queryData();
     echo json_encode(["result" => $connect->affected_rows()]);
 } else if ($data == "updateCustomerAll") {
-    #update table login
     $post = $_POST;
-   
-    #update table salesperson
-    $connect->sql = "UPDATE `customer` SET 
-    `Customer_Name`='" . $post['Customer_Name'] . "',
-    `Address`='" . $post['Address'] . "',
-    `Telephone_Number`='" . $post['Telephone_Number'] . "',
-    Salesperson_Code ='" . $_SESSION['Salesperson_Code'] . "'
-    WHERE Customer_ID='" . $_GET['id'] . "'";
+    $connect->sql = "UPDATE `customers` SET 
+    `customer_fname`='" . $post['customer_fname'] . "',
+    `customer_lname`='" . $post['customer_lname'] . "',
+    `customer_telephone`='" . $post['customer_telephone'] . "',
+    `c_address`='" . $post['c_address'] . "',
+    `c_email`='" . $post['c_email'] . "',
+    `c_password`='" . $post['c_password'] . "',
+    `customer_username`='" . $post['customer_username'] . "',
+    `c_status`='" . $post['c_status'] . "'
+    WHERE customer_id='" . $_GET['id'] . "'";
     $connect->queryData();
 
     echo json_encode(["result" => $connect->affected_rows()]);
 } else if ($data == "insertcustomer") {
     $post = $_POST;
-   
-    $connect->sql = "INSERT INTO `customer` (`Customer_Name`, `Address`, `Telephone_Number`, `Customer_Status`, `Salesperson_Code`) VALUES 
-    ('" . $post['Customer_Name'] . "',
-    '" . $post['Address'] . "',
-    '" . $post['Telephone_Number'] . "',
-    '1',
-    '" . $_SESSION['Salesperson_Code'] . "'
-    )";
+
+    $connect->sql = "INSERT INTO `customers`  VALUES 
+    (null,
+    '" . $post['customer_fname'] . "',
+    '" . $post['customer_lname'] . "',
+    '" . $post['customer_telephone'] . "',
+    '" . $post['c_address'] . "',
+    '" . $post['c_email'] . "',
+    '" . $post['c_password'] . "',
+    '" . $post['customer_username'] . "',
+    '" . $post['c_status'] . "'
+)";
     $connect->queryData();
 
-    
+
 
 
     echo json_encode(["result" => $connect->affected_rows()]);
 } else if ($data == "dataCustomerByID") {
-    $connect->sql = "SELECT
-    t_cus.Customer_ID,
-    t_cus.Customer_Name,
-    t_cus.Address,
-    t_cus.`Telephone_Number`,
-    t_cus.Customer_Status,
-    t_cus.Salesperson_Code,
-    t_sale.Salesperson_Name 
-    FROM
-    customer AS t_cus
-    INNER JOIN salesperson AS t_sale ON t_cus.Salesperson_Code = t_sale.Salesperson_Code
-    WHERE t_cus.Customer_ID='" . $_GET['id'] . "'";
+    $connect->sql = "SELECT    *     FROM     customers 
+    WHERE customer_id='" . $_GET['id'] . "'";
     $connect->queryData();
     $row = $connect->num_rows();
     if ($row > 0) {
         $rsconnect = $connect->fetch_AssocData();
+        $customer_id = $rsconnect['customer_id'];
+        if ($customer_id <= 9) {
+            $cus_id = "0000" . $customer_id;
+        } else if ($customer_id >= 10 && $customer_id <= 99) {
+            $cus_id = "000" . $customer_id;
+        } else if ($customer_id >= 100 && $customer_id <= 999) {
+            $cus_id = "00" . $customer_id;
+        } else if ($customer_id >= 1000 && $customer_id <= 9999) {
+            $cus_id = "0" . $customer_id;
+        } else {
+            $cus_id = $customer_id;
+        }
 
+        $rsconnect['customer_id'] = $cus_id;
         array_push($result, ["status" => "ok", "data" => $rsconnect]);
     } else {
         array_push($result, ["status" => "no"]);
@@ -66,20 +74,23 @@ if ($data == "customerStatus") {
 
     echo json_encode($result[0]);
 } else if ($data == "maxIdCustomer") {
-    $connect->sql = "SELECT	MAX( Customer_ID )+ 1 AS maxid FROM	customer";
+    $connect->sql = "SELECT	MAX( customer_id  ) AS maxid FROM	customers";
     $connect->queryData();
     $rsconnect = $connect->fetch_AssocData();
-    
-    if($rsconnect['maxid']<=9){
-        $max="00".$rsconnect['maxid'];
+
+    $customer_id = $rsconnect['maxid']+1;
+    if ($customer_id <= 9) {
+        $maxid = "0000" . $customer_id;
+    } else if ($customer_id >= 10 && $customer_id <= 99) {
+        $maxid = "000" . $customer_id;
+    } else if ($customer_id >= 100 && $customer_id <= 999) {
+        $maxid = "00" . $customer_id;
+    } else if ($customer_id >= 1000 && $customer_id <= 9999) {
+        $maxid = "0" . $customer_id;
+    } else {
+        $maxid = $customer_id;
     }
-    else if($rsconnect['maxid']>=10 && $rsconnect['maxid']<=99){
-        $max="0".$rsconnect['maxid'];
-    }
-    else{
-        $max=$rsconnect['maxid'];
-    }
-    $result = ["maxid" => $max];
+    $result = ["maxid" => $maxid];
 
     echo json_encode($result);
 }

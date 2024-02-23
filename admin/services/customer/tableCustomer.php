@@ -1,54 +1,40 @@
 <?php
-include('../Connect_Data.php');
+include('../connect_data.php');
 session_start();
-error_reporting(0);
 $connect = new Connect_Data();
 $connect->connectData();
-$connect->sql = "SELECT
-t_cus.Customer_ID,
-t_cus.Customer_Name,
-t_cus.Address,
-t_cus.`Telephone_Number`,
-t_cus.Customer_Status,
-t_cus.Salesperson_Code,
-t_sale.Salesperson_Name 
-FROM
-customer AS t_cus
-INNER JOIN salesperson AS t_sale ON t_cus.Salesperson_Code = t_sale.Salesperson_Code";
+$connect->sql = "SELECT * FROM customers";
 $connect->queryData();
 while ($rsconnect = $connect->fetch_AssocData()) {
-    if ($rsconnect['Customer_Status'] == 1) {
-        $Customer_Status = '<span class="badge bg-label-success">ใช้งาน</span>';
+    if ($rsconnect['c_status'] == 1) {
+        $c_status = '<span class="badge bg-label-success">ใช้งาน</span>';
     } else {
-        $Customer_Status = '<span class="badge bg-label-danger">ไม่ใช้งาน</span>';
+        $c_status = '<span class="badge bg-label-danger">ไม่ใช้งาน</span>';
     }
 
-    if($rsconnect['Customer_ID']<=9){
-        $Customer_ID="00".$rsconnect['Customer_ID'];
-    }
-    else if($rsconnect['Customer_ID']>=10 && $rsconnect['Customer_ID']<=99){
-        $Customer_ID="0".$rsconnect['Customer_ID'];
-    }
-    else{
-        $Customer_ID=$rsconnect['Customer_ID'];
+    $customer_id = $rsconnect['customer_id'];
+    if ($customer_id <= 9) {
+        $cus_id = "0000" . $customer_id;
+    } else if ($customer_id >= 10 && $customer_id <= 99) {
+        $cus_id = "000" . $customer_id;
+    } else if ($customer_id >= 100 && $customer_id <= 999) {
+        $cus_id = "00" . $customer_id;
+    } else if ($customer_id >= 1000 && $customer_id <= 9999) {
+        $cus_id = "0" . $customer_id;
+    } else {
+        $cus_id = $customer_id;
     }
 
 
     echo '<tr>
-    <td class="text-center">' . $Customer_ID . '</td>
-    <td class="text-center">' . $rsconnect['Customer_Name'] . '</td>
-    <td class="text-center">' . $rsconnect['Address'] . '</td>
-    <td class="text-center">' . $rsconnect['Telephone_Number'] . '</td>
-    <td class="text-center">' . $Customer_Status . '</td>
-    <td class="text-center">';
-    if ($_SESSION['Salesperson_position'] == "admin_sale") {
-        echo '<a  href="show.php?id=' . $rsconnect['Customer_ID'] . '"><button class="border-secondary text-secondary"><i class="bx bx-zoom-in me-1"></i></button></a>
-        <a  href="data.php?id=' . $rsconnect['Customer_ID'] . '"><button class="border-warning text-warning"><i class="bx bx-edit-alt me-1"></i></button></a>
-        <button class="border-danger text-danger"  onclick="updateCustomerStatus(' . $rsconnect['Customer_ID'] . ')"><i class="bx bx-trash me-1"></i></button>';
-    } else {
-        echo ' <a  href="show.php?id=' . $rsconnect['Customer_ID'] . '"><button class="border-secondary text-secondary"><i class="bx bx-zoom-in me-1"></i></button></a>';
-    }
-
-    echo '</td>
+    <td class="text-center">' . $cus_id . '</td>
+    <td class="text-center">' . $rsconnect['customer_fname'] . ' ' . $rsconnect['customer_lname'] . '</td>
+    <td class="text-center">' . $rsconnect['c_address'] . '</td>
+    <td class="text-center">' . $rsconnect['customer_telephone'] . '</td>
+    <td class="text-center">' . $c_status . '</td>
+    <td class="text-center">
+        <a  href="data.php?id='.$rsconnect['customer_id'].'"><button class="border-warning text-warning"><i class="bx bx-edit-alt me-1"></i></button></a>
+        <button class="border-danger text-danger"  onclick="updateCustomerStatus('.$rsconnect['customer_id'].')"><i class="bx bx-trash me-1"></i></button>
+    </td>
     </tr>';
 }

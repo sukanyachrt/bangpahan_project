@@ -20,47 +20,90 @@
                                 <div class="card mb-4">
                                     <div class="card-header d-flex align-items-center justify-content-between">
                                         <h5 class="mb-0">
-                                        <?php if($id=="") { echo "เพิ่มข้อมูล" ;} else { echo "แก้ไขข้อมูล";}?>
+                                            <?php if ($id == "") {
+                                                echo "เพิ่มข้อมูล";
+                                            } else {
+                                                echo "แก้ไขข้อมูล";
+                                            } ?>
                                         </h5>
 
                                     </div>
                                     <div class="card-body">
                                         <form id="customerForm">
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="Customer_ID">รหัสลูกค้า</label>
+                                                <label class="col-sm-2 col-form-label" for="customer_id">รหัสลูกค้า</label>
                                                 <div class="col-sm-10 form-group">
-                                                    <input type="text" class="form-control" ReadOnly id="Customer_ID" name="Customer_ID" placeholder="รหัสลูกค้า" />
+                                                    <input type="text" class="form-control" ReadOnly id="customer_id" name="customer_id" placeholder="รหัสลูกค้า" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="Customer_Name">ชื่อลูกค้า</label>
+                                                <label class="col-sm-2 col-form-label" for="customer_fname">ชื่อลูกค้า</label>
                                                 <div class="col-sm-10 form-group">
-                                                    <input type="text" class="form-control" id="Customer_Name" name="Customer_Name" placeholder="ชื่อลูกค้า" />
+                                                    <input type="text" class="form-control" id="customer_fname" name="customer_fname" placeholder="ชื่อลูกค้า" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="Address">ที่อยู่</label>
+                                                <label class="col-sm-2 col-form-label" for="customer_lname">นามสกุลลูกค้า</label>
+                                                <div class="col-sm-10 form-group">
+                                                    <input type="text" class="form-control" id="customer_lname" name="customer_lname" placeholder="นามสกุลลูกค้า" />
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="c_address">ที่อยู่</label>
                                                 <div class="col-sm-10 form-group">
                                                     <div class="input-group input-group-merge">
-                                                        <textarea class="form-control" id="Address" name="Address" rows="2" placeholder="ที่อยู่"></textarea>
-                                                       
+                                                        <textarea class="form-control" id="c_address" name="c_address" rows="2" placeholder="ที่อยู่"></textarea>
+
                                                     </div>
 
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="Telephone_Number">เบอร์โทรศัพท์</label>
+                                                <label class="col-sm-2 col-form-label" for="customer_telephone">เบอร์โทรศัพท์</label>
                                                 <div class="col-sm-10 form-group">
                                                     <div class="input-group input-group-merge">
-                                                        <input type="text" id="Telephone_Number" name="Telephone_Number" class="form-control" placeholder="เบอร์โทรศัพท์" />
+                                                        <input type="text" id="customer_telephone" name="customer_telephone" class="form-control" placeholder="เบอร์โทรศัพท์" />
 
                                                     </div>
 
                                                 </div>
                                             </div>
-                                            
-                                           
-                                            
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="c_email">Email</label>
+                                                <div class="col-sm-10 form-group">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="email" id="c_email" name="c_email" class="form-control" placeholder="อีเมล" />
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="c_email">Username</label>
+                                                <div class="col-sm-10 form-group">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" id="customer_username" name="customer_username" class="form-control" placeholder="Username" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="c_email">Password</label>
+                                                <div class="col-sm-10 form-group">
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" id="c_password" name="c_password" class="form-control" placeholder="Password" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="c_status">สถานะ </label>
+                                                <div class="col-sm-10 form-group">
+                                                    <select id="c_status" name="c_status" class="form-select">
+                                                        <option value="">เลือกสถานะ</option>
+                                                        <option value="1">ใช้งาน</option>
+                                                        <option value="0">ยกเลิก</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                             <div class="row justify-content-end">
                                                 <div class="col-sm-10">
                                                     <button type="button" id="btnSave" style="display: none;" class="btn btn-primary">บันทึกข้อมูล</button>
@@ -89,12 +132,12 @@
 <script src="../../assets/plugins/toastr/toastr.min.js"></script>
 <script>
     $(function() {
-        
+
         let id = $('#btnSaveEdit').val();
         if (id != "") {
             $('#btnSaveEdit').show()
             getdataCustomer(id)
-           
+
 
         } else {
             //เพิ่มข้อมูลใหม่
@@ -103,31 +146,37 @@
                 url: "../../services/customer/data.php?v=maxIdCustomer",
                 type: "GET",
                 success: function(Res) {
-                    $('#Customer_ID').val(Res.maxid)
+                    $('#customer_id').val(Res.maxid)
                 }
             });
         }
 
     });
-    function getdataCustomer(id){
+
+    function getdataCustomer(id) {
         $.ajax({
-                url: "../../services/customer/data.php?v=dataCustomerByID&id=" + id,
-                type: "GET",
-                success: function(Res) {
-                    if (Res.status == "ok") {
-                        let data = Res.data;
-                        $('#Customer_ID').val(data.Customer_ID)
-                        $('#Customer_Name').val(data.Customer_Name)
-                        $('#Telephone_Number').val(data.Telephone_Number)
-                        $('#Address').val(data.Address)
-                        $('#customerForm').valid();
-                    }
+            url: "../../services/customer/data.php?v=dataCustomerByID&id=" + id,
+            type: "GET",
+            success: function(Res) {
+                if (Res.status == "ok") {
+                    let data = Res.data;
+                    $('#customer_id').val(data.customer_id)
+                    $('#customer_fname').val(data.customer_fname)
+                    $('#customer_lname').val(data.customer_lname)
+                    $('#customer_telephone').val(data.customer_telephone)
+                    $('#c_address').val(data.c_address)
+                    $('#c_email').val(data.c_email)
+                    $('#c_password').val(data.c_password)
+                    $('#customer_username').val(data.customer_username)
+                    $('#c_status').val(data.c_status)
+                    $('#customerForm').valid();
                 }
-            });
+            }
+        });
     }
     //บันทึก
     $("#btnSave").on("click", function() {
-        
+
         if ($('#customerForm').valid()) {
 
             $.ajax({
@@ -172,49 +221,74 @@
     $("#btnReset").on("click", function() {
         location.href = 'index.php';
     })
-    
+
 
     $('#customerForm').validate({
         rules: {
-            Customer_ID: {
+            customer_id: {
                 required: true,
-                alphanumeric: true,
-            },
-            Customer_Name: {
+             },
+            customer_fname: {
                 required: true,
 
             },
-            Telephone_Number: {
+            customer_lname: {
+                required: true,
+            },
+            c_email: {
+                required: true,
+            },
+            c_password: {
+                required: true,
+            },
+            c_status: {
+                required: true,
+            },
+            customer_username: {
+                required: true,
+            },
+            customer_telephone: {
                 required: true,
                 digits: true, // ต้องเป็นตัวเลขเท่านั้น
                 minlength: 10, // ต้องมีจำนวน 10 ตัว
                 maxlength: 10
             },
-            Address: {
+            c_address: {
                 required: true,
             },
-            
-            
+
+
         },
         messages: {
-            Customer_ID: {
+            customer_id: {
                 required: "โปรดกรอกรหัสลูกค้า",
-                alphanumeric: "โปรดกรอกรหัสผู้ใช้งานที่มีเฉพาะตัวเลขและตัวอักษร",
             },
-            Customer_Name: {
-                required: "โปรดกรอกรหัสผ่าน",
-                alphanumeric: "โปรดกรอกรหัสผ่านที่มีเฉพาะตัวเลขและตัวอักษร",
+            customer_fname: {
+                required: "โปรดกรอกชื่อ",
             },
-            Telephone_Number: {
+            customer_lname: {
+                required: "โปรดกรอกนามสกถล",
+            },
+            customer_telephone: {
                 required: "กรุณากรอกเบอร์โทรศัพท์",
                 digits: "กรุณากรอกเฉพาะตัวเลข",
                 minlength: "กรุณากรอกเบอร์โทรศัพท์ที่มีจำนวน 10 ตัว"
             },
-            Address: {
+            c_address: {
                 required: "กรุณากรอกที่อยู่",
             },
-           
-            
+            c_email: {
+                required: "กรุณากรอกอีเมล",
+            },
+            c_password: {
+                required: "กรุณากรอก Password",
+            },
+            customer_username: {
+                required: "กรุณากรอก Username",
+            },
+            c_status: {
+                required: "กรุณาเลือกสถานะ",
+            },
 
         },
         errorElement: 'span',

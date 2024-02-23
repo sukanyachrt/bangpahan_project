@@ -16,22 +16,16 @@
                         <h4 class="py-3 mb-0">ข้อมูลลูกค้า</h4>
 
                         <div class="row">
-                            <?php
-                            if ($_SESSION['Salesperson_position'] == "admin_sale") {
-                            ?>
-                                <div class="col-lg-12 mb-0 order-0 d-flex justify-content-end">
-                                    <a href="data.php" class="btn btn-primary text-white account-image-reset mb-4">
-                                        <i class="bx bx-plus d-block d-sm-none"></i>
-                                        <span class="d-none d-sm-block">
-                                            <i class="bx bx-plus me-1"></i>
 
-                                            เพิ่มข้อมูล</span>
-                                    </a>
-                                </div>
-                            <?php
-                            }
-                            ?>
+                            <div class="col-lg-12 mb-0 order-0 d-flex justify-content-end">
+                                <a href="data.php" class="btn btn-primary text-white account-image-reset mb-4">
+                                    <i class="bx bx-plus d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">
+                                        <i class="bx bx-plus me-1"></i>
 
+                                        เพิ่มข้อมูล</span>
+                                </a>
+                            </div>
 
                             <div class="col-lg-12 mb-4 order-0">
                                 <div class="card">
@@ -129,11 +123,13 @@
     function dataCustomer() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
+            console.log(this.responseText)
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("tbCustomers").innerHTML = this.responseText;
 
             }
         };
+
         xhttp.open("GET", "../../services/customer/tableCustomer.php", true);
         xhttp.send();
     }
