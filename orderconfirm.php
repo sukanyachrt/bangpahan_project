@@ -10,6 +10,7 @@ include("include/header.php");
     .active .bs-stepper-circle {
         background-color: red !important;
     }
+
 </style>
 <?php
 if (!isset($_SESSION['customer_id'])) {
@@ -30,14 +31,12 @@ $connect->connectData();
         <div class="container mt-4">
             <div class="row">
                 <div class="col-12">
+                    
                     <div class="bs-stepper wizard-modern wizard-modern-example">
-                        <div class="bs-stepper-header table-responsive">
-
+                        <div class="bs-stepper-header table-responsive" >
                             <div class="step" data-target="#data-address">
                                 <button type="button" class="step-trigger">
-                                    <span class="bs-stepper-circle">
-                                        <i class="bi bi-plus"></i>
-                                    </span>
+                                    <span class="bs-stepper-circle">1</span>
                                     <span class="text-sm bs-stepper-title">วิธีการจัดส่ง</span>
 
                                 </button>
@@ -248,7 +247,6 @@ $connect->connectData();
                                                                     <p class="order_money">จำนวนเงิน : -</p>
                                                                     <p class="order_date">เวลาการสั่งซื้อ : -</p>
                                                                     <div class="text-center">
-                                                                        <a href="index.php#product" class="btn btn-primary"><i class="bi bi-plus-circle"></i> เลือกสินค้าเพิ่ม</a>
                                                                         <button onclick="orderdetail()" id="orderdetail" class="btn btn-danger"><i class="bi bi-file-earmark-arrow-up-fill"></i> แจ้งชำระเงิน</button>
 
                                                                     </div>
@@ -290,7 +288,7 @@ $connect->connectData();
             })
 
         });
-
+       
         function confirmorder() {
             $.ajax({
                 type: 'POST',
@@ -307,9 +305,10 @@ $connect->connectData();
                 }
             });
         }
-        function orderdetail(){
+
+        function orderdetail() {
             console.log($('#orderdetail').val())
-            window.location.href="orderdetail.php?id="+$('#orderdetail').val()
+            window.location.href = "orderdetail.php?id=" + $('#orderdetail').val()
         }
     </script>
 </body>

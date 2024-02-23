@@ -23,9 +23,24 @@
 
             </a>
         </li>
-        <li class="menu-item active open" data-menu="material">
+        <li class="menu-item" data-menu="Order">
+            <a href="../dashboard/index.php" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                <div data-i18n="Basic">รายการสั่งซื้อทั้งหมด</div>
+               
+            </a>
+        </li>
+        <li class="menu-item" data-menu="Payment">
+            <a href="../payment/index.php" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                <div data-i18n="Basic">ข้อมูลการชำระเงิน</div>
+
+            </a>
+        </li>
+
+        <li class="menu-item" data-menu="material">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-box"></i>
+                <i class="menu-icon tf-icons bx bx-food-menu"></i>
                 <div data-i18n="User interface">จัดการข้อมูลวัตถุดิบ</div>
             </a>
             <ul class="menu-sub">
@@ -47,12 +62,12 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-item open" data-menu="general">
+        <li class="menu-item" data-menu="general">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-box"></i>
+                <i class="menu-icon tf-icons bx bx-grid"></i>
                 <div data-i18n="User interface">จัดการข้อมูลทั่วไป</div>
             </a>
-            <ul class="menu-sub">
+           <ul class="menu-sub">
                 <li class="menu-item active" data-menu="customer">
                     <a href="../customer/index.php" class="menu-link">
                         <div data-i18n="Alerts">ข้อมูลลูกค้า</div>
@@ -65,7 +80,24 @@
                 </li>
             </ul>
         </li>
-
+        <li class="menu-item" data-menu="report">
+            <a href="javascript:void(0)" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="User interface">รายงานต่างๆ</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item active" data-menu="reportsell">
+                    <a href="../product/index.php" class="menu-link">
+                        <div data-i18n="Alerts">รายงานยอดขาย</div>
+                    </a>
+                </li>
+                <li class="menu-item active" data-menu="bestsell">
+                    <a href="../product/index.php" class="menu-link">
+                        <div data-i18n="Alerts">รายงานสินค้าขายดี</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
 
     </ul>
 </aside>
