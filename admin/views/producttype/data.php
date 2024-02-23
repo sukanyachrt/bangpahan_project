@@ -30,7 +30,7 @@ include('../../services/connect_data.php');
 
                                     </div>
                                     <div class="card-body">
-                                        <form id="productForm">
+                                        <form id="producttypeForm">
                                             <div class="row mb-3">
                                                 <label class="col-sm-2 col-form-label" for="protype_id">รหัสประเภทสินค้า</label>
                                                 <div class="col-sm-10 form-group">
@@ -97,11 +97,11 @@ include('../../services/connect_data.php');
             //เพิ่มข้อมูลใหม่
             $('#btnSave').show()
             $.ajax({
-                url: "../../services/product/data.php?v=maxIdProduct",
+                url: "../../services/producttype/data.php?v=maxIdProducttype",
                 type: "GET",
                 success: function(Res) {
                     console.log(Res)
-                    $('#product_id').val(Res.maxid)
+                    $('#protype_id').val(Res.maxid)
                 }
             });
         }
@@ -109,19 +109,15 @@ include('../../services/connect_data.php');
     });
     function getdataEmploy(id){
         $.ajax({
-                url: "../../services/product/data.php?v=dataproduct_id&id=" + id,
+                url: "../../services/producttype/data.php?v=dataproducttype_id&id=" + id,
                 type: "GET",
                 success: function(Res) {
                     if (Res.status == "ok") {
                         let data = Res.data;
-                        $('#product_id').val(data.product_id)
-                        $('#product_name').val(data.product_name)
-                        $('#product_detail').val(data.product_detail)
-                        $('#product_price').val(data.product_price)
-                        $('#product_num').val(data.product_num)
-                        $('#product_status').val(data.product_status)
-                        $('#product_image').val(data.product_image)
-                        $('#progroup_id').val(data.progroup_id)
+                        $('#protype_id').val(data.protype_id)
+                        $('#protype_name').val(data.protype_name)
+                        $('#protype_status').val(data.protype_status)
+
                     }
                 }
             });
@@ -129,14 +125,14 @@ include('../../services/connect_data.php');
     //บันทึก
     $("#btnSave").on("click", function() {
         
-        if ($('#productForm').valid()) {
+        if ($('#producttypeForm').valid()) {
 
             $.ajax({
                 async: true,
-                url: "../../services/product/data.php?v=inserteproduct",
+                url: "../../services/producttype/data.php?v=inserteproducttype",
                 type: "POST",
                 cache: false,
-                data: $('#productForm').serialize(),
+                data: $('#producttypeForm').serialize(),
                 success: function(Res) {
                     console.log(Res);
                     if (Res.result >= 0) {
@@ -151,14 +147,14 @@ include('../../services/connect_data.php');
 
     $("#btnSaveEdit").on("click", function() {
 
-        if ($('#productForm').valid()) {
+        if ($('#producttypeForm').valid()) {
             let id = $('#btnSaveEdit').val();
             $.ajax({
                 async: true,
-                url: "../../services/product/data.php?v=updateProduct&id=" + id,
+                url: "../../services/producttype/data.php?v=updateProducttype&id=" + id,
                 type: "POST",
                 cache: false,
-                data: $('#productForm').serialize(),
+                data: $('#producttypeForm').serialize(),
                 success: function(Res) {
                     console.log(Res);
                     if (Res.result >= 0) {
@@ -175,7 +171,7 @@ include('../../services/connect_data.php');
     })
     
 
-    $('#productForm').validate({
+    $('#producttypeForm').validate({
         rules: {
             product_id: {
                 required: true,

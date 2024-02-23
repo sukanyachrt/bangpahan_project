@@ -93,7 +93,7 @@
 <script src="../../assets/plugins/toastr/toastr.min.js"></script>
 <script>
     $(document).ready(function() {
-        dataEmploy();
+        dataProduct();
         if (sessionStorage.getItem('toastrShown') === 'edit') {
             toastr.success("แก้ไขข้อมูลแล้วค่ะ !");
             sessionStorage.removeItem('toastrShown');
@@ -111,7 +111,7 @@
     });
 
 
-    function dataEmploy() {
+    function dataProduct() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -137,7 +137,7 @@
             url: "../../services/product/data.php?v=updateProductStatus&id=" + objId,
             success: function(response) {
                 if (response.result == 1) {
-                    dataEmploy();
+                    dataProduct();
                     $('#modal_confirm_del').modal('hide');
                 }
             },
