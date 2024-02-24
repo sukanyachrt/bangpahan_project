@@ -91,7 +91,7 @@ while ($rsorder = $order->fetch_AssocData()) {
         </td>
         <td class="text-center">
 
-            <a href="detailpayment.php?id=<?php echo $rsorder['order_id'] ?>" type="button" class="btn btn-outline-danger btn-sm"><i class='bx bxs-eyedropper'></i></a>
+            <a href="detailpayment.php?id=<?php echo $rsorder['order_id'] ?>" type="button" class="btn btn-outline-danger btn-sm"><i class='bx bxs-edit'></i></a>
         </td>
     </tr>
 <?php

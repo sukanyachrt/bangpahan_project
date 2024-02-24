@@ -118,7 +118,7 @@ if ($rsorder['order_status'] == 1) {
                                                                                                 else {
                                                                                                     echo "bg-secondary";
                                                                                                 } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
-                                                                    <i class="bi bi-wallet-fill text-white"></i>
+                                                                    <i class="bx bx-x text-white"></i>
                                                                 </div>
                                                                 <h4 class="mt-3 fs-6">
                                                                     ข้อมูลการขำระเงินไม่ถูกต้อง
@@ -331,7 +331,7 @@ if ($rsorder['order_status'] == 1) {
                                                     </div>
                                                     <div class="col-2 text-start">
                                                         <span class="fw-medium h5">
-                                                            <?= "฿" . number_format($sumAllmoney,2) ?>
+                                                            <?= "฿" . $sumAllmoney ?>
 
                                                         </span>
                                                     </div>

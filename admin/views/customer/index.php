@@ -123,8 +123,7 @@
     function dataCustomer() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
-            console.log(this.responseText)
-            if (this.readyState == 4 && this.status == 200) {
+             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("tbCustomers").innerHTML = this.responseText;
 
             }

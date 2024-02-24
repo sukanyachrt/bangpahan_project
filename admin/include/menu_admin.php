@@ -24,7 +24,7 @@
             </a>
         </li>
         <li class="menu-item" data-menu="Order">
-            <a href="../dashboard/index.php" class="menu-link">
+            <a href="../order/index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-list-ul"></i>
                 <div data-i18n="Basic">รายการสั่งซื้อทั้งหมด</div>
                

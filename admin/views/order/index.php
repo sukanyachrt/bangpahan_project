@@ -10,21 +10,21 @@
                 <?php include("../../include/navbar.php"); ?>
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
-                        <h4 class="py-3 mb-0">ข้อมูลการชำระเงิน</h4>
+                        <h4 class="py-3 mb-0">ข้อมูลรายการสั่งซื้อทั้งหมด</h4>
                         <div class="row">
                             <div class="col-md-12">
 
-                                <!-- <div class="my-3">
+                                <div class="my-3">
                                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                        <a href="?status=All" class="btn btn-outline-secondary <?php if (isset($_GET['status']) && $_GET['status'] == "All") echo "active"; ?>">
+                                        <a href="?status=All" class="btn btn-outline-secondary <?php if (!isset($_GET['status']) || $_GET['status'] == "All") echo "active"; ?>">
                                             <i class="tf-icons bx bx-list-check"></i>
                                             ทั้งหมด
                                         </a>
-                                        <a href="?status=1"  class="btn btn-outline-danger <?php if (isset($_GET['status'])&& $_GET['status'] == "1") echo "active"; ?>">
+                                        <a href="?status=1"  class="btn btn-outline-danger <?php if (isset($_GET['status']) && $_GET['status'] == "1") echo "active"; ?>">
                                             <i class="tf-icons bx bx-credit-card"></i>
                                             รอชำระเงิน
                                         </a>
-                                        <a href="?status=2"  class="btn btn-outline-warning <?php if (!isset($_GET['status']) || $_GET['status'] == "2") echo "active"; ?>">
+                                        <a href="?status=2"  class="btn btn-outline-warning <?php if (isset($_GET['status']) && $_GET['status'] == "2") echo "active"; ?>">
                                             <i class="tf-icons bx bx-check-circle"></i>
                                             รอยืนยันการชำระเงิน
                                         </a>
@@ -41,7 +41,7 @@
                                             ข้อมูลการชำระเงินไม่ถูกต้อง
                                         </a>
                                     </div>
-                                </div> -->
+                                </div>
                                
 
 
@@ -120,7 +120,7 @@
 
             }
         };
-        var status = "<?php echo isset($_GET['status']) ? $_GET['status'] : '2'; ?>";
+        var status = "<?php echo isset($_GET['status']) ? $_GET['status'] : 'All'; ?>";
         xhttp.open("GET", "../../services/payment/tablePayment.php?status=" + status, true);
         xhttp.send();
     }
