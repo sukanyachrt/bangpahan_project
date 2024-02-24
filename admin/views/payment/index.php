@@ -11,18 +11,40 @@
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <h4 class="py-3 mb-0">ข้อมูลการชำระเงิน</h4>
-
                         <div class="row">
                             <div class="col-md-12">
-                                <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                                    <li class="nav-item rounded border border-primary">
-                                        <a class="nav-link <?php if (!isset($_GET['status']) || $_GET['status'] == "2") echo "active"; ?>" href="?status=2"><i class="bx bx-edit me-1"></i>รอตรวจสอบ</a>
 
-                                    </li>
-                                    <li class="nav-item rounded border border-primary mx-2">
-                                        <a class="nav-link <?php if (isset($_GET['status']) && $_GET['status'] == "All") echo "active"; ?>" href="?status=All"><i class="bx bx-list-check me-1"></i> ทั้งหมด</a>
-                                    </li>
-                                </ul>
+                                <div class="my-3">
+                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                        <a href="?status=All" class="btn btn-outline-secondary <?php if (isset($_GET['status']) && $_GET['status'] == "All") echo "active"; ?>">
+                                            <i class="tf-icons bx bx-list-check"></i>
+                                            ทั้งหมด
+                                        </a>
+                                        <a href="?status=1"  class="btn btn-outline-secondary <?php if (!isset($_GET['status'])|| $_GET['status'] == "1") echo "active"; ?>">
+                                            <i class="tf-icons bx bx-credit-card"></i>
+                                            รอชำระเงิน
+                                        </a>
+                                        <a href="?status=2"  class="btn btn-outline-secondary <?php if (isset($_GET['status']) && $_GET['status'] == "2") echo "active"; ?>">
+                                            <i class="tf-icons bx bx-check-circle"></i>
+                                            รอยืนยันการชำระเงิน
+                                        </a>
+                                        <a href="?status=3"  class="btn btn-outline-secondary <?php if (isset($_GET['status']) && $_GET['status'] == "3") echo "active"; ?>">
+                                            <i class="tf-icons bx bxs-backpack"></i>
+                                            รอจัดส่ง
+                                        </a>
+                                        <a href="?status=4"  class="btn btn-outline-secondary <?php if (isset($_GET['status']) && $_GET['status'] == "4") echo "active"; ?>">
+                                            <i class="tf-icons bx bx-check-double"></i>
+                                            จัดส่งเรียบร้อยแล้ว
+                                        </a>
+                                        <a href="?status=0"  class="btn btn-outline-secondary <?php if (isset($_GET['status']) && $_GET['status'] == "0") echo "active"; ?>">
+                                            <i class="tf-icons bx bx-x"></i>
+                                            ข้อมูลการชำระเงินไม่ถูกต้อง
+                                        </a>
+                                    </div>
+                                </div>
+                               
+
+
                             </div>
                         </div>
 

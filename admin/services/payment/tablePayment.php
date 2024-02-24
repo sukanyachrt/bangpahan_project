@@ -80,9 +80,12 @@ while ($rsorder = $order->fetch_AssocData()) {
             } else if ($rsorder['order_status'] == 2) {
                 echo '<span class="badge rounded-pill bg-warning">รอยืนยันการชำระเงิน</span>';
             } else if ($rsorder['order_status'] == 3) {
-                echo '<span class="badge rounded-pill bg-primary">รอจัดส่ง</span>';
+                echo '<span class="badge rounded-pill bg-info">รอจัดส่ง</span>';
             } else if ($rsorder['order_status'] == 4) {
                 echo '<span class="badge rounded-pill bg-success">จัดส่งเรียบร้อยแล้ว</span>';
+            }
+            else if ($rsorder['order_status'] == 0) {
+                echo '<span class="badge rounded-pill bg-dark">ข้อมูลการชำระเงินไม่ถูกต้อง</span>';
             }
             ?>
         </td>

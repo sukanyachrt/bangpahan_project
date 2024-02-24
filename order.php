@@ -120,6 +120,9 @@ $orderdetail->connectData();
                                                 } else if ($rsorder['order_status'] == 4) {
                                                     echo '<span class="badge rounded-pill bg-success">จัดส่งเรียบร้อยแล้ว</span>';
                                                 }
+                                                else if ($rsorder['order_status'] == 0) {
+                                                    echo '<span class="badge rounded-pill bg-dark">ข้อมูลการขำระเงินไม่ถูกต้อง</span>';
+                                                }
                                                 ?>
                                             </td>
                                             <td class="text-center">
