@@ -27,7 +27,7 @@
             <a href="../order/index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-list-ul"></i>
                 <div data-i18n="Basic">รายการสั่งซื้อทั้งหมด</div>
-               
+
             </a>
         </li>
         <li class="menu-item" data-menu="Payment">
@@ -45,35 +45,36 @@
             </a>
             <ul class="menu-sub">
 
-                <li class="menu-item active" data-menu="product">
+                <li class="menu-item active" data-submenu="product">
                     <a href="../product/index.php" class="menu-link">
                         <div data-i18n="Alerts">ข้อมูลสินค้า</div>
                     </a>
                 </li>
-                <li class="menu-item" data-menu="producttype">
+                <li class="menu-item" data-submenu="producttype">
                     <a href="../producttype/index.php" class="menu-link">
                         <div data-i18n="Badges">ข้อมูลประเภทสินค้า</div>
                     </a>
                 </li>
-                <li class="menu-item" data-menu="productgroup">
+                <li class="menu-item" data-submenu="productgroup">
                     <a href="../productgroup/index.php" class="menu-link">
                         <div data-i18n="Badges">ข้อมูลกลุ่มสินค้า</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <li class="menu-item" data-menu="general">
+        
+        <li class="menu-item active open" data-submenu="general">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-grid"></i>
                 <div data-i18n="User interface">จัดการข้อมูลทั่วไป</div>
             </a>
-           <ul class="menu-sub">
-                <li class="menu-item active" data-menu="customer">
+            <ul class="menu-sub active">
+                <li class="menu-item " data-submenu="customer">
                     <a href="../customer/index.php" class="menu-link">
                         <div data-i18n="Alerts">ข้อมูลลูกค้า</div>
                     </a>
                 </li>
-                <li class="menu-item active" data-menu="employee">
+                <li class="menu-item active" data-submenu="employee">
                     <a href="../employee/index.php" class="menu-link">
                         <div data-i18n="Alerts">ข้อมูลผู้ดูแลระบบ</div>
                     </a>
@@ -81,23 +82,13 @@
             </ul>
         </li>
         <li class="menu-item" data-menu="report">
-            <a href="javascript:void(0)" class="menu-link menu-toggle">
+            <a href="../report/index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-file"></i>
-                <div data-i18n="User interface">รายงานต่างๆ</div>
+                <div data-i18n="Basic">รายงานต่างๆ</div>
+
             </a>
-            <ul class="menu-sub">
-                <li class="menu-item active" data-menu="reportsell">
-                    <a href="../product/index.php" class="menu-link">
-                        <div data-i18n="Alerts">รายงานยอดขาย</div>
-                    </a>
-                </li>
-                <li class="menu-item active" data-menu="bestsell">
-                    <a href="../product/index.php" class="menu-link">
-                        <div data-i18n="Alerts">รายงานสินค้าขายดี</div>
-                    </a>
-                </li>
-            </ul>
         </li>
+        
 
     </ul>
 </aside>
@@ -105,8 +96,11 @@
     document.addEventListener('DOMContentLoaded', function() {
         function handleMenuItemClick(clickedItem) {
             document.querySelectorAll('.menu-item').forEach(function(item) {
-                item.classList.remove('active');
+                if (item.classList.contains('menu-item')) {
+                    item.classList.remove('active', 'open');
+                }
             });
+
             clickedItem.classList.add('active');
             sessionStorage.setItem('menu', clickedItem.getAttribute('data-menu'));
         }
@@ -122,8 +116,26 @@
             document.querySelectorAll('.menu-item').forEach(function(item) {
                 if (item.getAttribute('data-menu') === storedMenu) {
                     handleMenuItemClick(item);
+                    var reportsellMenuItem = document.querySelector('[data-menu="' + storedMenu + '"]');
+                    reportsellMenuItem.classList.add('open');
                 }
             });
         }
+
+
+        var storedMenusub = sessionStorage.getItem('submenu');
+        if (storedMenusub) {
+            var reportsellMenuItem = document.querySelector('[data-submenu="' + storedMenusub + '"]');
+            if (reportsellMenuItem) { 
+                reportsellMenuItem.classList.add('active'); 
+            }
+        }
+
+
+        $('[data-submenu]').on('click', function() {
+            var submenuValue = $(this).attr('data-submenu');
+            sessionStorage.setItem('submenu', submenuValue);
+
+        });
     });
 </script>
