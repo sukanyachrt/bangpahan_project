@@ -31,22 +31,11 @@ $connect->connectData();
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <h4 class="py-3 mb-0">Dashboard</h4>
                         <div class="row">
-                            <div class="col-md-8 col-12 order-0   mb-4">
-                                <div class="card">
-                                    <div class="row row-bordered g-0">
-                                        <div class="col-md-12">
-                                            <h5 class="card-header m-0 me-2 pb-3">รายได้รวม</h5>
-                                            <div id="totalIncomeChart" class="px-2"></div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-md-4 col-12 order-0 mb-4">
                                 <div class="card h-100">
                                     <div class="card-header d-flex align-items-center justify-content-between pb-0">
                                         <div class="card-title mb-0">
-                                            <h5 class="m-0 me-2">สถานะรายการสั่งซื้อ</h5>
+                                            <h5 class="m-0 me-2 text-primary">สถานะรายการสั่งซื้อ</h5>
                                         </div>
                                         <div class="dropdown">
                                             <button class="btn p-0" type="button" id="orederStatistics" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -70,8 +59,9 @@ $connect->connectData();
                                                     $rsconnect = $connect->fetch_AssocData();
                                                     echo $rsconnect['numberorder'];
                                                     ?>
+                                                     <span class="h5">รายการ</span>
                                                 </h2>
-                                                <span>Total Orders</span>
+                                               
                                             </div>
                                         </div>
                                         <ul class="p-0 m-0">
@@ -84,7 +74,7 @@ $connect->connectData();
                                                         <h6 class="mb-0">รอชำระเงิน</h6>
                                                     </div>
                                                     <div class="user-progress">
-                                                        <small class="fw-medium">
+                                                        <h4 class="fw-medium">
                                                             <?php
                                                             $connect->sql = "SELECT
                                             count( * ) AS numberorder 
@@ -93,7 +83,7 @@ $connect->connectData();
                                                             $rsconnect = $connect->fetch_AssocData();
                                                             echo $rsconnect['numberorder'];
                                                             ?>
-                                                        </small>
+                                                        </h4>
                                                     </div>
                                                 </div>
                                             </li>
@@ -106,8 +96,8 @@ $connect->connectData();
                                                         <h6 class="mb-0">รอยืนยันการชำระเงิน</h6>
                                                     </div>
                                                     <div class="user-progress">
-                                                        <small class="fw-medium">
-                                                        <?php
+                                                        <h4 class="fw-medium">
+                                                            <?php
                                                             $connect->sql = "SELECT
                                             count( * ) AS numberorder 
                                             FROM   orders WHERE order_status='2'";
@@ -115,7 +105,7 @@ $connect->connectData();
                                                             $rsconnect = $connect->fetch_AssocData();
                                                             echo $rsconnect['numberorder'];
                                                             ?>
-                                                        </small>
+                                                        </h4>
                                                     </div>
                                                 </div>
                                             </li>
@@ -128,8 +118,8 @@ $connect->connectData();
                                                         <h6 class="mb-0">รอจัดส่ง</h6>
                                                     </div>
                                                     <div class="user-progress">
-                                                        <small class="fw-medium">
-                                                        <?php
+                                                        <h4 class="fw-medium">
+                                                            <?php
                                                             $connect->sql = "SELECT
                                             count( * ) AS numberorder 
                                             FROM   orders WHERE order_status='3'";
@@ -137,7 +127,7 @@ $connect->connectData();
                                                             $rsconnect = $connect->fetch_AssocData();
                                                             echo $rsconnect['numberorder'];
                                                             ?>
-                                                        </small>
+                                                        </h4>
                                                     </div>
                                                 </div>
                                             </li>
@@ -150,8 +140,8 @@ $connect->connectData();
                                                         <h6 class="mb-0">จัดส่งเรียบร้อย</h6>
                                                     </div>
                                                     <div class="user-progress">
-                                                        <small class="fw-medium">
-                                                        <?php
+                                                        <h4 class="fw-medium">
+                                                            <?php
                                                             $connect->sql = "SELECT
                                             count( * ) AS numberorder 
                                             FROM   orders WHERE order_status='4'";
@@ -159,7 +149,7 @@ $connect->connectData();
                                                             $rsconnect = $connect->fetch_AssocData();
                                                             echo $rsconnect['numberorder'];
                                                             ?>
-                                                        </small>
+                                                        </h4>
                                                     </div>
                                                 </div>
                                             </li>
@@ -172,8 +162,8 @@ $connect->connectData();
                                                         <h6 class="mb-0">ข้อมูลการชำระเงินไม่ถูกต้อง</h6>
                                                     </div>
                                                     <div class="user-progress">
-                                                        <small class="fw-medium">
-                                                        <?php
+                                                        <h4 class="fw-medium">
+                                                            <?php
                                                             $connect->sql = "SELECT
                                             count( * ) AS numberorder 
                                             FROM   orders WHERE order_status='0'";
@@ -181,7 +171,7 @@ $connect->connectData();
                                                             $rsconnect = $connect->fetch_AssocData();
                                                             echo $rsconnect['numberorder'];
                                                             ?>
-                                                        </small>
+                                                        </h4>
                                                     </div>
                                                 </div>
                                             </li>
@@ -189,6 +179,18 @@ $connect->connectData();
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-8 col-12 order-0   mb-4">
+                                <div class="card">
+                                    <div class="row row-bordered g-0">
+                                        <div class="col-md-12">
+                                            <h5 class="card-header m-0 me-2 pb-3 text-primary">รายได้รวม</h5>
+                                            <div id="totalIncomeChart" class="px-2"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="col-lg-6 col-12 mb-4 order-1">
                                 <div class="card">
                                     <div class="d-flex align-items-end row">

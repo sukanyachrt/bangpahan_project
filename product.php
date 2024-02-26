@@ -48,7 +48,7 @@ include("include/header.php");
                     ?>
                         <div class="col-sm-1 col-md-4 col-lg-4 mb-3">
                             <div class="card ">
-                                <img src="assets/img/<?= $rsconnect['product_image'] ?>" class="card-img-top" alt="..." style="max-height: 250px; object-fit: contain;">
+                                <img src="assets/img/product/<?= $rsconnect['product_image'] ?>" class="card-img-top" alt="..." style="max-height: 250px; object-fit: contain;">
                                 <div class="card-body">
                                     <h5 class="card-title"><?= $rsconnect['product_name'] ?></h5>
                                     <p class="card-text"><?php echo $rsconnect['product_detail'] ?></p>
