@@ -16,7 +16,7 @@
 
         <!-- Components -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">เมนู Admin</span></li>
-        <li class="menu-item" data-menu="dashboard">
+        <li class="menu-item active" data-menu="dashboard">
             <a href="../dashboard/index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-home"></i>
                 <div data-i18n="Basic">Dashboard</div>
@@ -45,7 +45,7 @@
             </a>
             <ul class="menu-sub">
 
-                <li class="menu-item active" data-submenu="product">
+                <li class="menu-item" data-submenu="product">
                     <a href="../product/index.php" class="menu-link">
                         <div data-i18n="Alerts">ข้อมูลสินค้า</div>
                     </a>
@@ -63,18 +63,18 @@
             </ul>
         </li>
         
-        <li class="menu-item active open" data-submenu="general">
+        <li class="menu-item" data-menu="general">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-grid"></i>
                 <div data-i18n="User interface">จัดการข้อมูลทั่วไป</div>
             </a>
-            <ul class="menu-sub active">
+            <ul class="menu-sub">
                 <li class="menu-item " data-submenu="customer">
                     <a href="../customer/index.php" class="menu-link">
                         <div data-i18n="Alerts">ข้อมูลลูกค้า</div>
                     </a>
                 </li>
-                <li class="menu-item active" data-submenu="employee">
+                <li class="menu-item " data-submenu="employee">
                     <a href="../employee/index.php" class="menu-link">
                         <div data-i18n="Alerts">ข้อมูลผู้ดูแลระบบ</div>
                     </a>
@@ -89,7 +89,6 @@
             </a>
         </li>
         
-
     </ul>
 </aside>
 <script>
