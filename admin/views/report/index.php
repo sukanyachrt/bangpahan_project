@@ -141,15 +141,54 @@ $connect->connectData();
                                     </div>
                                 </div>
                             <?php
-                            } ?>
+                            } else if (!isset($_GET['report']) || $_GET['report'] == "bestsell") {
 
+                            ?>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <div id="reportrange" class="pull-left form-control" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
+                                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                                                <span></span> <b class="caret"></b>
+                                            </div>
+                                            <select id="sortOrder" class="form-select">
+                                                <option value="">เรียงลำดับตาม</option>
+                                                <option value="ยอดขายสินค้า (สูงสุด)">ยอดขายสินค้า (สูงสุด)</option>
+                                                <option value="ยอดขายสินค้า (ต่ำสุด)">ยอดขายสินค้า (ต่ำสุด)</option>
+                                                <option value="จำนวนที่ขายได้ (สูงสุด)">จำนวนที่ขายได้ (สูงสุด)</option>
+                                                <option value="จำนวนที่ขายได้ (ต่ำสุด)">จำนวนที่ขายได้ (ต่ำสุด)</option>
+                                            </select>
+                                            <button class="btn btn-outline-primary" onclick="dataBestsell()" type="button">ค้นหาข้อมูล</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-4">
+                                        <div class="table-responsive text-nowrap">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-end">วันที่</th>
+                                                        <th class="text-end">กลุ่มสินค้า</th>
+                                                        <th class="text-end">ชื่อสินค้า</th>
+                                                        <th class="text-end">จำนวน</th>
+                                                        <th class="text-end">ยอดขาย</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbreportbestsell">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <?php } ?>
 
 
 
                         </div>
 
                     </div>
-                    <div class="modal fade" id="modal_confirm_del" tabindex="-1" aria-hidden="true">
+                    <div class="modal fade" id="modal_show" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-sm" role="document">
                             <div class="modal-content">
                                 <div class="modal-header bg-warning ">
@@ -157,13 +196,13 @@ $connect->connectData();
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <h5 class="">ยืนยันการลบข้อมูล ?</h5>
+                                    <h5 class="">เลือกข้อมูลให้ครบถ้วน !</h5>
                                 </div>
                                 <div class="modal-footer text-center">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                         ยกเลิก
                                     </button>
-                                    <button type="button" id="btnIdProduct" onclick="confirmDel_employ()" class="btn btn-warning">ยืนยัน</button>
+                                    <button type="button" id="btnIdProduct" data-bs-dismiss="modal"  class="btn btn-warning">ตกลง</button>
                                 </div>
                             </div>
                         </div>
@@ -185,7 +224,8 @@ $connect->connectData();
 <script src="../../assets/datepicker/locales/bootstrap-datepicker.th.min.js" charset="UTF-8"></script>
 <script src="../../assets/js/moment.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js" integrity="sha512-ZrigzIl5MysuwHc2LaGI+uOLnLDdyYUth+pA5OuJC++WEleiYrztIc7nU/iBRWeP+ufmSGepuJULdgh/K0rIAA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css" integrity="sha512-gp+RQIipEa1X7Sq1vYXnuOW96C4704yI1n0YB9T/KqdvqaEgL6nAuTSrKufUX3VBONq/TPuKiXGLVgBKicZ0KA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script>
     $(document).ready(function() {
         dataYear();
@@ -234,8 +274,11 @@ $connect->connectData();
 
                 }
             };
-            xhttp.open("GET", "../../services/report/tablereportsell_day.php?start=" + startdate+"&end="+enddate, true);
+            xhttp.open("GET", "../../services/report/tablereportsell_day.php?start=" + startdate + "&end=" + enddate, true);
             xhttp.send();
+        }
+        else{
+            $('#modal_show').modal('show')
         }
 
     }
@@ -284,4 +327,53 @@ $connect->connectData();
             return $(this).text() === moment(startDate).format('D');
         }).addClass('active');
     });
+
+    $(function() {
+
+        var start = moment();
+        var end = moment();
+
+        function cb(start, end) {
+            $('#reportrange span').html(start.format('D/MM/YYYY') + ' - ' + end.format('D/MM/YYYY'));
+        }
+
+        $('#reportrange').daterangepicker({
+            startDate: start,
+            endDate: end,
+            ranges: {
+                'วันนี้': [moment(), moment()],
+                'เมื่อวานนี้': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                '7 วันที่ผ่านมา': [moment().subtract(6, 'days'), moment()],
+                '30 วันที่ผ่านมา': [moment().subtract(29, 'days'), moment()],
+                'เดือนนี้': [moment().startOf('month'), moment().endOf('month')],
+                'เดือนที่แล้ว': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+
+            }
+        }, cb);
+
+        cb(start, end);
+
+    });
+
+    function dataBestsell() {
+        console.log($('#reportrange span').html())
+        console.log($('#sortOrder').val())
+        if ($('#sortOrder').val() != "") {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("tbreportbestsell").innerHTML = this.responseText;
+
+                }
+            };
+            xhttp.open("GET", "../../services/report/tablereportbestsell.php?sort="+$('#sortOrder').val()+"&reportrange=" + $('#reportrange span').html(), true);
+            xhttp.send();
+        }
+        else{
+            $('#modal_show').modal('show')
+        }
+
+
+
+    }
 </script>
