@@ -1,6 +1,11 @@
 <?php include("../../include/header.php"); ?>
 <link rel="stylesheet" href="../../assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="../../assets/plugins/toastr/toastr.min.css">
+<?php
+require_once("../../services/connect_data.php");
+$connect = new Connect_Data();
+$connect->connectData();
+?>
 
 <body>
     <div class="layout-wrapper layout-content-navbar">
@@ -19,30 +24,92 @@
                                         <a href="?status=All" class="btn btn-outline-secondary <?php if (!isset($_GET['status']) || $_GET['status'] == "All") echo "active"; ?>">
                                             <i class="tf-icons bx bx-list-check"></i>
                                             ทั้งหมด
+
                                         </a>
-                                        <a href="?status=1"  class="btn btn-outline-danger <?php if (isset($_GET['status']) && $_GET['status'] == "1") echo "active"; ?>">
+                                        <a href="?status=1" class="btn btn-outline-danger <?php if (isset($_GET['status']) && $_GET['status'] == "1") echo "active"; ?>">
                                             <i class="tf-icons bx bx-credit-card"></i>
                                             รอชำระเงิน
+                                            <?php
+                                            $connect->sql = "SELECT
+                                            count( * ) AS numberorder 
+                                            FROM   orders WHERE order_status='1'";
+                                            $connect->queryData();
+                                            $rsconnect = $connect->fetch_AssocData();
+                                            if ($rsconnect['numberorder'] > 0) {
+                                            ?>
+                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                            <?php
+                                            }
+                                            ?>
+
                                         </a>
-                                        <a href="?status=2"  class="btn btn-outline-warning <?php if (isset($_GET['status']) && $_GET['status'] == "2") echo "active"; ?>">
+                                        <a href="?status=2" class="btn btn-outline-warning <?php if (isset($_GET['status']) && $_GET['status'] == "2") echo "active"; ?>">
                                             <i class="tf-icons bx bx-check-circle"></i>
-                                            รอยืนยันการชำระเงิน
+                                            รอยืนยันการชำระเงิน 
+                                            <?php
+                                            $connect->sql = "SELECT
+                                            count( * ) AS numberorder 
+                                            FROM   orders WHERE order_status='2'";
+                                            $connect->queryData();
+                                            $rsconnect = $connect->fetch_AssocData();
+                                            if ($rsconnect['numberorder'] > 0) {
+                                            ?>
+                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                            <?php
+                                            }
+                                            ?>
                                         </a>
-                                        <a href="?status=3"  class="btn btn-outline-info <?php if (isset($_GET['status']) && $_GET['status'] == "3") echo "active"; ?>">
+                                        <a href="?status=3" class="btn btn-outline-info <?php if (isset($_GET['status']) && $_GET['status'] == "3") echo "active"; ?>">
                                             <i class="tf-icons bx bxs-backpack"></i>
                                             รอจัดส่ง
+                                            <?php
+                                            $connect->sql = "SELECT
+                                            count( * ) AS numberorder 
+                                            FROM   orders WHERE order_status='3'";
+                                            $connect->queryData();
+                                            $rsconnect = $connect->fetch_AssocData();
+                                            if ($rsconnect['numberorder'] > 0) {
+                                            ?>
+                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                            <?php
+                                            }
+                                            ?>
                                         </a>
-                                        <a href="?status=4"  class="btn btn-outline-success <?php if (isset($_GET['status']) && $_GET['status'] == "4") echo "active"; ?>">
+                                        <a href="?status=4" class="btn btn-outline-success <?php if (isset($_GET['status']) && $_GET['status'] == "4") echo "active"; ?>">
                                             <i class="tf-icons bx bx-check-double"></i>
                                             จัดส่งเรียบร้อยแล้ว
+                                            <?php
+                                            $connect->sql = "SELECT
+                                            count( * ) AS numberorder 
+                                            FROM   orders WHERE order_status='4'";
+                                            $connect->queryData();
+                                            $rsconnect = $connect->fetch_AssocData();
+                                            if ($rsconnect['numberorder'] > 0) {
+                                            ?>
+                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                            <?php
+                                            }
+                                            ?>
                                         </a>
-                                        <a href="?status=0"  class="btn btn-outline-dark <?php if (isset($_GET['status']) && $_GET['status'] == "0") echo "active"; ?>">
+                                        <a href="?status=0" class="btn btn-outline-dark <?php if (isset($_GET['status']) && $_GET['status'] == "0") echo "active"; ?>">
                                             <i class="tf-icons bx bx-x"></i>
                                             ข้อมูลการชำระเงินไม่ถูกต้อง
+                                            <?php
+                                            $connect->sql = "SELECT
+                                            count( * ) AS numberorder 
+                                            FROM   orders WHERE order_status='0'";
+                                            $connect->queryData();
+                                            $rsconnect = $connect->fetch_AssocData();
+                                            if ($rsconnect['numberorder'] > 0) {
+                                            ?>
+                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                            <?php
+                                            }
+                                            ?>
                                         </a>
                                     </div>
                                 </div>
-                               
+
 
 
                             </div>

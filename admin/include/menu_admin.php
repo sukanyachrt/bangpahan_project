@@ -1,3 +1,8 @@
+<?php
+require_once("../../services/connect_data.php");
+$order = new Connect_Data();
+$order->connectData();
+?>
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="" class="app-brand-link">
@@ -34,6 +39,21 @@
             <a href="../payment/index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-credit-card"></i>
                 <div data-i18n="Basic">ข้อมูลการชำระเงิน</div>
+                <?php
+                $order->sql = "SELECT
+                                            count( * ) AS numberorder 
+                                            FROM   orders WHERE order_status='2'";
+                $order->queryData();
+                $rsorder = $order->fetch_AssocData();
+                
+                if($rsorder['numberorder']>0){
+                    ?>
+                    <div class="badge bg-danger rounded-pill ms-auto"><?=$rsorder['numberorder']?></div>
+                    <?php
+                }
+                ?>
+
+                
 
             </a>
         </li>
@@ -62,7 +82,7 @@
                 </li>
             </ul>
         </li>
-        
+
         <li class="menu-item" data-menu="general">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-grid"></i>
@@ -88,7 +108,7 @@
 
             </a>
         </li>
-        
+
     </ul>
 </aside>
 <script>
@@ -125,8 +145,8 @@
         var storedMenusub = sessionStorage.getItem('submenu');
         if (storedMenusub) {
             var reportsellMenuItem = document.querySelector('[data-submenu="' + storedMenusub + '"]');
-            if (reportsellMenuItem) { 
-                reportsellMenuItem.classList.add('active'); 
+            if (reportsellMenuItem) {
+                reportsellMenuItem.classList.add('active');
             }
         }
 

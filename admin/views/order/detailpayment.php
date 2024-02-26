@@ -1,11 +1,21 @@
 <?php include("../../include/header.php"); ?>
 <link rel="stylesheet" href="../../assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="../../assets/plugins/toastr/toastr.min.css">
-<?php
-include("../../services/connect_data.php");
-$order = new Connect_Data();
-$order->connectData();
-$order->sql = "SELECT
+
+
+
+<body>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <?php include("../../include/checkmenu.php"); ?>
+            <div class="layout-page">
+                <?php include("../../include/navbar.php"); ?>
+                <?php
+
+                require_once("../../services/connect_data.php");
+                $order = new Connect_Data();
+                $order->connectData();
+                $order->sql = "SELECT
 customers.customer_fname,
 customers.customer_lname,
 c_address,
@@ -16,57 +26,50 @@ orders.order_date,
 orders.order_status 
 FROM orders INNER JOIN customers ON orders.customer_id = customers.customer_id  
 WHERE order_id='" . $_GET['id'] . "'";
-$order->queryData();
-$rsorder = $order->fetch_AssocData();
-$order_status = $rsorder['order_status'];
-if ($rsorder['order_id'] <= 9) {
-    $order_id = "0000" . $rsorder['order_id'];
-} else if ($rsorder['order_id'] >= 10 && $rsorder['order_id'] <= 99) {
-    $order_id = "000" . $rsorder['order_id'];
-} else if ($rsorder['order_id'] >= 100 && $rsorder['order_id'] <= 999) {
-    $order_id = "00" . $rsorder['order_id'];
-} else if ($rsorder['order_id'] >= 1000 && $rsorder['order_id'] <= 9999) {
-    $order_id = "0" . $rsorder['order_id'];
-} else {
-    $order_id = $rsorder['order_id'];
-}
-// ยอดที่ต้องชำระจริง
-$orderdetail = new Connect_Data();
-$orderdetail->connectData();
-$orderdetail->sql = "SELECT  sum(orders_detail.order_qty * 	orders_detail.product_price) as sumprice  	FROM 	orders_detail  WHERE order_id ='" . $_GET['id'] . "'";
-$orderdetail->queryData();
-$rsorderdetail = $orderdetail->fetch_AssocData();
-$sumprice = $rsorderdetail['sumprice'];
+                $order->queryData();
+                $rsorder = $order->fetch_AssocData();
 
-// ข้อมูลการชำระเงิน
-$payment = new Connect_Data();
-$payment->connectData();
-$payment->sql = "SELECT * FROM payment WHERE order_id='" . $_GET['id'] . "'";
-$payment->queryData();
-$rspayment = $payment->fetch_AssocData();
+                $order_status = $rsorder['order_status'];
+                if ($rsorder['order_id'] <= 9) {
+                    $order_id = "0000" . $rsorder['order_id'];
+                } else if ($rsorder['order_id'] >= 10 && $rsorder['order_id'] <= 99) {
+                    $order_id = "000" . $rsorder['order_id'];
+                } else if ($rsorder['order_id'] >= 100 && $rsorder['order_id'] <= 999) {
+                    $order_id = "00" . $rsorder['order_id'];
+                } else if ($rsorder['order_id'] >= 1000 && $rsorder['order_id'] <= 9999) {
+                    $order_id = "0" . $rsorder['order_id'];
+                } else {
+                    $order_id = $rsorder['order_id'];
+                }
+                // ยอดที่ต้องชำระจริง
+                $orderdetail = new Connect_Data();
+                $orderdetail->connectData();
+                $orderdetail->sql = "SELECT  sum(orders_detail.order_qty * 	orders_detail.product_price) as sumprice  	FROM 	orders_detail  WHERE order_id ='" . $_GET['id'] . "'";
+                $orderdetail->queryData();
+                $rsorderdetail = $orderdetail->fetch_AssocData();
+                $sumprice = $rsorderdetail['sumprice'];
 
-// สถานะ
+                // ข้อมูลการชำระเงิน
+                $payment = new Connect_Data();
+                $payment->connectData();
+                $payment->sql = "SELECT * FROM payment WHERE order_id='" . $_GET['id'] . "'";
+                $payment->queryData();
+                $rspayment = $payment->fetch_AssocData();
 
-if ($rsorder['order_status'] == 1) {
-    $status_span =    '<span class="badge rounded-pill bg-danger">รอชำระเงิน</span>';
-} else if ($rsorder['order_status'] == 2) {
-    $status_span =    '<span class="badge rounded-pill bg-warning">รอยืนยันการชำระเงิน</span>';
-} else if ($rsorder['order_status'] == 3) {
-    $status_span =   '<span class="badge rounded-pill bg-info">รอจัดส่ง</span>';
-} else if ($rsorder['order_status'] == 4) {
-    $status_span =    '<span class="badge rounded-pill bg-success">จัดส่งเรียบร้อยแล้ว</span>';
-} else if ($rsorder['order_status'] == 0) {
-    $status_span =  '<span class="badge rounded-pill bg-dark">ข้อมูลการชำระเงินไม่ถูกต้อง</span>';
-}
-?>
+                // สถานะ
 
-
-<body>
-    <div class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-            <?php include("../../include/checkmenu.php"); ?>
-            <div class="layout-page">
-                <?php include("../../include/navbar.php"); ?>
+                if ($rsorder['order_status'] == 1) {
+                    $status_span =    '<span class="badge rounded-pill bg-danger">รอชำระเงิน</span>';
+                } else if ($rsorder['order_status'] == 2) {
+                    $status_span =    '<span class="badge rounded-pill bg-warning">รอยืนยันการชำระเงิน</span>';
+                } else if ($rsorder['order_status'] == 3) {
+                    $status_span =   '<span class="badge rounded-pill bg-info">รอจัดส่ง</span>';
+                } else if ($rsorder['order_status'] == 4) {
+                    $status_span =    '<span class="badge rounded-pill bg-success">จัดส่งเรียบร้อยแล้ว</span>';
+                } else if ($rsorder['order_status'] == 0) {
+                    $status_span =  '<span class="badge rounded-pill bg-dark">ข้อมูลการชำระเงินไม่ถูกต้อง</span>';
+                }
+                ?>
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <h4 class="py-3 mb-0">รายละเอียดข้อมูล / <?= $status_span ?></h4>
@@ -192,35 +195,54 @@ if ($rsorder['order_status'] == 1) {
                                         <h5>รายละเอียดข้อมูลการชำระเงิน</h5>
                                         <div class="row">
                                             <div class="col-lg-12 order-0">
-
-                                                <div class="row">
-                                                    <div class="col-lg-12 ">
-                                                        <div class="demo-inline-spacing ">
-                                                            <div class="list-group  border  border-3 border-danger">
-                                                                <a href="javascript:void(0);" class="list-group-item list-group-item-action">ผู้สั่งซื้อ : <?= $rsorder['customer_fname'] . " " . $rsorder['customer_fname'] ?></a>
-                                                                <a href="javascript:void(0);" class="list-group-item list-group-item-action">วันที่สั่งซื้อ : <?= date('d/m/Y', strtotime($rsorder['order_date'])) ?></a>
-                                                                <a href="javascript:void(0);" class="list-group-item list-group-item-action">ธนาคารที่ชำระ : <?= $rspayment['pay_bank'] ?></a>
-                                                                <a href="javascript:void(0);" class="list-group-item list-group-item-action">วันที่ชำระเงิน : <?= date('d/m/Y', strtotime($rspayment['pay_date'])) . " เวลา " . $rspayment['pay_time'] ?></a>
-                                                                <a href="javascript:void(0);" class="list-group-item list-group-item-action">ยอดในการชำระ : <?= $sumprice ?> บาท</a>
-                                                                <a href="javascript:void(0);" class="list-group-item list-group-item-action bg-transparent">
-                                                                    หลักฐานการโอน
-                                                                    <img class="img-fluid d-flex mx-auto mb-4" style="max-width:400px; max-height:400px;" src="../../../assets/img/payment/<?= $rspayment['pay_image'] ?>" alt="Card image cap" />
-                                                                </a>
-                                                                <a href="javascript:void(0);" class="list-group-item list-group-item-action">รายละเอียด : <?= $rspayment['pay_detail'] ?></a>
-                                                                <?php
-                                                                if ($rsorder['order_status'] == 2) {
-                                                                ?>
-                                                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action text-center">
-                                                                        <button class="btn btn-outline-dark m-2" onclick="confirmPayment('NO')">ข้อมูลการชำระไม่ถูกต้อง</button>
-                                                                        <button class="btn btn-warning" onclick="confirmPayment('YES')"> <i class='bx bxs-edit text-white'></i> ยืนยันผลการชำระเงิน</button>
+                                                <?php
+                                                if (isset($rspayment['pay_bank'])) {
+                                                ?>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 ">
+                                                            <div class="demo-inline-spacing ">
+                                                                <div class="list-group  border  border-3 border-danger">
+                                                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">ผู้สั่งซื้อ : <?= $rsorder['customer_fname'] . " " . $rsorder['customer_fname'] ?></a>
+                                                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">วันที่สั่งซื้อ : <?= date('d/m/Y', strtotime($rsorder['order_date'])) ?></a>
+                                                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">ธนาคารที่ชำระ : <?= $rspayment['pay_bank'] ?></a>
+                                                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">วันที่ชำระเงิน : <?= date('d/m/Y', strtotime($rspayment['pay_date'])) . " เวลา " . $rspayment['pay_time'] ?></a>
+                                                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">ยอดในการชำระ : <?= $sumprice ?> บาท</a>
+                                                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action bg-transparent">
+                                                                        หลักฐานการโอน
+                                                                        <img class="img-fluid d-flex mx-auto mb-4" style="max-width:400px; max-height:400px;" src="../../../assets/img/payment/<?= $rspayment['pay_image'] ?>" alt="Card image cap" />
                                                                     </a>
-                                                                <?php } ?>
+                                                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">รายละเอียด : <?= $rspayment['pay_detail'] ?></a>
+                                                                    <?php
+                                                                    if ($rsorder['order_status'] == 2) {
+                                                                    ?>
+                                                                        <a href="javascript:void(0);" class="list-group-item list-group-item-action text-center">
+                                                                            <button class="btn btn-outline-dark m-2" onclick="confirmPayment('NO')">ข้อมูลการชำระไม่ถูกต้อง</button>
+                                                                            <button class="btn btn-warning" onclick="confirmPayment('YES')"> <i class='bx bxs-edit text-white'></i> ยืนยันผลการชำระเงิน</button>
+                                                                        </a>
+                                                                    <?php } ?>
+
+                                                                </div>
 
                                                             </div>
-
                                                         </div>
                                                     </div>
-                                                </div>
+                                                <?php
+                                                } else {
+                                                    ?>
+                                                    <div class="row">
+                                                        <div class="col-lg-12 ">
+                                                            <div class="demo-inline-spacing ">
+                                                                <div class="list-group  border  border-3 border-danger">
+                                                                    <a href="javascript:void(0);" class="list-group-item list-group-item-action">ยังไม่มีการชำระเงิน</a>
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <?php
+                                                }
+                                                ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -395,13 +417,14 @@ if ($rsorder['order_status'] == 1) {
 <script src="../../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="../../assets/plugins/toastr/toastr.min.js"></script>
 <script>
-     $(document).ready(function() {
-        
+    $(document).ready(function() {
+
         if (sessionStorage.getItem('toastrShown') === 'save') {
             toastr.success("บันทึกข้อมูลแล้วค่ะ !");
             sessionStorage.removeItem('toastrShown');
         }
     });
+
     function confirmPayment(typeconfirm) {
         if (typeconfirm == "YES") {
             confirm(3);
@@ -420,7 +443,7 @@ if ($rsorder['order_status'] == 1) {
                     $('#modal_confirm').modal('hide');
                     sessionStorage.setItem('toastrShown', 'save');
                     location.reload();
-                    
+
                 }
             },
             error: function(error) {

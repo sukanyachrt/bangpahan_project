@@ -1,11 +1,19 @@
 <?php include("../../include/header.php"); ?>
 <link rel="stylesheet" href="../../assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="../../assets/plugins/toastr/toastr.min.css">
-<?php
-include("../../services/connect_data.php");
-$order = new Connect_Data();
-$order->connectData();
-$order->sql = "SELECT
+
+
+<body>
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <?php include("../../include/checkmenu.php"); ?>
+            <div class="layout-page">
+                <?php include("../../include/navbar.php"); ?>
+                <?php
+                require_once("../../services/connect_data.php");
+                $order = new Connect_Data();
+                $order->connectData();
+                $order->sql = "SELECT
 customers.customer_fname,
 customers.customer_lname,
 c_address,
@@ -16,57 +24,50 @@ orders.order_date,
 orders.order_status 
 FROM orders INNER JOIN customers ON orders.customer_id = customers.customer_id  
 WHERE order_id='" . $_GET['id'] . "'";
-$order->queryData();
-$rsorder = $order->fetch_AssocData();
-$order_status = $rsorder['order_status'];
-if ($rsorder['order_id'] <= 9) {
-    $order_id = "0000" . $rsorder['order_id'];
-} else if ($rsorder['order_id'] >= 10 && $rsorder['order_id'] <= 99) {
-    $order_id = "000" . $rsorder['order_id'];
-} else if ($rsorder['order_id'] >= 100 && $rsorder['order_id'] <= 999) {
-    $order_id = "00" . $rsorder['order_id'];
-} else if ($rsorder['order_id'] >= 1000 && $rsorder['order_id'] <= 9999) {
-    $order_id = "0" . $rsorder['order_id'];
-} else {
-    $order_id = $rsorder['order_id'];
-}
-// ยอดที่ต้องชำระจริง
-$orderdetail = new Connect_Data();
-$orderdetail->connectData();
-$orderdetail->sql = "SELECT  sum(orders_detail.order_qty * 	orders_detail.product_price) as sumprice  	FROM 	orders_detail  WHERE order_id ='" . $_GET['id'] . "'";
-$orderdetail->queryData();
-$rsorderdetail = $orderdetail->fetch_AssocData();
-$sumprice = $rsorderdetail['sumprice'];
+                $order->queryData();
+                $rsorder = $order->fetch_AssocData();
+                $order_status = $rsorder['order_status'];
+                if ($rsorder['order_id'] <= 9) {
+                    $order_id = "0000" . $rsorder['order_id'];
+                } else if ($rsorder['order_id'] >= 10 && $rsorder['order_id'] <= 99) {
+                    $order_id = "000" . $rsorder['order_id'];
+                } else if ($rsorder['order_id'] >= 100 && $rsorder['order_id'] <= 999) {
+                    $order_id = "00" . $rsorder['order_id'];
+                } else if ($rsorder['order_id'] >= 1000 && $rsorder['order_id'] <= 9999) {
+                    $order_id = "0" . $rsorder['order_id'];
+                } else {
+                    $order_id = $rsorder['order_id'];
+                }
+                // ยอดที่ต้องชำระจริง
+                $orderdetail = new Connect_Data();
+                $orderdetail->connectData();
+                $orderdetail->sql = "SELECT  sum(orders_detail.order_qty * 	orders_detail.product_price) as sumprice  	FROM 	orders_detail  WHERE order_id ='" . $_GET['id'] . "'";
+                $orderdetail->queryData();
+                $rsorderdetail = $orderdetail->fetch_AssocData();
+                $sumprice = $rsorderdetail['sumprice'];
 
-// ข้อมูลการชำระเงิน
-$payment = new Connect_Data();
-$payment->connectData();
-$payment->sql = "SELECT * FROM payment WHERE order_id='" . $_GET['id'] . "'";
-$payment->queryData();
-$rspayment = $payment->fetch_AssocData();
+                // ข้อมูลการชำระเงิน
+                $payment = new Connect_Data();
+                $payment->connectData();
+                $payment->sql = "SELECT * FROM payment WHERE order_id='" . $_GET['id'] . "'";
+                $payment->queryData();
+                $rspayment = $payment->fetch_AssocData();
 
-// สถานะ
+                // สถานะ
 
-if ($rsorder['order_status'] == 1) {
-    $status_span =    '<span class="badge rounded-pill bg-danger">รอชำระเงิน</span>';
-} else if ($rsorder['order_status'] == 2) {
-    $status_span =    '<span class="badge rounded-pill bg-warning">รอยืนยันการชำระเงิน</span>';
-} else if ($rsorder['order_status'] == 3) {
-    $status_span =   '<span class="badge rounded-pill bg-info">รอจัดส่ง</span>';
-} else if ($rsorder['order_status'] == 4) {
-    $status_span =    '<span class="badge rounded-pill bg-success">จัดส่งเรียบร้อยแล้ว</span>';
-} else if ($rsorder['order_status'] == 0) {
-    $status_span =  '<span class="badge rounded-pill bg-dark">ข้อมูลการชำระเงินไม่ถูกต้อง</span>';
-}
-?>
+                if ($rsorder['order_status'] == 1) {
+                    $status_span =    '<span class="badge rounded-pill bg-danger">รอชำระเงิน</span>';
+                } else if ($rsorder['order_status'] == 2) {
+                    $status_span =    '<span class="badge rounded-pill bg-warning">รอยืนยันการชำระเงิน</span>';
+                } else if ($rsorder['order_status'] == 3) {
+                    $status_span =   '<span class="badge rounded-pill bg-info">รอจัดส่ง</span>';
+                } else if ($rsorder['order_status'] == 4) {
+                    $status_span =    '<span class="badge rounded-pill bg-success">จัดส่งเรียบร้อยแล้ว</span>';
+                } else if ($rsorder['order_status'] == 0) {
+                    $status_span =  '<span class="badge rounded-pill bg-dark">ข้อมูลการชำระเงินไม่ถูกต้อง</span>';
+                }
+                ?>
 
-
-<body>
-    <div class="layout-wrapper layout-content-navbar">
-        <div class="layout-container">
-            <?php include("../../include/checkmenu.php"); ?>
-            <div class="layout-page">
-                <?php include("../../include/navbar.php"); ?>
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <h4 class="py-3 mb-0">รายละเอียดข้อมูล / <?= $status_span ?></h4>
@@ -331,7 +332,7 @@ if ($rsorder['order_status'] == 1) {
                                                     </div>
                                                     <div class="col-2 text-start">
                                                         <span class="fw-medium h5">
-                                                            <?= "฿" . number_format($sumAllmoney,2) ?>
+                                                            <?= "฿" . number_format($sumAllmoney, 2) ?>
 
                                                         </span>
                                                     </div>
@@ -395,13 +396,14 @@ if ($rsorder['order_status'] == 1) {
 <script src="../../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="../../assets/plugins/toastr/toastr.min.js"></script>
 <script>
-     $(document).ready(function() {
-        
+    $(document).ready(function() {
+
         if (sessionStorage.getItem('toastrShown') === 'save') {
             toastr.success("บันทึกข้อมูลแล้วค่ะ !");
             sessionStorage.removeItem('toastrShown');
         }
     });
+
     function confirmPayment(typeconfirm) {
         if (typeconfirm == "YES") {
             confirm(3);
@@ -420,7 +422,7 @@ if ($rsorder['order_status'] == 1) {
                     $('#modal_confirm').modal('hide');
                     sessionStorage.setItem('toastrShown', 'save');
                     location.reload();
-                    
+
                 }
             },
             error: function(error) {
