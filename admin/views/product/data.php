@@ -1,11 +1,44 @@
 <?php include("../../include/header.php"); ?>
 <link rel="stylesheet" href="../../assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="../../assets/plugins/toastr/toastr.min.css">
+<style>
+    input[type="file"] {
+        display: block;
+    }
+
+    .imageThumb {
+        max-height: 400px;
+        max-width: 400px;
+        border: 2px solid;
+        padding: 1px;
+        cursor: pointer;
+    }
+
+    .pip {
+        display: inline-block;
+        margin: 10px 10px 0 0;
+    }
+
+    .img-delete {
+        display: block;
+        background: #444;
+        border: 1px solid black;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .img-delete:hover {
+        background: white;
+        color: black;
+    }
+</style>
 <?php
 include('../../services/connect_data.php');
- $connect = new Connect_Data();
- $connect->connectData();
+$connect = new Connect_Data();
+$connect->connectData();
 ?>
+
 <body>
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -24,8 +57,12 @@ include('../../services/connect_data.php');
                                 <div class="card mb-4">
                                     <div class="card-header d-flex align-items-center justify-content-between">
                                         <h5 class="mb-0">
-                                            
-                                            <?php if($id=="") { echo "เพิ่มข้อมูล" ;} else { echo "แก้ไขข้อมูล";}?>
+
+                                            <?php if ($id == "") {
+                                                echo "เพิ่มข้อมูล";
+                                            } else {
+                                                echo "แก้ไขข้อมูล";
+                                            } ?>
                                         </h5>
 
                                     </div>
@@ -44,39 +81,53 @@ include('../../services/connect_data.php');
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="product_detail">รายละเอียดสินค้า	</label>
+                                                <label class="col-sm-2 col-form-label" for="product_detail">รายละเอียดสินค้า </label>
                                                 <div class="col-sm-10 form-group">
                                                     <input type="text" class="form-control" id="product_detail" name="product_detail" placeholder="รายละเอียดสินค้า" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="product_price">ราคาสินค้า	</label>
+                                                <label class="col-sm-2 col-form-label" for="product_price">ราคาสินค้า </label>
                                                 <div class="col-sm-10 form-group">
                                                     <input type="text" class="form-control" id="product_price" name="product_price" placeholder="ราคาสินค้า" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="product_num">จำนวนสินค้า	</label>
+                                                <label class="col-sm-2 col-form-label" for="product_num">จำนวนสินค้า </label>
                                                 <div class="col-sm-10 form-group">
                                                     <input type="text" class="form-control" id="product_num" name="product_num" placeholder="จำนวนสินค้า" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="progroup_id">กลุ่มสินค้า	</label>
+                                                <label class="col-sm-2 col-form-label" for="progroup_id">กลุ่มสินค้า </label>
                                                 <div class="col-sm-10 form-group">
                                                     <select id="progroup_id" name="progroup_id" class="form-select">
                                                         <option value="">เลือกกลุ่มสินค้า</option>
                                                         <?php
                                                         $connect->sql = "SELECT  * FROM  productgroup  WHERE progroup_status ='1'";
                                                         $connect->queryData();
-                                                        while($rsconnect = $connect->fetch_AssocData()){
-                                                            ?>
-                                                            <option value="<?=$rsconnect['progroup_id']?>"><?=$rsconnect['progroup_name']?></option>
-                                                            <?php
+                                                        while ($rsconnect = $connect->fetch_AssocData()) {
+                                                        ?>
+                                                            <option value="<?= $rsconnect['progroup_id'] ?>"><?= $rsconnect['progroup_name'] ?></option>
+                                                        <?php
                                                         }
-                                                        
+
                                                         ?>
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="protype_id">รูปภาพสินค้า </label>
+                                                <div class="col-sm-10 form-group blah" style="display: none;">
+                                                    <span class="pip">
+                                                        <img id="imageThumb" class="imageThumb" src="http://placehold.it/180" alt="your image" />
+                                                        <br /><span class="img-delete" id="imgdelete">Remove</span>
+                                                    </span>
+
+                                                </div>
+                                                <div class="col-sm-10 form-group">
+                                                    <input type="hidden" id="product_imageHidden" name="product_imageHidden" value="">
+                                                    <input type='file' id="product_image" onchange="readURL(this);" accept="image/png, image/gif, image/jpeg, image/jpg" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -89,10 +140,10 @@ include('../../services/connect_data.php');
                                                     </select>
                                                 </div>
                                             </div>
-                                            
-                                            
-                                            
-                                            
+
+
+
+
                                             <div class="row justify-content-end">
                                                 <div class="col-sm-10">
                                                     <button type="button" id="btnSave" style="display: none;" class="btn btn-primary">บันทึกข้อมูล</button>
@@ -121,12 +172,12 @@ include('../../services/connect_data.php');
 <script src="../../assets/plugins/toastr/toastr.min.js"></script>
 <script>
     $(function() {
-        
+
         let id = $('#btnSaveEdit').val();
         if (id != "") {
             $('#btnSaveEdit').show()
-            getdataEmploy(id)
-           
+            getdataProduct(id)
+
 
         } else {
             //เพิ่มข้อมูลใหม่
@@ -142,79 +193,124 @@ include('../../services/connect_data.php');
         }
 
     });
-    function getdataEmploy(id){
+
+    function getdataProduct(id) {
         $.ajax({
-                url: "../../services/product/data.php?v=dataproduct_id&id=" + id,
-                type: "GET",
-                success: function(Res) {
-                    if (Res.status == "ok") {
-                        let data = Res.data;
-                        $('#product_id').val(data.product_id)
-                        $('#product_name').val(data.product_name)
-                        $('#product_detail').val(data.product_detail)
-                        $('#product_price').val(data.product_price)
-                        $('#product_num').val(data.product_num)
-                        $('#product_status').val(data.product_status)
-                        $('#product_image').val(data.product_image)
-                        $('#progroup_id').val(data.progroup_id)
-                    }
+            url: "../../services/product/data.php?v=dataproduct_id&id=" + id,
+            type: "GET",
+            success: function(Res) {
+                console.log(Res)
+                if (Res.status == "ok") {
+                    let data = Res.data;
+                    $('#product_id').val(data.product_id)
+                    $('#product_name').val(data.product_name)
+                    $('#product_detail').val(data.product_detail)
+                    $('#product_price').val(data.product_price)
+                    $('#product_num').val(data.product_num)
+                    $('#product_status').val(data.product_status)
+                    $('#progroup_id').val(data.progroup_id)
+
+                    $('#imageThumb').attr('src', data.progroup_imageLocation);
+                    $('#product_imageHidden').val(data.product_image)
+                    $('.blah').show();
+                    $('#product_image').hide()
+
                 }
-            });
+            }
+        });
     }
     //บันทึก
     $("#btnSave").on("click", function() {
-        
+
         if ($('#productForm').valid()) {
+            if ($('#progroup_image').val() == "") {
 
-            $.ajax({
-                async: true,
-                url: "../../services/product/data.php?v=inserteproduct",
-                type: "POST",
-                cache: false,
-                data: $('#productForm').serialize(),
-                success: function(Res) {
-                    console.log(Res);
-                    if (Res.result >= 0) {
-                        sessionStorage.setItem('toastrShown', 'save');
-                        location.href = 'index.php';
+                toastr.warning("โปรดอัพโหลดรูป !");
+            } else {
+                var fd = new FormData($('#productForm')[0]);
+                var files = $('#product_image')[0].files[0];
+                fd.append('product_image', files);
+                $.ajax({
+                    async: true,
+                    url: "../../services/product/data.php?v=inserteproduct",
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: fd,
+                    success: function(Res) {
+                        console.log(Res);
+                        if (Res.result >= 0) {
+                            sessionStorage.setItem('toastrShown', 'save');
+                            location.href = 'index.php';
 
+                        }
                     }
-                }
-            });
+                });
+            }
+
         }
     });
 
     $("#btnSaveEdit").on("click", function() {
 
         if ($('#productForm').valid()) {
-            let id = $('#btnSaveEdit').val();
-            $.ajax({
-                async: true,
-                url: "../../services/product/data.php?v=updateProduct&id=" + id,
-                type: "POST",
-                cache: false,
-                data: $('#productForm').serialize(),
-                success: function(Res) {
-                    console.log(Res);
-                    if (Res.result >= 0) {
-                        sessionStorage.setItem('toastrShown', 'edit');
-                        location.href = 'index.php';
+            if ($('#product_image').val() == "" && $('#product_imageHidden').val() == "") {
 
+                toastr.warning("โปรดอัพโหลดรูป !");
+            } else {
+                let id = $('#btnSaveEdit').val();
+                var fd = new FormData($('#productForm')[0]);
+                var files = $('#product_image')[0].files[0];
+                fd.append('product_image', files);
+                $.ajax({
+                    async: true,
+                    url: "../../services/product/data.php?v=updateProduct&id=" + id,
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: fd,
+                    success: function(Res) {
+                        console.log(Res);
+                        if (Res.result >= 0) {
+                            sessionStorage.setItem('toastrShown', 'edit');
+                            location.href = 'index.php';
+
+                        }
                     }
-                }
-            });
+                });
+
+            }
+
+            //let id = $('#btnSaveEdit').val();
+            // $.ajax({
+            //     async: true,
+            //     url: "../../services/product/data.php?v=updateProduct&id=" + id,
+            //     type: "POST",
+            //     cache: false,
+            //     data: $('#productForm').serialize(),
+            //     success: function(Res) {
+            //         console.log(Res);
+            //         if (Res.result >= 0) {
+            //             sessionStorage.setItem('toastrShown', 'edit');
+            //             location.href = 'index.php';
+
+            //         }
+            //     }
+            // });
         }
     });
     $("#btnReset").on("click", function() {
         location.href = 'index.php';
     })
-    
+
 
     $('#productForm').validate({
         rules: {
             product_id: {
                 required: true,
-                
+
             },
             product_name: {
                 required: true,
@@ -225,53 +321,53 @@ include('../../services/connect_data.php');
             },
             product_price: {
                 required: true,
-                digits: true, 
-                
+                digits: true,
+
             },
-            product_num :{
+            product_num: {
                 required: true,
-                digits: true, 
+                digits: true,
             },
             product_status: {
                 required: true,
-               
+
             },
             product_image: {
                 required: true,
-               
+
             },
             progroup_id: {
                 required: true,
-               
+
             },
         },
         messages: {
             product_id: {
                 required: "โปรดกรอกรหัสสินค้า",
-                
+
             },
             product_name: {
                 required: "โปรดกรอกชื่อสินค้า",
-                
+
             },
             product_detail: {
                 required: "โปรดกรอกรายละเอียดสินค้า",
-                
+
             },
             product_price: {
                 required: "โปรดกรอกราคาสินค้า",
             },
             product_status: {
                 required: "โปรดเลือกสถานะสินค้า",
-               
+
             },
             product_image: {
                 required: "โปรดอัพโหลดรูปสินค้า",
-              
+
             },
             progroup_id: {
                 required: "โปรดกลุ่มสินค้า",
-               
+
             },
         },
         errorElement: 'span',
@@ -292,4 +388,25 @@ include('../../services/connect_data.php');
     $.validator.addMethod("alphanumeric", function(value, element) {
         return this.optional(element) || /^[a-zA-Z0-9]+$/.test(value);
     }, "โปรดกรอกข้อมูลที่มีเฉพาะตัวเลขและตัวอักษร (a-z)");
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imageThumb').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+            $('.blah').show();
+            $('#product_image').hide()
+        }
+    }
+    $("#imgdelete").click(function() {
+        $('#imageThumb').attr('src', ''); // Clear the image source
+        $('#product_image').val('');
+        $('.blah').hide();
+        $('#product_image').show();
+        $('#product_imageHidden').val('');
+    });
 </script>

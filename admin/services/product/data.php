@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 include('../connect_data.php');
-//error_reporting(0);
+error_reporting(0);
 $connect = new Connect_Data();
 $connect->connectData();
 $data = isset($_GET['v']) ? $_GET['v'] : '';
@@ -63,6 +63,7 @@ FROM
             $product_id = $rsconnect['product_id'];
         }
         $rsconnect['product_id'] = $product_id;
+        $rsconnect['progroup_imageLocation'] =  "../../../assets/img/product/" . $rsconnect['product_image'];
         array_push($result, ["status" => "ok", "data" => $rsconnect]);
     } else {
         array_push($result, ["status" => "no"]);
@@ -73,52 +74,61 @@ FROM
 
 
     #update
-    // if ($_FILES["product_image"]["error"] > 0) {
-    //     $product_image = "";
-    // } else {
-    //     $product_image = $_FILES['product_image']['name'];
-    //     $location = "../../assets/img/payment/" . $product_image;
-    //     $uploadOk = 1;
+    $product_image = '';
+    if ($_FILES["product_image"]["error"] > 0) {
+        $product_image = "";
+    } else {
+        $product_image = $_FILES['product_image']['name'];
+        $location = "../../../assets/img/product/" . $product_image;
+        $uploadOk = 1;
 
-    //     if ($uploadOk == 0) {
-    //     } else {
-    //         /* Upload file */
-    //         if (move_uploaded_file($_FILES['product_image']['tmp_name'], $location)) {
-    //         } else {
-    //         }
-    //     }
-    // }
+        if ($uploadOk == 0) {
+        } else {
+            /* Upload file */
+            if (move_uploaded_file($_FILES['product_image']['tmp_name'], $location)) {
+            } else {
+            }
+        }
+    }
+
+
 
     $post = $_POST;
+    if ($post['product_imageHidden'] != "") {
+        $product_image = $post['product_imageHidden'];
+    }
+
     $connect->sql = "UPDATE `product` SET 
     `progroup_id`='" . $post['progroup_id'] . "',
     `product_name`='" . $post['product_name'] . "',
     `product_detail`='" . $post['product_detail'] . "',
     `product_price`='" . $post['product_price'] . "',
     `product_num`='" . $post['product_num'] . "',
-    `product_status`='" . $post['product_status'] . "'
+    `product_status`='" . $post['product_status'] . "',
+    product_image = '" . $product_image . "'
     WHERE product_id='" . $_GET['id'] . "'";
     $connect->queryData();
 
     echo json_encode(["result" => $connect->affected_rows()]);
+  //  echo json_encode($_POST);
 } else if ($data == "inserteproduct") {
     $post = $_POST;
     $product_image = "";
-    // if ($_FILES["product_image"]["error"] > 0) {
-    //     $product_image = "";
-    // } else {
-    //     $product_image = $_FILES['product_image']['name'];
-    //     $location = "../../assets/img/payment/" . $product_image;
-    //     $uploadOk = 1;
+    if ($_FILES["product_image"]["error"] > 0) {
+        $product_image = "";
+    } else {
+        $product_image = $_FILES['product_image']['name'];
+        $location = "../../../assets/img/product/" . $product_image;
+        $uploadOk = 1;
 
-    //     if ($uploadOk == 0) {
-    //     } else {
-    //         /* Upload file */
-    //         if (move_uploaded_file($_FILES['product_image']['tmp_name'], $location)) {
-    //         } else {
-    //         }
-    //     }
-    // }
+        if ($uploadOk == 0) {
+        } else {
+            /* Upload file */
+            if (move_uploaded_file($_FILES['product_image']['tmp_name'], $location)) {
+            } else {
+            }
+        }
+    }
     $connect->sql = "INSERT INTO `product` VALUES 
     (null,
     '" . $post['progroup_id'] . "',
