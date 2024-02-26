@@ -290,7 +290,7 @@ WHERE order_id='" . $_GET['id'] . "'";
                                                 <div class="card-body">
                                                     <div class="row align-items-start">
                                                         <div class="col-md-2 col-12">
-                                                            <img src="../../../assets/img/<?= $result['product_image'] ?>" alt="" class="avatar-lg rounded">
+                                                            <img src="../../../assets/img/product/<?= $result['product_image'] ?>" alt="" class="avatar-lg rounded">
                                                         </div>
                                                         <div class="col-md-4 col-12 align-self-center overflow-hidden">
                                                             <div>
