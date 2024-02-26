@@ -1,6 +1,38 @@
 <?php include("../../include/header.php"); ?>
 <link rel="stylesheet" href="../../assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="../../assets/plugins/toastr/toastr.min.css">
+<style>
+    input[type="file"] {
+        display: block;
+    }
+
+    .imageThumb {
+        max-height: 400px;
+        max-width: 400px;
+        border: 2px solid;
+        padding: 1px;
+        cursor: pointer;
+    }
+
+    .pip {
+        display: inline-block;
+        margin: 10px 10px 0 0;
+    }
+
+    .img-delete {
+        display: block;
+        background: #444;
+        border: 1px solid black;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .img-delete:hover {
+        background: white;
+        color: black;
+    }
+</style>
 <?php
 include('../../services/connect_data.php');
 $connect = new Connect_Data();
@@ -67,6 +99,21 @@ $connect->connectData();
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="row mb-3">
+                                                <label class="col-sm-2 col-form-label" for="protype_id">รูปภาพสินค้า </label>
+                                                <div class="col-sm-10 form-group blah" style="display: none;">
+                                                    <span class="pip">
+                                                        <img id="imageThumb" class="imageThumb" src="http://placehold.it/180" alt="your image" />
+                                                        <br /><span class="img-delete" id="imgdelete">Remove</span>
+                                                    </span>
+
+                                                </div>
+                                                <div class="col-sm-10 form-group">
+                                                    <input type="hidden" id="progroup_imageHidden" name="progroup_imageHidden" value="">
+                                                    <input type='file' id="progroup_image" onchange="readURL(this);" accept="image/png, image/gif, image/jpeg, image/jpg" />
+                                                </div>
+                                            </div>
+
                                             <div class="row mb-3">
                                                 <label class="col-sm-2 col-form-label" for="progroup_status">สถานะ </label>
                                                 <div class="col-sm-10 form-group">
@@ -142,7 +189,11 @@ $connect->connectData();
                     $('#progroup_id').val(data.progroup_id)
                     $('#progroup_name').val(data.progroup_name)
                     $('#progroup_status').val(data.progroup_status)
-                    $('#protype_id').val(data.protype_id)
+                    $('#protype_id').val(data.protype_id);
+                    $('#imageThumb').attr('src', data.progroup_imageLocation);
+                    $('#progroup_imageHidden').val( data.progroup_image)
+                    $('.blah').show();
+                    $('#progroup_image').hide()
                 }
             }
         });
@@ -151,13 +202,17 @@ $connect->connectData();
     $("#btnSave").on("click", function() {
 
         if ($('#productgroupForm').valid()) {
-
+            var fd = new FormData($('#productgroupForm')[0]);
+            var files = $('#progroup_image')[0].files[0];
+            fd.append('progroup_image', files);
             $.ajax({
                 async: true,
                 url: "../../services/productgroup/data.php?v=inserteproductgroup",
                 type: "POST",
                 cache: false,
-                data: $('#productgroupForm').serialize(),
+                contentType: false,
+                processData: false,
+                data: fd,
                 success: function(Res) {
                     console.log(Res);
                     if (Res.result >= 0) {
@@ -167,6 +222,7 @@ $connect->connectData();
                     }
                 }
             });
+
         }
     });
 
@@ -174,12 +230,17 @@ $connect->connectData();
 
         if ($('#productgroupForm').valid()) {
             let id = $('#btnSaveEdit').val();
+            var fd = new FormData($('#productgroupForm')[0]);
+            var files = $('#progroup_image')[0].files[0];
+            fd.append('progroup_image', files);
             $.ajax({
                 async: true,
                 url: "../../services/productgroup/data.php?v=updateProductgroup&id=" + id,
                 type: "POST",
                 cache: false,
-                data: $('#productgroupForm').serialize(),
+                contentType: false,
+                processData: false,
+                data: fd,
                 success: function(Res) {
                     console.log(Res);
                     if (Res.result >= 0) {
@@ -189,6 +250,8 @@ $connect->connectData();
                     }
                 }
             });
+
+
         }
     });
     $("#btnReset").on("click", function() {
@@ -206,7 +269,7 @@ $connect->connectData();
                 required: true,
 
             },
-           
+
             progroup_status: {
                 required: true,
 
@@ -219,6 +282,7 @@ $connect->connectData();
                 required: true,
 
             },
+
         },
         messages: {
             progroup_id: {
@@ -229,7 +293,7 @@ $connect->connectData();
                 required: "โปรดกรอกชื่อสินค้า",
 
             },
-            
+
             progroup_status: {
                 required: "โปรดเลือกสถานะสินค้า",
 
@@ -242,6 +306,7 @@ $connect->connectData();
                 required: "โปรดกลุ่มสินค้า",
 
             },
+
         },
         errorElement: 'span',
         errorPlacement: function(error, element) {
@@ -261,4 +326,25 @@ $connect->connectData();
     $.validator.addMethod("alphanumeric", function(value, element) {
         return this.optional(element) || /^[a-zA-Z0-9]+$/.test(value);
     }, "โปรดกรอกข้อมูลที่มีเฉพาะตัวเลขและตัวอักษร (a-z)");
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#imageThumb').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+            $('.blah').show();
+            $('#progroup_image').hide()
+        }
+    }
+    $("#imgdelete").click(function() {
+        $('#imageThumb').attr('src', ''); // Clear the image source
+        $('#progroup_image').val('');
+        $('.blah').hide();
+        $('#progroup_image').show();
+        $('#progroup_imageHidden').val('');
+    });
 </script>
