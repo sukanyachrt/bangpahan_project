@@ -191,7 +191,7 @@ $connect->connectData();
                     $('#progroup_status').val(data.progroup_status)
                     $('#protype_id').val(data.protype_id);
                     $('#imageThumb').attr('src', data.progroup_imageLocation);
-                    $('#progroup_imageHidden').val( data.progroup_image)
+                    $('#progroup_imageHidden').val(data.progroup_image)
                     $('.blah').show();
                     $('#progroup_image').hide()
                 }
@@ -202,26 +202,32 @@ $connect->connectData();
     $("#btnSave").on("click", function() {
 
         if ($('#productgroupForm').valid()) {
-            var fd = new FormData($('#productgroupForm')[0]);
-            var files = $('#progroup_image')[0].files[0];
-            fd.append('progroup_image', files);
-            $.ajax({
-                async: true,
-                url: "../../services/productgroup/data.php?v=inserteproductgroup",
-                type: "POST",
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: fd,
-                success: function(Res) {
-                    console.log(Res);
-                    if (Res.result >= 0) {
-                        sessionStorage.setItem('toastrShown', 'save');
-                        location.href = 'index.php';
+            if ($('#progroup_image').val() == "") {
 
+                toastr.warning("โปรดอัพโหลดรูป !");
+            } else {
+                var fd = new FormData($('#productgroupForm')[0]);
+                var files = $('#progroup_image')[0].files[0];
+                fd.append('progroup_image', files);
+                $.ajax({
+                    async: true,
+                    url: "../../services/productgroup/data.php?v=inserteproductgroup",
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: fd,
+                    success: function(Res) {
+                        console.log(Res);
+                        if (Res.result >= 0) {
+                            sessionStorage.setItem('toastrShown', 'save');
+                            location.href = 'index.php';
+
+                        }
                     }
-                }
-            });
+                });
+            }
+
 
         }
     });
@@ -229,27 +235,33 @@ $connect->connectData();
     $("#btnSaveEdit").on("click", function() {
 
         if ($('#productgroupForm').valid()) {
-            let id = $('#btnSaveEdit').val();
-            var fd = new FormData($('#productgroupForm')[0]);
-            var files = $('#progroup_image')[0].files[0];
-            fd.append('progroup_image', files);
-            $.ajax({
-                async: true,
-                url: "../../services/productgroup/data.php?v=updateProductgroup&id=" + id,
-                type: "POST",
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: fd,
-                success: function(Res) {
-                    console.log(Res);
-                    if (Res.result >= 0) {
-                        sessionStorage.setItem('toastrShown', 'edit');
-                        location.href = 'index.php';
+            if ($('#progroup_image').val() == "" && $('#progroup_imageHidden').val()=="") {
 
+                toastr.warning("โปรดอัพโหลดรูป !");
+            } else {
+                let id = $('#btnSaveEdit').val();
+                var fd = new FormData($('#productgroupForm')[0]);
+                var files = $('#progroup_image')[0].files[0];
+                fd.append('progroup_image', files);
+                $.ajax({
+                    async: true,
+                    url: "../../services/productgroup/data.php?v=updateProductgroup&id=" + id,
+                    type: "POST",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: fd,
+                    success: function(Res) {
+                        console.log(Res);
+                        if (Res.result >= 0) {
+                            sessionStorage.setItem('toastrShown', 'edit');
+                            location.href = 'index.php';
+
+                        }
                     }
-                }
-            });
+                });
+
+            }
 
 
         }
