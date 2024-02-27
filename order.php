@@ -51,6 +51,7 @@ $orderdetail->connectData();
                                     <option value="รอยืนยันการชำระเงิน">รอยืนยันการชำระเงิน</option>
                                     <option value="รอจัดส่ง">รอจัดส่ง</option>
                                     <option value="จัดส่งเรียบร้อยแล้ว">จัดส่งเรียบร้อยแล้ว</option>
+                                    <option value="ยกเลิกออเดอร์">ยกเลิกออเดอร์</option>
                                 </select>
                             </div>
 
