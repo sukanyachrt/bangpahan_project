@@ -335,23 +335,23 @@ WHERE order_id='" . $_GET['id'] . "'";
 
                                             <div class="card-body text-end">
                                                 <div class="row">
-                                                    <div class="col-10">
+                                                    <div class="col-md-10 col-6">
                                                         <span class="fw-medium h5">
                                                             สินค้าทั้งหมด :
                                                         </span>
                                                     </div>
-                                                    <div class="col-2 text-start">
+                                                    <div class="col-md-2 col-6 text-start">
                                                         <span class="fw-medium h5">
                                                             <?= $sumorder_qty ?> รายการ
 
                                                         </span>
                                                     </div>
-                                                    <div class="col-10">
+                                                    <div class="col-md-10 col-6">
                                                         <span class="fw-medium h5">
                                                             ยอดรวม :
                                                         </span>
                                                     </div>
-                                                    <div class="col-2 text-start">
+                                                    <div class="col-md-2 col-6 text-start">
                                                         <span class="fw-medium h5">
                                                             <?= "฿" . $sumAllmoney ?>
 

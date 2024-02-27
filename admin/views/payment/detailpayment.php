@@ -312,27 +312,27 @@ WHERE order_id='" . $_GET['id'] . "'";
                                     <div class="col-12">
                                         <div class="card border shadow-none">
 
-                                            <div class="card-body text-end">
+                                        <div class="card-body text-end">
                                                 <div class="row">
-                                                    <div class="col-10">
+                                                    <div class="col-md-10 col-6">
                                                         <span class="fw-medium h5">
                                                             สินค้าทั้งหมด :
                                                         </span>
                                                     </div>
-                                                    <div class="col-2 text-start">
+                                                    <div class="col-md-2 col-6 text-start">
                                                         <span class="fw-medium h5">
                                                             <?= $sumorder_qty ?> รายการ
 
                                                         </span>
                                                     </div>
-                                                    <div class="col-10">
+                                                    <div class="col-md-10 col-6">
                                                         <span class="fw-medium h5">
                                                             ยอดรวม :
                                                         </span>
                                                     </div>
-                                                    <div class="col-2 text-start">
+                                                    <div class="col-md-2 col-6 text-start">
                                                         <span class="fw-medium h5">
-                                                            <?= "฿" . number_format($sumAllmoney, 2) ?>
+                                                            <?= "฿" . $sumAllmoney ?>
 
                                                         </span>
                                                     </div>
@@ -367,7 +367,7 @@ WHERE order_id='" . $_GET['id'] . "'";
                     <div class="modal fade" id="modal_confirm" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-sm" role="document">
                             <div class="modal-content">
-                                <div class="modal-header bg-warning ">
+                                <div class="modal-header bg-dark ">
                                     <h4 class="modal-title text-white" id="exampleModalLabel2">แจ้งเตือน</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
@@ -378,7 +378,7 @@ WHERE order_id='" . $_GET['id'] . "'";
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                         ยกเลิก
                                     </button>
-                                    <button type="button" id="btnIdEmploy" onclick="confirm('0')" class="btn btn-warning">ยืนยัน</button>
+                                    <button type="button" id="btnIdEmploy" onclick="confirm('0')" class="btn btn-dark">ยืนยัน</button>
                                 </div>
                             </div>
                         </div>
@@ -421,7 +421,7 @@ WHERE order_id='" . $_GET['id'] . "'";
                 if (response.result == 1) {
                     $('#modal_confirm').modal('hide');
                     sessionStorage.setItem('toastrShown', 'save');
-                    location.reload();
+                    window.location="detailpayment.php?id=<?php echo $_GET['id'] ?>"
 
                 }
             },

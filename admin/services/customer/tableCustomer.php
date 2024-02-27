@@ -3,13 +3,17 @@ include('../connect_data.php');
 session_start();
 $connect = new Connect_Data();
 $connect->connectData();
+
+$order = new Connect_Data();
+$order->connectData();
+
 $connect->sql = "SELECT * FROM customers";
 $connect->queryData();
 while ($rsconnect = $connect->fetch_AssocData()) {
     if ($rsconnect['c_status'] == 1) {
-        $c_status = '<span class="badge bg-label-success">ใช้งาน</span>';
+        $c_status = '<span class="badge bg-label-success">ยังคงเป็นสมาชิก</span>';
     } else {
-        $c_status = '<span class="badge bg-label-danger">ไม่ใช้งาน</span>';
+        $c_status = '<span class="badge bg-label-danger">ยกเลิกการเป็นสมาชิก</span>';
     }
 
     $customer_id = $rsconnect['customer_id'];
@@ -26,12 +30,26 @@ while ($rsconnect = $connect->fetch_AssocData()) {
     }
 
 
+    // จำนวนออเดอร์ที่ลูกค้าสั่ง
+    $order->sql = "SELECT	COUNT(*) as numOrder FROM	orders WHERE customer_id='".$customer_id."'	GROUP BY customer_id";
+    $order->queryData();
+    $row = $order->num_rows();
+    $numorder="";
+    if ($row > 0) {
+        $rsorder = $order->fetch_AssocData();
+        $numorder=$rsorder['numOrder'];
+    }
+   
+
+
+
     echo '<tr>
     <td class="text-center">' . $cus_id . '</td>
     <td class="text-center">' . $rsconnect['customer_fname'] . ' ' . $rsconnect['customer_lname'] . '</td>
     <td class="text-center">' . $rsconnect['c_address'] . '</td>
     <td class="text-center">' . $rsconnect['customer_telephone'] . '</td>
     <td class="text-center">' . $c_status . '</td>
+    <td class="text-center">' . $numorder. '</td>
     <td class="text-center">
         <a  href="data.php?id='.$rsconnect['customer_id'].'"><button class="border-warning text-warning"><i class="bx bx-edit-alt me-1"></i></button></a>
         <button class="border-danger text-danger"  onclick="updateCustomerStatus('.$rsconnect['customer_id'].')"><i class="bx bx-trash me-1"></i></button>
