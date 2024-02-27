@@ -2,12 +2,12 @@
 <link rel="stylesheet" href="../../assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="../../assets/plugins/toastr/toastr.min.css">
 <link rel="stylesheet" href="../../assets/plugins/fontawesome-free/css/all.min.css">
-
-<?php
-include("../../services/connect_data.php");
-$connect = new Connect_Data();
-$connect->connectData();
-?>
+<style>
+    body {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+</style>
 
 <body>
     <div class="layout-wrapper layout-content-navbar">
@@ -15,6 +15,12 @@ $connect->connectData();
             <?php include("../../include/checkmenu.php"); ?>
             <div class="layout-page">
                 <?php include("../../include/navbar.php"); ?>
+                <?php
+                require_once("../../services/connect_data.php");
+                $connect = new Connect_Data();
+                $connect->connectData();
+                ?>
+
                 <div class="content-wrapper">
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <h4 class="py-3 mb-0">รายงาน</h4>
@@ -59,8 +65,13 @@ $connect->connectData();
                                         </ul>
                                         <div class="tab-content">
                                             <div class="tab-pane fade show active" id="navs-top-year" role="tabpanel">
+                                                <div class="row mb-2">
+                                                    <div class="col-md-12 text-md-end">
+                                                        <button class="btn btn-dark text-end" onclick="printReportofYear()">Print</button>
+                                                    </div>
+                                                </div>
                                                 <div class="table-responsive text-nowrap">
-                                                    <table class="table table-bordered">
+                                                    <table class="table table-bordered tbreportsell_year" id="toPrint">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center">ปี</th>
@@ -94,8 +105,13 @@ $connect->connectData();
 
                                                     </select>
                                                 </div>
+                                                <div class="row mb-2">
+                                                    <div class="col-md-12 text-md-end">
+                                                        <button class="btn btn-dark text-end" onclick="printReportofMonth()">Print</button>
+                                                    </div>
+                                                </div>
                                                 <div class="table-responsive text-nowrap">
-                                                    <table class="table table-bordered">
+                                                    <table class="table table-bordered tbreportsell_month">
                                                         <thead>
                                                             <tr>
                                                                 <th class="text-center">ปี</th>
@@ -120,9 +136,14 @@ $connect->connectData();
                                                         </div>
 
                                                     </div>
-                                                    <div class="col-12 mt-4">
+
+                                                    <div class="col-md-12 text-md-end mt-4">
+                                                        <button class="btn btn-dark text-end" onclick="printReportofDay()">Print</button>
+                                                    </div>
+
+                                                    <div class="col-12 mt-2">
                                                         <div class="table-responsive text-nowrap">
-                                                            <table class="table table-bordered">
+                                                            <table class="table table-bordered tbreportsell_day">
                                                                 <thead>
                                                                     <tr>
                                                                         <th class="text-end">วันที่</th>
@@ -162,9 +183,13 @@ $connect->connectData();
                                         </div>
                                     </div>
 
-                                    <div class="col-12 mt-4">
+                                    <div class="col-md-12 text-md-end mt-4">
+                                        <button class="btn btn-dark text-end" onclick="printReportofbestsell()">Print</button>
+                                    </div>
+
+                                    <div class="col-12 mt-2">
                                         <div class="table-responsive text-nowrap">
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered tbreportbestsell">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-end">วันที่</th>
@@ -202,7 +227,7 @@ $connect->connectData();
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                         ยกเลิก
                                     </button>
-                                    <button type="button" id="btnIdProduct" data-bs-dismiss="modal"  class="btn btn-warning">ตกลง</button>
+                                    <button type="button" id="btnIdProduct" data-bs-dismiss="modal" class="btn btn-warning">ตกลง</button>
                                 </div>
                             </div>
                         </div>
@@ -276,8 +301,7 @@ $connect->connectData();
             };
             xhttp.open("GET", "../../services/report/tablereportsell_day.php?start=" + startdate + "&end=" + enddate, true);
             xhttp.send();
-        }
-        else{
+        } else {
             $('#modal_show').modal('show')
         }
 
@@ -366,14 +390,119 @@ $connect->connectData();
 
                 }
             };
-            xhttp.open("GET", "../../services/report/tablereportbestsell.php?sort="+$('#sortOrder').val()+"&reportrange=" + $('#reportrange span').html(), true);
+            xhttp.open("GET", "../../services/report/tablereportbestsell.php?sort=" + $('#sortOrder').val() + "&reportrange=" + $('#reportrange span').html(), true);
             xhttp.send();
-        }
-        else{
+        } else {
             $('#modal_show').modal('show')
         }
+    }
+    // print
+    function printReportofYear() {
+
+        var tableContents = $('.tbreportsell_year').prop('outerHTML');
+        var additionalContent = '<h5 class="text-center">รายงานยอดขายสรุปรายปี</h5>';
+        var contentToPrint = additionalContent + tableContents;
+        var printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write('<html>');
+        printWindow.document.write('<link rel="preconnect" href="https://fonts.googleapis.com" />');
+        printWindow.document.write('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />');
+        printWindow.document.write('<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/css/demo.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />');
+        printWindow.document.write('<style>body {        -webkit-print-color-adjust: exact !important;        print-color-adjust: exact !important;    }</style>');
+        printWindow.document.write('<head><title>รายงานยอดขายสรุปรายเดือน</title></head><body>');
+        printWindow.document.write(contentToPrint);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+
+    }
 
 
+    function printReportofMonth() {
+        var tableContents = $('.tbreportsell_month').prop('outerHTML');
+        var additionalContent = '<h5 class="text-center">รายงานยอดขายสรุปรายเดือน</h5>';
+        var contentToPrint = additionalContent + tableContents;
+        var printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write('<html>');
+        printWindow.document.write('<link rel="preconnect" href="https://fonts.googleapis.com" />');
+        printWindow.document.write('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />');
+        printWindow.document.write('<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/css/demo.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />');
+        printWindow.document.write('<style>body {        -webkit-print-color-adjust: exact !important;        print-color-adjust: exact !important;    }</style>');
+        printWindow.document.write('<head><title>รายงานยอดขายสรุปรายเดือน</title></head><body>');
+        printWindow.document.write(contentToPrint);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+    }
+
+
+
+    function printReportofDay() {
+
+        var tableContents = $('.tbreportsell_day').prop('outerHTML');
+        var additionalContent = '<h5 class="text-center">รายงานยอดขายสรุปรายวัน</h5>';
+        var contentToPrint = additionalContent + tableContents;
+        var printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write('<html>');
+        printWindow.document.write('<link rel="preconnect" href="https://fonts.googleapis.com" />');
+        printWindow.document.write('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />');
+        printWindow.document.write('<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/css/demo.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />');
+        printWindow.document.write('<style>body {        -webkit-print-color-adjust: exact !important;        print-color-adjust: exact !important;    }</style>');
+        printWindow.document.write('<head><title>รายงานยอดขายสรุปรายเดือน</title></head><body>');
+        printWindow.document.write(contentToPrint);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
+    }
+
+    
+    function printReportofbestsell(){
+
+        var tableContents = $('.tbreportbestsell').prop('outerHTML');
+        var additionalContent = '<h5 class="text-center">รายงานสินค้าขายดี</h5>';
+        var contentToPrint = additionalContent + tableContents;
+        var printWindow = window.open('', '_blank');
+        printWindow.document.open();
+        printWindow.document.write('<html>');
+        printWindow.document.write('<link rel="preconnect" href="https://fonts.googleapis.com" />');
+        printWindow.document.write('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />');
+        printWindow.document.write('<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/css/demo.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />');
+        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />');
+        printWindow.document.write('<style>body {        -webkit-print-color-adjust: exact !important;        print-color-adjust: exact !important;    }</style>');
+        printWindow.document.write('<head><title>รายงานสินค้าขายดี</title></head><body>');
+        printWindow.document.write(contentToPrint);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.print();
+        printWindow.close();
 
     }
 </script>

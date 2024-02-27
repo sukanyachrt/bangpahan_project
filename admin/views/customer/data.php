@@ -82,7 +82,7 @@
                                                 <label class="col-sm-2 col-form-label" for="c_email">Username</label>
                                                 <div class="col-sm-10 form-group">
                                                     <div class="input-group input-group-merge">
-                                                        <input type="text" id="customer_username" name="customer_username" class="form-control" placeholder="Username" />
+                                                        <input type="<?php if(!isset($_GET['id'])) { echo "text";} else { echo "password"; } ?>" id="customer_username" name="customer_username" class="form-control" placeholder="Username" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -90,7 +90,7 @@
                                                 <label class="col-sm-2 col-form-label" for="c_email">Password</label>
                                                 <div class="col-sm-10 form-group">
                                                     <div class="input-group input-group-merge">
-                                                        <input type="text" id="c_password" name="c_password" class="form-control" placeholder="Password" />
+                                                        <input type="<?php if(!isset($_GET['id'])) { echo "text";} else { echo "password"; } ?>" id="c_password" name="c_password" class="form-control" placeholder="Password" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,7 +108,7 @@
                                                 <div class="col-sm-10">
                                                     <button type="button" id="btnSave" style="display: none;" class="btn btn-primary">บันทึกข้อมูล</button>
                                                     <button type="button" id="btnSaveEdit" style="display: none;" value="<?php echo $id ?>" class="btn btn-primary">บันทึกการแก้ไข</button>
-                                                    <button type="button" id="btnReset" class="btn btn-outline-secondary">กลับ</button>
+                                                    <button type="button" id="btnReset" class="btn btn-secondary">กลับ</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -135,7 +135,7 @@
 
         let id = $('#btnSaveEdit').val();
         if (id != "") {
-            $('#btnSaveEdit').show()
+            $('#btnSaveEdit').hide()
             getdataCustomer(id)
 
 

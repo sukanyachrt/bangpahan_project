@@ -320,7 +320,7 @@ if ($_GET['id'] <= 9) {
                             <div class="card-body">
                                 <div class="row align-items-start">
                                     <div class="col-md-2 col-12">
-                                        <img src="assets/img/<?= $result['product_image'] ?>" alt="" class="avatar-lg rounded">
+                                        <img src="assets/img/product/<?= $result['product_image'] ?>" alt="" class="avatar-lg rounded">
                                     </div>
                                     <div class="col-md-4 col-12 align-self-center overflow-hidden">
                                         <div>
@@ -419,6 +419,7 @@ if ($_GET['id'] <= 9) {
         if (sessionStorage.getItem('toastrShown') === 'save') {
             toastr.success("บันทึกข้อมูลการชำระเงินแล้วค่ะ !");
             sessionStorage.removeItem('toastrShown');
+           
         }
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
@@ -464,7 +465,7 @@ if ($_GET['id'] <= 9) {
                     alphanumeric: "โปรดกรอกตัวเลขเท่านั้น",
                 },
                 pay_image: {
-                    required: "โปนดอัพโหลดหลักฐานการโอน",
+                    required: "โปรดอัพโหลดหลักฐานการโอน",
                 },
             },
             errorElement: 'span',
@@ -494,7 +495,7 @@ if ($_GET['id'] <= 9) {
                         console.log(response)
                         if (response.status == "ok") {
                             sessionStorage.setItem('toastrShown', 'save');
-                            location.reload();
+                            window.location="orderdetail.php?id=<?php echo $_GET['id'] ?>"
                         }
                     },
                     error: function(error) {
