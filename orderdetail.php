@@ -4,8 +4,12 @@ include("include/header.php");
 <link rel="stylesheet" href="assets/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="assets/toastr/toastr.min.css">
 <style>
-     #toast-container>.toast-success {
+    #toast-container>.toast-success {
         background-color: green;
+    }
+
+    .bg-warning-2 {
+        background-color: #ECB159 !important;
     }
 </style>
 <?php
@@ -43,6 +47,28 @@ if ($_GET['id'] <= 9) {
                     $rsconnect = $product->fetch_AssocData();
                     $order_status = $rsconnect['order_status'];
                     ?>
+                    <?php if ($order_status == 0 && !isset($_GET['status'])) {
+                    ?>
+                        <div class="row">
+                            <div class="col-12">
+
+                                <div class="card radius-10 border-top  border-3 border-danger ">
+                                    <div class="card-header ">
+                                        <h6>ข้อมูลการชำระเงินไม่ถูกต้อง</h6>
+                                    </div>
+
+                                    <div class="card-body py-4">
+
+                                        <div class="col-md-12 text-center">
+                                            <button type="submit" class="btn btn-dark" onclick="confirmCancelorder()">ยกเลิกออเดอร์</button>
+                                            <a class="btn btn-danger" href="orderdetail.php?id=<?php echo $_GET['id'] ?>&status=1">แก้ไขข้อมูลการชําระเงิน</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                    } ?>
                     <div class="card radius-10 border-top  border-3 border-danger">
                         <div class="card-body">
                             <div class="row">
@@ -59,9 +85,30 @@ if ($_GET['id'] <= 9) {
                                         </div>
                                     </div>
                                 </div>
+                                <?php if ($order_status == 5) { ?>
+                                    <div class="col-md-2">
+                                        <div class="text-center position-relative">
+                                            <div class="step-icon mx-auto <?php if ($order_status == 5) echo "bg-danger";
+                                                                            else {
+                                                                                echo "bg-secondary";
+                                                                            } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
+                                                <i class="bi bi-x text-white"></i>
+                                            </div>
+                                            <h4 class="mt-3 fs-6">
+                                                ยกเลิกออเดอร์
+
+                                            </h4>
+                                            <div class="arrow-icon d-none d-lg-block position-absolute" style="top:50px; right:-25px">
+                                                <svg class="bi bi-arrow-right" fill="currentColor" height="25" viewbox="0 0 16 16" width="25" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" fill-rule="evenodd"></path>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                                 <div class="col-md-2">
                                     <div class="text-center position-relative">
-                                        <div class="step-icon mx-auto <?php if ($order_status > 1 || $order_status==0) echo "bg-danger";
+                                        <div class="step-icon mx-auto <?php if (($order_status > 1 || $order_status == 0) && $order_status!=5) echo "bg-danger";
                                                                         else {
                                                                             echo "bg-secondary";
                                                                         } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
@@ -78,30 +125,30 @@ if ($_GET['id'] <= 9) {
                                         </div>
                                     </div>
                                 </div>
-                                <?php if ($order_status ==0) { ?> 
-                                <div class="col-md-2" >
-                                    <div class="text-center position-relative">
-                                        <div class="step-icon mx-auto <?php if ($order_status ==0) echo "bg-danger";
-                                                                        else {
-                                                                            echo "bg-secondary";
-                                                                        } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
-                                            <i class="bi bi-wallet-fill text-white"></i>
-                                        </div>
-                                        <h4 class="mt-3 fs-6">
-                                            ข้อมูลการขำระเงินไม่ถูกต้อง
+                                <?php if ($order_status == 0) { ?>
+                                    <div class="col-md-2">
+                                        <div class="text-center position-relative">
+                                            <div class="step-icon mx-auto <?php if ($order_status == 0 && $order_status!=5) echo "bg-danger";
+                                                                            else {
+                                                                                echo "bg-secondary";
+                                                                            } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
+                                                <i class="bi bi-wallet-fill text-white"></i>
+                                            </div>
+                                            <h4 class="mt-3 fs-6">
+                                                ข้อมูลการชำระเงินไม่ถูกต้อง
 
-                                        </h4>
-                                        <div class="arrow-icon d-none d-lg-block position-absolute" style="top:50px; right:-25px">
-                                            <svg class="bi bi-arrow-right" fill="currentColor" height="25" viewbox="0 0 16 16" width="25" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" fill-rule="evenodd"></path>
-                                            </svg>
+                                            </h4>
+                                            <div class="arrow-icon d-none d-lg-block position-absolute" style="top:50px; right:-25px">
+                                                <svg class="bi bi-arrow-right" fill="currentColor" height="25" viewbox="0 0 16 16" width="25" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" fill-rule="evenodd"></path>
+                                                </svg>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 <?php } ?>
                                 <div class="col-md-3">
                                     <div class="text-center position-relative">
-                                        <div class="step-icon mx-auto <?php if ($order_status > 2) echo "bg-danger";
+                                        <div class="step-icon mx-auto <?php if ($order_status > 2 && $order_status!=5) echo "bg-danger";
                                                                         else {
                                                                             echo "bg-secondary";
                                                                         } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
@@ -121,7 +168,7 @@ if ($_GET['id'] <= 9) {
                                 </div>
                                 <div class="col-md-2">
                                     <div class="text-center position-relative">
-                                        <div class="step-icon mx-auto <?php if ($order_status >= 3) echo "bg-danger";
+                                        <div class="step-icon mx-auto <?php if ($order_status >= 3 && $order_status!=5) echo "bg-danger";
                                                                         else {
                                                                             echo "bg-secondary";
                                                                         } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
@@ -139,7 +186,7 @@ if ($_GET['id'] <= 9) {
                                 </div>
                                 <div class="col-md-3">
                                     <div class="text-center position-relative">
-                                        <div class="step-icon mx-auto <?php if ($order_status >= 4) echo "bg-danger";
+                                        <div class="step-icon mx-auto <?php if ($order_status >= 4 && $order_status!=5) echo "bg-danger";
                                                                         else {
                                                                             echo "bg-secondary";
                                                                         } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
@@ -149,130 +196,133 @@ if ($_GET['id'] <= 9) {
                                     </div>
                                 </div>
                             </div>
-                            <?php if ($order_status == 1) { ?>
-                            <div class="row pt-5">
-                              
+
+
+                            <?php if ($order_status == 1 || isset($_GET['status']) == 1) { ?>
+                                <div class="row pt-5">
+
                                     <div class="col-12 bg-danger">
                                         <p class="fs-6 pt-2 text-center text-white">แจ้งข้อมูลการชำระเงิน</p>
                                     </div>
-                               
-                                <div class="col-12 my-2">
-                                    <form id="paymentForm" name="paymentForm">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">ธนาคารที่โอนเงิน</label>
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th></th>
-                                                            <th>ธนาคาร</th>
-                                                            <th>สาขา</th>
-                                                            <th>เลขที่บัญชี</th>
-                                                            <th>ชื่อบัญชี </th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr class="odd">
-                                                            <td>
-                                                                <input class="form-check-input" type="radio" name="pay_bank" id="pay_bank" value="kbank">
-                                                            </td>
-                                                            <td><img src="assets/img/bank/kbank.gif" width="20" align="absmiddle"></td>
-                                                            <td>กสิกรไทย</td>
-                                                            <td>สำนักสีลม</td>
-                                                            <td>1234567890</td>
-                                                            <td>บจก. บางปะหันบรรจุภัณฑ์</td>
-                                                        </tr>
-                                                        <tr class="">
-                                                            <td>
-                                                                <input class="form-check-input" type="radio" name="pay_bank" id="pay_bank" value="bbl">
-                                                            </td>
-                                                            <td><img src="assets/img/bank/bbl.gif" width="20" align="absmiddle"></td>
-                                                            <td>กรุงเทพ</td>
-                                                            <td>สำนักงานใหญ่สีลม</td>
-                                                            <td>1234567890</td>
-                                                            <td>บจก. บางปะหันบรรจุภัณฑ์</td>
-                                                        </tr>
-                                                        <tr class="odd">
-                                                            <td>
-                                                                <input class="form-check-input" type="radio" name="pay_bank" id="pay_bank" value="ktb">
-                                                            </td>
-                                                            <td><img src="assets/img/bank/ktb.gif" width="20" align="absmiddle"></td>
-                                                            <td>กรุงไทย</td>
-                                                            <td>สีลม</td>
-                                                            <td>1234567890</td>
-                                                            <td>บจก. บางปะหันบรรจุภัณฑ์</td>
-                                                        </tr>
-                                                        <tr class="">
-                                                            <td>
-                                                                <input class="form-check-input" type="radio" name="pay_bank" id="pay_bank" value="scb">
-                                                            </td>
-                                                            <td><img src="assets/img/bank/scb.gif" width="20" align="absmiddle"></td>
-                                                            <td>ไทยพาณิชย์</td>
-                                                            <td>ปาโซ่ ทาวเวอร์</td>
-                                                            <td>1234567890</td>
-                                                            <td>บจก. บางปะหันบรรจุภัณฑ์</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+
+                                    <div class="col-12 my-2">
+                                        <form id="paymentForm" name="paymentForm">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">ธนาคารที่โอนเงิน</label>
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th></th>
+                                                                <th></th>
+                                                                <th>ธนาคาร</th>
+                                                                <th>สาขา</th>
+                                                                <th>เลขที่บัญชี</th>
+                                                                <th>ชื่อบัญชี </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="odd">
+                                                                <td>
+                                                                    <input class="form-check-input" type="radio" name="pay_bank" id="pay_bank" value="kbank">
+                                                                </td>
+                                                                <td><img src="assets/img/bank/kbank.gif" width="20" align="absmiddle"></td>
+                                                                <td>กสิกรไทย</td>
+                                                                <td>สำนักสีลม</td>
+                                                                <td>1234567890</td>
+                                                                <td>บจก. บางปะหันบรรจุภัณฑ์</td>
+                                                            </tr>
+                                                            <tr class="">
+                                                                <td>
+                                                                    <input class="form-check-input" type="radio" name="pay_bank" id="pay_bank" value="bbl">
+                                                                </td>
+                                                                <td><img src="assets/img/bank/bbl.gif" width="20" align="absmiddle"></td>
+                                                                <td>กรุงเทพ</td>
+                                                                <td>สำนักงานใหญ่สีลม</td>
+                                                                <td>1234567890</td>
+                                                                <td>บจก. บางปะหันบรรจุภัณฑ์</td>
+                                                            </tr>
+                                                            <tr class="odd">
+                                                                <td>
+                                                                    <input class="form-check-input" type="radio" name="pay_bank" id="pay_bank" value="ktb">
+                                                                </td>
+                                                                <td><img src="assets/img/bank/ktb.gif" width="20" align="absmiddle"></td>
+                                                                <td>กรุงไทย</td>
+                                                                <td>สีลม</td>
+                                                                <td>1234567890</td>
+                                                                <td>บจก. บางปะหันบรรจุภัณฑ์</td>
+                                                            </tr>
+                                                            <tr class="">
+                                                                <td>
+                                                                    <input class="form-check-input" type="radio" name="pay_bank" id="pay_bank" value="scb">
+                                                                </td>
+                                                                <td><img src="assets/img/bank/scb.gif" width="20" align="absmiddle"></td>
+                                                                <td>ไทยพาณิชย์</td>
+                                                                <td>ปาโซ่ ทาวเวอร์</td>
+                                                                <td>1234567890</td>
+                                                                <td>บจก. บางปะหันบรรจุภัณฑ์</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row my-2">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="exampleInputPassword1">วันที่โอน</label>
-                                                    <input type="text" class="form-control datepicker" readOnly id="pay_date" name="pay_date" placeholder="วัน/เดือน/ปี" />
+                                            <div class="row my-2">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">วันที่โอน</label>
+                                                        <input type="text" class="form-control datepicker" readOnly id="pay_date" name="pay_date" placeholder="วัน/เดือน/ปี" />
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">เวลาที่โอน</label>
+                                                        <input type="text" autocomplete="off" class="form-control bs-timepicker" id="pay_time" name="pay_time" placeholder="เวลาที่โอน" />
+                                                    </div>
 
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="exampleInputPassword1">เวลาที่โอน</label>
-                                                    <input type="text" autocomplete="off" class="form-control bs-timepicker" id="pay_time" name="pay_time" placeholder="เวลาที่โอน" />
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="row my-2">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="exampleInputPassword1">ยอดเงินที่โอน</label>
-                                                    <input type="text" class="form-control" id="pay_total" name="pay_total" placeholder="ยอดเงินที่โอน">
+                                            <div class="row my-2">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">ยอดเงินที่โอน</label>
+                                                        <input type="text" class="form-control" id="pay_total" name="pay_total" placeholder="ยอดเงินที่โอน">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row my-2">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="exampleInputPassword1">หลักฐานการโอน</label>
-                                                    <input type="file" id="pay_image" accept="image/*" class="form-control" name="pay_image">
+                                            <div class="row my-2">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputPassword1">หลักฐานการโอน</label>
+                                                        <input type="file" id="pay_image" accept="image/*" class="form-control" name="pay_image">
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row my-2">
-                                            <div class="col-md-12">
-                                                <div class="form-group ">
-                                                    <label for="exampleInputPassword1">หมายเหตุ</label>
-                                                    <textarea class="form-control" id="pay_detail" name="pay_detail" rows="3"></textarea>
+                                            <div class="row my-2">
+                                                <div class="col-md-12">
+                                                    <div class="form-group ">
+                                                        <label for="exampleInputPassword1">หมายเหตุ</label>
+                                                        <textarea class="form-control" id="pay_detail" name="pay_detail" rows="3"></textarea>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row my-2 text-center">
-                                            <div class="col-md-12">
-                                                <button type="submit" class="btn btn-danger">บันทึกการโอนเงิน</button>
+                                            <div class="row my-2 text-center">
+                                                <div class="col-md-12">
+                                                    <button type="submit" class="btn btn-danger">บันทึกการโอนเงิน</button>
+                                                </div>
                                             </div>
-                                        </div>
 
 
-                                    </form>
+                                        </form>
+                                    </div>
+
                                 </div>
-
-                            </div>
-                             <?php } ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="col-12">
                     <h6>ที่อยู่สำหรับจัดส่ง</h6>
@@ -419,7 +469,7 @@ if ($_GET['id'] <= 9) {
         if (sessionStorage.getItem('toastrShown') === 'save') {
             toastr.success("บันทึกข้อมูลการชำระเงินแล้วค่ะ !");
             sessionStorage.removeItem('toastrShown');
-           
+
         }
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
@@ -495,7 +545,7 @@ if ($_GET['id'] <= 9) {
                         console.log(response)
                         if (response.status == "ok") {
                             sessionStorage.setItem('toastrShown', 'save');
-                            window.location="orderdetail.php?id=<?php echo $_GET['id'] ?>"
+                            window.location = "orderdetail.php?id=<?php echo $_GET['id'] ?>"
                         }
                     },
                     error: function(error) {
@@ -504,6 +554,20 @@ if ($_GET['id'] <= 9) {
                 });
             },
         });
+
+        function confirmCancelorder() {
+            
+                $.ajax({
+                    type: 'GET',
+                    url: "services/cart/order.php?v=cancelOrder&id=<?php echo $_GET['id']?>",
+                    success: function(response) {
+                        window.location = "order.php"
+                    }
+                });
+            
+           
+
+        }
 
         // เพิ่มเงื่อนไขสำหรับกฎ alphanumeric
         $.validator.addMethod("alphanumeric", function(value, element) {

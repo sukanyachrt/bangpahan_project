@@ -122,6 +122,26 @@ $connect->connectData();
                                         </a>
 
                                     </div>
+                                    <div class="btn-group" role="group" aria-label="Second group">
+
+                                        <a href="?status=5" class="btn btn-outline-secondary <?php if (isset($_GET['status']) && $_GET['status'] == "5") echo "active"; ?>">
+                                            <i class="tf-icons bx bx-x"></i>
+                                            ยกเลิกออเดอร์
+                                            <?php
+                                            $connect->sql = "SELECT
+                                            count( * ) AS numberorder 
+                                            FROM   orders WHERE order_status='5'";
+                                            $connect->queryData();
+                                            $rsconnect = $connect->fetch_AssocData();
+                                            if ($rsconnect['numberorder'] > 0) {
+                                            ?>
+                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                            <?php
+                                            }
+                                            ?>
+                                        </a>
+
+                                    </div>
 
                                 </div>
                                 </div>

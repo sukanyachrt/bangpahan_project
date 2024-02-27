@@ -66,6 +66,9 @@ WHERE order_id='" . $_GET['id'] . "'";
                 } else if ($rsorder['order_status'] == 0) {
                     $status_span =  '<span class="badge rounded-pill bg-dark">ข้อมูลการชำระเงินไม่ถูกต้อง</span>';
                 }
+                else if ($rsorder['order_status'] == 5) {
+                    $status_span =  '<span class="badge rounded-pill bg-dark">ยกเลิกออเดอร์</span>';
+                }
                 ?>
 
                 <div class="content-wrapper">
@@ -77,7 +80,7 @@ WHERE order_id='" . $_GET['id'] . "'";
                                 <h6>ออเดอร์ของฉัน > หมายเลขสั่งซื้อ : <?= $order_id ?></h6>
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="card radius-10 border-top  border-3 border-danger">
+                                    <div class="card radius-10 border-top  border-3 border-danger">
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-md-2">
@@ -93,9 +96,30 @@ WHERE order_id='" . $_GET['id'] . "'";
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <?php if ($order_status == 5) { ?>
+                                                        <div class="col-md-2">
+                                                            <div class="text-center position-relative">
+                                                                <div class="step-icon mx-auto <?php if ($order_status == 5) echo "bg-danger";
+                                                                                                else {
+                                                                                                    echo "bg-secondary";
+                                                                                                } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
+                                                                    <i class="bx bx-x text-white"></i>
+                                                                </div>
+                                                                <h4 class="mt-3 fs-6">
+                                                                    ยกเลิกออเดอร์
+
+                                                                </h4>
+                                                                <div class="arrow-icon d-none d-lg-block position-absolute" style="top:50px; right:-25px">
+                                                                    <svg class="bi bi-arrow-right" fill="currentColor" height="25" viewbox="0 0 16 16" width="25" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" fill-rule="evenodd"></path>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php } ?>
                                                     <div class="col-md-2">
                                                         <div class="text-center position-relative">
-                                                            <div class="step-icon mx-auto <?php if ($order_status > 1 || $order_status == 0) echo "bg-danger";
+                                                            <div class="step-icon mx-auto <?php if (($order_status > 1 || $order_status == 0) &&  $order_status != 5) echo "bg-danger";
                                                                                             else {
                                                                                                 echo "bg-secondary";
                                                                                             } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
@@ -115,11 +139,11 @@ WHERE order_id='" . $_GET['id'] . "'";
                                                     <?php if ($order_status == 0) { ?>
                                                         <div class="col-md-2">
                                                             <div class="text-center position-relative">
-                                                                <div class="step-icon mx-auto <?php if ($order_status == 0) echo "bg-danger";
+                                                                <div class="step-icon mx-auto <?php if ($order_status == 0  &&  $order_status != 5) echo "bg-danger";
                                                                                                 else {
                                                                                                     echo "bg-secondary";
                                                                                                 } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
-                                                                    <i class="bi bi-wallet-fill text-white"></i>
+                                                                    <i class="bx bx-x text-white"></i>
                                                                 </div>
                                                                 <h4 class="mt-3 fs-6">
                                                                     ข้อมูลการขำระเงินไม่ถูกต้อง
@@ -135,7 +159,7 @@ WHERE order_id='" . $_GET['id'] . "'";
                                                     <?php } ?>
                                                     <div class="col-md-3">
                                                         <div class="text-center position-relative">
-                                                            <div class="step-icon mx-auto <?php if ($order_status > 2) echo "bg-danger";
+                                                            <div class="step-icon mx-auto <?php if ($order_status > 2  &&  $order_status != 5) echo "bg-danger";
                                                                                             else {
                                                                                                 echo "bg-secondary";
                                                                                             } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
@@ -155,7 +179,7 @@ WHERE order_id='" . $_GET['id'] . "'";
                                                     </div>
                                                     <div class="col-md-2">
                                                         <div class="text-center position-relative">
-                                                            <div class="step-icon mx-auto <?php if ($order_status >= 3) echo "bg-danger";
+                                                            <div class="step-icon mx-auto <?php if ($order_status >= 3  &&  $order_status != 5) echo "bg-danger";
                                                                                             else {
                                                                                                 echo "bg-secondary";
                                                                                             } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
@@ -173,7 +197,7 @@ WHERE order_id='" . $_GET['id'] . "'";
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="text-center position-relative">
-                                                            <div class="step-icon mx-auto <?php if ($order_status >= 4) echo "bg-danger";
+                                                            <div class="step-icon mx-auto <?php if ($order_status >= 4  &&  $order_status != 5) echo "bg-danger";
                                                                                             else {
                                                                                                 echo "bg-secondary";
                                                                                             } ?> border rounded-circle d-flex align-items-center justify-content-center" style="width: 50px;height: 50px;">
