@@ -39,7 +39,7 @@
                                                         <th class="text-center">รหัสสินค้า</th>
                                                         <th class="text-center">ชื่อสินค้า</th>
                                                         <th class="text-center">ราคาสินค้า</th>
-                                                        <th class="text-center">จำนวนสินค้า</th>
+                                                        <th class="text-center">จำนวนสินค้าคงเหลือ</th>
                                                         <th class="text-center">กลุ่มสินค้า</th>
                                                         <th class="text-center">สถานะ</th>
                                                         <th class="text-center"></th>

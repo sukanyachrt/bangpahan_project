@@ -116,7 +116,7 @@ $order->connectData();
         function handleMenuItemClick(clickedItem) {
             document.querySelectorAll('.menu-item').forEach(function(item) {
                 if (item.classList.contains('menu-item')) {
-                    item.classList.remove('active', 'open');
+                    item.classList.remove('active');
                 }
             });
 

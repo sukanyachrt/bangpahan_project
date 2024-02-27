@@ -72,3 +72,8 @@ if ($data == "confirmorder") {
     }
     
 }
+else if($data=="cancelOrder"){
+    $connect->sql = "UPDATE `orders` SET order_status='5' WHERE order_id='".$_GET['id']."'";
+    $connect->queryData();
+    echo json_encode(["status" => "ok"]); 
+}

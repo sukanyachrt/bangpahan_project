@@ -119,15 +119,18 @@ $orderdetail->connectData();
                                                     echo '<span class="badge rounded-pill bg-primary">รอจัดส่ง</span>';
                                                 } else if ($rsorder['order_status'] == 4) {
                                                     echo '<span class="badge rounded-pill bg-success">จัดส่งเรียบร้อยแล้ว</span>';
-                                                }
-                                                else if ($rsorder['order_status'] == 0) {
+                                                } else if ($rsorder['order_status'] == 0) {
                                                     echo '<span class="badge rounded-pill bg-dark">ข้อมูลการขำระเงินไม่ถูกต้อง</span>';
+                                                }
+                                                else if ($rsorder['order_status'] == 5) {
+                                                    echo '<span class="badge rounded-pill bg-dark">ยกเลิกออเดอร์</span>';
                                                 }
                                                 ?>
                                             </td>
                                             <td class="text-center">
 
                                                 <a href="orderdetail.php?id=<?php echo $rsorder['order_id'] ?>" type="button" class="btn btn-outline-danger btn-sm"><i class="bi bi-eye"></i></a>
+                                                <button type="button" onclick="cancelOrder('<?php echo  $rsorder['order_id'] ?>','<?php echo $rsorder['order_status'] ?>')" class="btn btn-outline-dark btn-sm">X</a>
                                             </td>
                                         </tr>
                                     <?php
@@ -140,6 +143,23 @@ $orderdetail->connectData();
                 </div>
             </div>
         </div>
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header bg-dark">
+                        <h5 class="modal-title text-white" id="exampleModalLabel">แจ้งเตือน</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="resultcancelorder modal-body text-center">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                        <button type="button" class="btn btn-dark" id="btnidcancelOrder" value="" onclick="confirmCancelorder()">ตกลง</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <?php include("include/footer.php"); ?>
@@ -163,6 +183,37 @@ $orderdetail->connectData();
                 });
             });
         });
+
+        function cancelOrder(id, status) {
+            console.log(status)
+            if (status <= 1) {
+                $('.resultcancelorder').text("ต้องการยกเลิกออเดอร์นี้ ?")
+                $('#btnidcancelOrder').val(id)
+                $('#exampleModal').modal('show')
+            } else {
+                $('#btnidcancelOrder').val('')
+                $('.resultcancelorder').text("ไม่สามารถยกเลิกออเดอร์นี้ได้ !")
+                $('#exampleModal').modal('show')
+            }
+
+        }
+
+        function confirmCancelorder() {
+            var id = $('#btnidcancelOrder').val();
+            if (id > 0) {
+                $.ajax({
+                    type: 'GET',
+                    url: "services/cart/order.php?v=cancelOrder&id=" + id,
+                    success: function(response) {
+                        window.location = "order.php"
+                    }
+                });
+            }
+            else{
+                $('#exampleModal').modal('hide')
+            }
+
+        }
     </script>
 </body>
 
