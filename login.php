@@ -76,12 +76,12 @@ include("include/header.php");
             <div id="login">
               <form id="loginForm">
                 <h1 class="text-center h3 mb-3 fw-normal text-white font-weight-bold fw-bold">ยินดีต้อนรับ</h1>
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                   <input type="text" class="form-control" id="Username" name="Username" placeholder="Enter your email or username" autofocus />
                 </div>
-                <div class="mb-3 form-password-toggle">
+                <div class="mb-3 form-password-toggle ">
 
-                  <div class="input-group input-group-merge">
+                  <div class="input-group input-group-merge form-group">
                     <input type="password" class="form-control" id="Password" name="Password" placeholder="Password" aria-describedby="password" />
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
@@ -99,31 +99,31 @@ include("include/header.php");
               <form class="" id="signupForm">
                 <h1 class="text-center h3 mb-3 fw-normal text-white font-weight-bold fw-bold">ลงทะเบียนเพื่อเป็นสมาชิก</h1>
                 <div class="row">
-                  <div class="col-md-6  my-1">
+                  <div class="col-md-6  my-1 form-group">
                     <input type="text" class="form-control" id="customer_fname" name="customer_fname" placeholder="ชื่อ">
 
                   </div>
-                  <div class="col-md-6  my-1">
+                  <div class="col-md-6  my-1 form-group">
                     <input type="text" class="form-control" id="customer_lname" name="customer_lname" placeholder="นามสกุล">
 
                   </div>
-                  <div class="col-12 my-1">
+                  <div class="col-12 my-1 form-group">
                     <input type="text" class="form-control" id="customer_telephone" name="customer_telephone" placeholder="เบอร์โทรศัพท์">
 
                   </div>
-                  <div class="col-12 my-1">
+                  <div class="col-12 my-1 form-group">
                     <input type="text" class="form-control" id="c_address" name="c_address" placeholder="ที่อยู่">
 
                   </div>
-                  <div class="col-12 my-1">
+                  <div class="col-12 my-1 form-group">
                     <input type="email" class="form-control" id="c_email" name="c_email" placeholder="Email">
 
                   </div>
-                  <div class="col-12 my-1">
+                  <div class="col-12 my-1 form-group">
                     <input type="text" class="form-control" id="customer_username" name="customer_username" placeholder="Username">
 
                   </div>
-                  <div class="col-12 my-1">
+                  <div class="col-12 my-1 form-group">
                     <input type="text" class="form-control" id="c_password" name="c_password" placeholder="Password">
 
                   </div>
@@ -439,7 +439,7 @@ include("include/header.php");
 
     $.validator.addMethod("alphanumeric", function(value, element) {
       return this.optional(element) || /^[a-zA-Z0-9]+$/.test(value);
-    }, "โปรดกรอกข้อมูลที่มีเฉพาะตัวเลขและตัวอักษร (a-z)");
+    }, "โปรดกรอกข้อมูลที่มีเฉพาะตัวเลขและตัวอักษร (a-zA-Z0-9)");
 
     function postSession(data) {
       $.ajax({

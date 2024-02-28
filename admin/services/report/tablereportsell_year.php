@@ -22,7 +22,7 @@ while ($rsconnect = $connect->fetch_AssocData()) {
     $yearorder = $rsconnect['yearorder'];
     $order->sql = "SELECT	orders.order_id 
                     FROM	orders 
-                    WHERE	order_status > 0 	AND YEAR ( order_date )= '".$yearorder."'";
+                    WHERE	order_status > 0 AND  order_status!=5	AND YEAR ( order_date )= '".$yearorder."'";
     $order->queryData();
     $sumorder=0;
     while ($rsorder = $order->fetch_AssocData()) {

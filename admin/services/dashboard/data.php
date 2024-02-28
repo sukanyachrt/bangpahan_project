@@ -23,7 +23,7 @@ if ($data == "incomeAll") {
         $incomePerMonth = array();
         for ($i = 1; $i <= 12; $i++) {
             $month = date("m", mktime(0, 0, 0, $i, 1));
-            $connect->sql = "SELECT * FROM orders WHERE YEAR(order_date) = '" . $item . "' AND MONTH(order_date) = '" . $month . "' AND order_status>2";
+            $connect->sql = "SELECT * FROM orders WHERE YEAR(order_date) = '" . $item . "' AND MONTH(order_date) = '" . $month . "' AND order_status>0 AND order_status!=5";
             $connect->queryData();
             $row = $connect->num_rows();
             $sumIncome = 0;

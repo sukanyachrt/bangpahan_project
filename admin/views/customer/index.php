@@ -17,7 +17,7 @@
 
                         <div class="row">
 
-                            <div class="col-lg-12 mb-0 order-0 d-flex justify-content-end">
+                            <!-- <div class="col-lg-12 mb-0 order-0 d-flex justify-content-end">
                                 <a href="data.php" class="btn btn-primary text-white account-image-reset mb-4">
                                     <i class="bx bx-plus d-block d-sm-none"></i>
                                     <span class="d-none d-sm-block">
@@ -25,7 +25,7 @@
 
                                         เพิ่มข้อมูล</span>
                                 </a>
-                            </div>
+                            </div> -->
 
                             <div class="col-lg-12 mb-4 order-0">
                                 <div class="card">

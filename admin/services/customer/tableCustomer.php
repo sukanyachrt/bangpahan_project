@@ -51,7 +51,7 @@ while ($rsconnect = $connect->fetch_AssocData()) {
     <td class="text-center">' . $c_status . '</td>
     <td class="text-center">' . $numorder. '</td>
     <td class="text-center">
-        <a  href="data.php?id='.$rsconnect['customer_id'].'"><button class="border-warning text-warning"><i class="bx bx-edit-alt me-1"></i></button></a>
+        <a  href="data.php?id='.$rsconnect['customer_id'].'"><button class="border-warning text-warning"><i class="bx bxs-grid"></i></button></a>
         <button class="border-danger text-danger"  onclick="updateCustomerStatus('.$rsconnect['customer_id'].')"><i class="bx bx-trash me-1"></i></button>
     </td>
     </tr>';

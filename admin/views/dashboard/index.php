@@ -222,12 +222,12 @@ $connect->connectData();
                                                 <h3 class="card-title mb-4">
                                                     <?php
                                                     $connect->sql = "SELECT
-                                            sum( product_num ) AS numberproduct 
+                                            count( * ) AS numberproduct 
                                             FROM   product 
                                             WHERE product_status =1";
                                                     $connect->queryData();
                                                     $rsconnect = $connect->fetch_AssocData();
-                                                    echo $rsconnect['numberproduct'] . " ชิ้น";
+                                                    echo $rsconnect['numberproduct'] . " รายการ";
                                                     ?>
                                                 </h3>
 
@@ -248,7 +248,7 @@ $connect->connectData();
                                         <div class="col-sm-7">
                                             <div class="card-body">
                                                 <h5 class="card-title text-primary">รวมออเดอร์ทั้งหมด </h5>
-                                                <h3 class="card-title text-nowrap mb-1">
+                                                <h3 class="card-title text-nowrap mb-4">
                                                     <?php
                                                     $connect->sql = "SELECT
                                             count( * ) AS numberorder 

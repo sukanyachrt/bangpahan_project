@@ -87,18 +87,7 @@ $connect->connectData();
                                         <a href="?status=4" class="btn btn-outline-success <?php if (isset($_GET['status']) && $_GET['status'] == "4") echo "active"; ?>">
                                             <i class="tf-icons bx bx-check-double"></i>
                                             จัดส่งเรียบร้อยแล้ว
-                                            <?php
-                                            $connect->sql = "SELECT
-                                            count( * ) AS numberorder 
-                                            FROM   orders WHERE order_status='4'";
-                                            $connect->queryData();
-                                            $rsconnect = $connect->fetch_AssocData();
-                                            if ($rsconnect['numberorder'] > 0) {
-                                            ?>
-                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
-                                            <?php
-                                            }
-                                            ?>
+                                           
                                         </a>
 
                                     </div>

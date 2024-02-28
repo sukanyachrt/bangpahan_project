@@ -400,8 +400,9 @@
     function printReportofYear() {
 
         var tableContents = $('.tbreportsell_year').prop('outerHTML');
+        var additionalHeader = '<h5 class="text-center">ร้านบางปะหันบรรจุภัณฑ์</h5>';
         var additionalContent = '<h5 class="text-center">รายงานยอดขายสรุปรายปี</h5>';
-        var contentToPrint = additionalContent + tableContents;
+        var contentToPrint = additionalHeader+additionalContent + tableContents;
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
         printWindow.document.write('<html>');
@@ -427,8 +428,9 @@
 
     function printReportofMonth() {
         var tableContents = $('.tbreportsell_month').prop('outerHTML');
+        var additionalHeader = '<h5 class="text-center">ร้านบางปะหันบรรจุภัณฑ์</h5>';
         var additionalContent = '<h5 class="text-center">รายงานยอดขายสรุปรายเดือน</h5>';
-        var contentToPrint = additionalContent + tableContents;
+        var contentToPrint =additionalHeader+ additionalContent + tableContents;
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
         printWindow.document.write('<html>');
@@ -455,8 +457,9 @@
     function printReportofDay() {
 
         var tableContents = $('.tbreportsell_day').prop('outerHTML');
+        var additionalHeader = '<h5 class="text-center">ร้านบางปะหันบรรจุภัณฑ์</h5>';
         var additionalContent = '<h5 class="text-center">รายงานยอดขายสรุปรายวัน</h5>';
-        var contentToPrint = additionalContent + tableContents;
+        var contentToPrint = additionalHeader+additionalContent + tableContents;
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
         printWindow.document.write('<html>');
@@ -482,8 +485,9 @@
     function printReportofbestsell(){
 
         var tableContents = $('.tbreportbestsell').prop('outerHTML');
+        var additionalHeader = '<h5 class="text-center">ร้านบางปะหันบรรจุภัณฑ์</h5>';
         var additionalContent = '<h5 class="text-center">รายงานสินค้าขายดี</h5>';
-        var contentToPrint = additionalContent + tableContents;
+        var contentToPrint = additionalHeader+additionalContent + tableContents;
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
         printWindow.document.write('<html>');
