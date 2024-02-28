@@ -10,7 +10,6 @@ include("include/header.php");
     .active .bs-stepper-circle {
         background-color: red !important;
     }
-
 </style>
 <?php
 if (!isset($_SESSION['customer_id'])) {
@@ -31,9 +30,9 @@ $connect->connectData();
         <div class="container mt-4">
             <div class="row">
                 <div class="col-12">
-                    
+
                     <div class="bs-stepper wizard-modern wizard-modern-example">
-                        <div class="bs-stepper-header table-responsive" >
+                        <div class="bs-stepper-header table-responsive">
                             <div class="step" data-target="#data-address">
                                 <button type="button" class="step-trigger">
                                     <span class="bs-stepper-circle">1</span>
@@ -102,7 +101,7 @@ $connect->connectData();
                                 <div class="row justify-content-center">
                                     <div class="col-12 d-flex justify-content-center">
                                         <div class="col-12 text-end">
-                                            <a href="#" onclick="history.back()" class="btn btn-secondary"><i class="bi bi-arrow-left-circle"></i> ย้อนกลับ</a>
+                                            <a href="cart.php"  class="btn btn-secondary"><i class="bi bi-arrow-left-circle"></i> ย้อนกลับ</a>
                                             <a href="#" onclick="stepper.next()" class="btn btn-danger"><i class="bi bi-arrow-right-circle"></i> ต่อไป</a>
 
                                         </div>
@@ -219,7 +218,7 @@ $connect->connectData();
                                 <div class="row justify-content-center">
                                     <div class="col-12 d-flex justify-content-center">
                                         <div class="col-12 text-end">
-                                            <a href="#" onclick="history.back()" class="btn btn-secondary"><i class="bi bi-arrow-left-circle"></i> ย้อนกลับ</a>
+                                            <a href="#" onclick="stepper.previous()" class="btn btn-secondary"><i class="bi bi-arrow-left-circle"></i> ย้อนกลับ</a>
                                             <a href="#" onclick="confirmorder()" class="btn btn-danger"><i class="bi bi-arrow-right-circle"></i> ยืนยันการสั่งซื้อ</a>
 
                                         </div>
@@ -231,7 +230,7 @@ $connect->connectData();
                                 <div class="row">
                                     <div class="col-12">
                                         <h6>ข้อมูลการสั่งซื้อ</h6>
-                                        <div class="mt-5 mt-lg-0">
+                                        <div class="mt-5 mt-lg-0 orderdetail" style="display: none;">
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="">
@@ -247,7 +246,7 @@ $connect->connectData();
                                                                     <p class="order_money">จำนวนเงิน : -</p>
                                                                     <p class="order_date">เวลาการสั่งซื้อ : -</p>
                                                                     <div class="text-center">
-                                                                        <button onclick="orderdetail()" id="orderdetail" class="btn btn-danger"><i class="bi bi-file-earmark-arrow-up-fill"></i> แจ้งชำระเงิน</button>
+                                                                        <button onclick="orderdetail()" id="orderdetail"  class="btn btn-danger"><i class="bi bi-file-earmark-arrow-up-fill"></i> แจ้งชำระเงิน</button>
 
                                                                     </div>
                                                                 </div>
@@ -288,7 +287,7 @@ $connect->connectData();
             })
 
         });
-       
+
         function confirmorder() {
             $.ajax({
                 type: 'POST',
@@ -299,6 +298,7 @@ $connect->connectData();
                         $('#orderdetail').val(response.order_id)
                         $('.order_date').text('เวลาการสั่งซื้อ : ' + response.order_date);
                         $('.order_money').text('จำนวนเงิน : ' + response.order_money);
+                        $('.orderdetail').show()
 
                         stepper.next()
                     }
@@ -307,8 +307,13 @@ $connect->connectData();
         }
 
         function orderdetail() {
-            console.log($('#orderdetail').val())
-            window.location.href = "orderdetail.php?id=" + $('#orderdetail').val()
+            if ($('#orderdetail').val() > 0) {
+                console.log($('#orderdetail').val())
+                window.location.href = "orderdetail.php?id=" + $('#orderdetail').val()
+            } else {
+                stepper.previous()
+            }
+
         }
     </script>
 </body>

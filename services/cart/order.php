@@ -55,20 +55,45 @@ if ($data == "confirmorder") {
         }
     }
 
-
-    $product->sql = "INSERT INTO `payment`(`pay_id`, `order_id`, `pay_date`, `pay_total`, `pay_bank`, `pay_image`, `pay_time`, `pay_detail`) VALUES 
-    (null,'" . $id . "','" . $pay_date . "','" . $post['pay_total'] . "','" . $post['pay_bank'] . "','" . $pay_image . "','" . $post['pay_time'] . "','" . $pay_detail . "')";
+    // check $id
+    $product->sql = "SELECT * FROM payment WHERE order_id='" . $id . "'";
     $product->queryData();
-    $pay_id = $product->id_insertrows();
-    if ($pay_id > 0) {
+    $row = $product->num_rows();
+    if ($row > 0) {
+        $rsproduct = $product->fetch_AssocData();
+        $pay_id = $rsproduct['pay_id'];
+        $connect->sql = "UPDATE `payment` SET 
+        `pay_date`='" . $pay_date . "',
+        `pay_total`='" . $post['pay_total'] . "',
+        `pay_bank`='" . $post['pay_bank'] . "',
+        `pay_image`='" . $pay_image . "',
+        `pay_time`='" . $post['pay_time'] . "',
+        `pay_detail`='" . $pay_detail . "'
+         WHERE pay_id='" . $pay_id . "'";
+        $connect->queryData();
         $product->sql = "UPDATE `orders` SET 
         `order_status`='2' 
         WHERE order_id='" . $id . "'";
         $product->queryData();
-        echo json_encode(["status" => "ok",$pay_date]); 
+        echo json_encode(["status" => "ok", $pay_date]);
+
+    } else {
+        $product->sql = "INSERT INTO `payment`(`pay_id`, `order_id`, `pay_date`, `pay_total`, `pay_bank`, `pay_image`, `pay_time`, `pay_detail`) VALUES 
+        (null,'" . $id . "','" . $pay_date . "','" . $post['pay_total'] . "','" . $post['pay_bank'] . "','" . $pay_image . "','" . $post['pay_time'] . "','" . $pay_detail . "')";
+        $product->queryData();
+        $pay_id = $product->id_insertrows();
+        if ($pay_id > 0) {
+            $product->sql = "UPDATE `orders` SET 
+            `order_status`='2' 
+            WHERE order_id='" . $id . "'";
+            $product->queryData();
+            echo json_encode(["status" => "ok", $pay_date]);
+        } else {
+            echo json_encode(["status" => "no"]);
+        }
     }
-    else{
-        echo json_encode(["status" => "no"]); 
-    }
-    
+} else if ($data == "cancelOrder") {
+    $connect->sql = "UPDATE `orders` SET order_status='5' WHERE order_id='" . $_GET['id'] . "'";
+    $connect->queryData();
+    echo json_encode(["status" => "ok"]);
 }

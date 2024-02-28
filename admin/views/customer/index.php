@@ -47,6 +47,7 @@
                                                         <th class="text-center">ที่อยู่</th>
                                                         <th class="text-center">เบอร์โทรศัพท์</th>
                                                         <th class="text-center">สถานะ</th>
+                                                        <th class="text-center">จํานวนออเดอร์ที่ลูกค้าสั่ง</th>
                                                         <th class="text-center">จัดการข้อมูล</th>
                                                     </tr>
                                                 </thead>
@@ -123,7 +124,7 @@
     function dataCustomer() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
-             if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("tbCustomers").innerHTML = this.responseText;
 
             }

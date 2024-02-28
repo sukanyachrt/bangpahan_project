@@ -50,7 +50,7 @@
       <a href="index.php" class="logo d-flex align-items-center me-auto me-lg-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1>BeakBuddy<span>.</span></h1>
+        <h1>BakeBuddy<span>.</span></h1>
       </a>
 
       <nav id="navbar" class="navbar">
@@ -253,7 +253,7 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>BeakBuddy</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>BakeBuddy</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->

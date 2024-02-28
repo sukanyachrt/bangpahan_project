@@ -283,22 +283,7 @@ $connect->connectData();
 
             }
 
-            //let id = $('#btnSaveEdit').val();
-            // $.ajax({
-            //     async: true,
-            //     url: "../../services/product/data.php?v=updateProduct&id=" + id,
-            //     type: "POST",
-            //     cache: false,
-            //     data: $('#productForm').serialize(),
-            //     success: function(Res) {
-            //         console.log(Res);
-            //         if (Res.result >= 0) {
-            //             sessionStorage.setItem('toastrShown', 'edit');
-            //             location.href = 'index.php';
-
-            //         }
-            //     }
-            // });
+          
         }
     });
     $("#btnReset").on("click", function() {
@@ -321,7 +306,7 @@ $connect->connectData();
             },
             product_price: {
                 required: true,
-                digits: true,
+                alphanumeric: true,
 
             },
             product_num: {
@@ -386,8 +371,8 @@ $connect->connectData();
 
     // เพิ่มเงื่อนไขสำหรับกฎ alphanumeric
     $.validator.addMethod("alphanumeric", function(value, element) {
-        return this.optional(element) || /^[a-zA-Z0-9]+$/.test(value);
-    }, "โปรดกรอกข้อมูลที่มีเฉพาะตัวเลขและตัวอักษร (a-z)");
+        return this.optional(element) || /^[0-9.]+$/.test(value);
+    }, "โปรดกรอกข้อมูลที่มีเฉพาะตัวเลข");
 
     function readURL(input) {
         if (input.files && input.files[0]) {

@@ -87,6 +87,9 @@ while ($rsorder = $order->fetch_AssocData()) {
             else if ($rsorder['order_status'] == 0) {
                 echo '<span class="badge rounded-pill bg-dark">ข้อมูลการชำระเงินไม่ถูกต้อง</span>';
             }
+            else if ($rsorder['order_status'] == 5) {
+                echo '<span class="badge rounded-pill bg-dark">ยกเลิกออเดอร์</span>';
+            }
             ?>
         </td>
         <td class="text-center">

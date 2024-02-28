@@ -10,8 +10,8 @@ include("include/header.php");
 
   .form {
     background: rgba(19, 35, 47, .6);
-    padding: 40px;
-    max-width: 600px;
+    padding: 20px;
+    max-width: 500px;
     margin: 20px auto;
     border-radius: 4px;
     box-shadow: 0 4px 10px 4px rgba(19, 35, 47, .1);
@@ -20,7 +20,7 @@ include("include/header.php");
   .tab-group {
     list-style: none;
     padding: 0;
-    margin: 0 0 40px 0;
+    margin: 0 0 10px 0;
   }
 
   .tab-group:after {
@@ -32,10 +32,10 @@ include("include/header.php");
   .tab-group li a {
     display: block;
     text-decoration: none;
-    padding: 15px;
+    padding: 8px;
     background: rgba(160, 179, 176, .25);
     color: #a0b3b0;
-    font-size: 20px;
+    font-size: 15px;
     float: left;
     width: 50%;
     text-align: center;
@@ -76,31 +76,23 @@ include("include/header.php");
             <div id="login">
               <form id="loginForm">
                 <h1 class="text-center h3 mb-3 fw-normal text-white font-weight-bold fw-bold">ยินดีต้อนรับ</h1>
-                <div class="row">
-                  <div class="col-12 my-2">
-                    <div class="form-floating form-group">
-                      <input type="text" class="form-control" id="Username" name="Username" placeholder="name@example.com">
-                      <label for="floatingInput">Email address / Username</label>
-                    </div>
-                  </div>
-                  <div class="col-12 my-2">
-                    <div class="form-floating form-group">
-                      <input type="password" class="form-control" id="Password" name="Password" placeholder="Password">
-                      <label for="floatingPassword">Password</label>
-                    </div>
-                  </div>
-                  <div class="col-12 my-2">
-                    <div class="form-check text-start ">
-                      <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-                      <label class="form-check-label text-white" for="flexCheckDefault">
-                        Remember me
-                      </label>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <button class="btn btn-danger w-100 py-2" type="submit">เข้าสู่ระบบ</button>
+                <div class="mb-3">
+                  <input type="text" class="form-control" id="Username" name="Username" placeholder="Enter your email or username" autofocus />
+                </div>
+                <div class="mb-3 form-password-toggle">
+
+                  <div class="input-group input-group-merge">
+                    <input type="password" class="form-control" id="Password" name="Password" placeholder="Password" aria-describedby="password" />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
                 </div>
+                <div class="mb-3  text-end">
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#resetpasswordModal" class="text-white">ลืมรหัสผ่าน ?</a>
+                </div>
+                <div class="mb-1">
+                  <button class="btn btn-danger w-100 py-2" type="submit">เข้าสู่ระบบ</button>
+                </div>
+
               </form>
             </div>
             <div id="signup">
@@ -108,51 +100,38 @@ include("include/header.php");
                 <h1 class="text-center h3 mb-3 fw-normal text-white font-weight-bold fw-bold">ลงทะเบียนเพื่อเป็นสมาชิก</h1>
                 <div class="row">
                   <div class="col-md-6  my-1">
-                    <div class="form-floating form-group">
-                      <input type="text" class="form-control" id="customer_fname" name="customer_fname" placeholder="ชื่อ">
-                      <label for="floatingInput">ชื่อลูกค้า</label>
-                    </div>
+                    <input type="text" class="form-control" id="customer_fname" name="customer_fname" placeholder="ชื่อ">
+
                   </div>
                   <div class="col-md-6  my-1">
-                    <div class="form-floating form-group">
-                      <input type="text" class="form-control" id="customer_lname" name="customer_lname" placeholder="นามสกุล">
-                      <label for="floatingPassword">นามสกุล</label>
-                    </div>
+                    <input type="text" class="form-control" id="customer_lname" name="customer_lname" placeholder="นามสกุล">
+
                   </div>
                   <div class="col-12 my-1">
-                    <div class="form-floating form-group">
-                      <input type="text" class="form-control" id="customer_telephone" name="customer_telephone" placeholder="เบอร์โทรศัพท์">
-                      <label for="floatingPassword">เบอร์โทรศัพท์</label>
-                    </div>
+                    <input type="text" class="form-control" id="customer_telephone" name="customer_telephone" placeholder="เบอร์โทรศัพท์">
+
                   </div>
                   <div class="col-12 my-1">
-                    <div class="form-floating form-group">
-                      <input type="text" class="form-control" id="c_address" name="c_address" placeholder="ที่อยู่">
-                      <label for="floatingPassword">ที่อยู่</label>
-                    </div>
+                    <input type="text" class="form-control" id="c_address" name="c_address" placeholder="ที่อยู่">
+
                   </div>
                   <div class="col-12 my-1">
-                    <div class="form-floating form-group">
-                      <input type="email" class="form-control" id="c_email" name="c_email" placeholder="Email">
-                      <label for="floatingPassword">Email</label>
-                    </div>
+                    <input type="email" class="form-control" id="c_email" name="c_email" placeholder="Email">
+
                   </div>
                   <div class="col-12 my-1">
-                    <div class="form-floating form-group">
-                      <input type="text" class="form-control" id="customer_username" name="customer_username" placeholder="Username">
-                      <label for="floatingPassword">Username</label>
-                    </div>
+                    <input type="text" class="form-control" id="customer_username" name="customer_username" placeholder="Username">
+
                   </div>
                   <div class="col-12 my-1">
-                    <div class="form-floating form-group">
-                      <input type="text" class="form-control" id="c_password" name="c_password" placeholder="Password">
-                      <label for="floatingPassword">Password</label>
-                    </div>
+                    <input type="text" class="form-control" id="c_password" name="c_password" placeholder="Password">
+
                   </div>
-                  <div class="col-12">
+                  <div class="col-12 mt-2">
                     <button class="btn btn-danger w-100 py-2" type="submit">Register</button>
                   </div>
                 </div>
+
               </form>
 
             </div>
@@ -161,7 +140,7 @@ include("include/header.php");
       </div>
 
     </div>
-    <!-- Modal -->
+    <!-- Modal แจ้งเตือน-->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -177,6 +156,42 @@ include("include/header.php");
             <button type="button" class="btn btn-warning" data-bs-dismiss="modal">ตกลง</button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- modal reset password -->
+    <div class="modal fade" id="resetpasswordModal" tabindex="-1" aria-labelledby="resetpasswordModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+          <form class="" id="resetForm">
+            <div class="modal-header">
+              <h5 class="modal-title" id="resetpasswordModalLabel">ลืมรหัสผ่าน</h5>
+             
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-danger" style="display: none;" role="alert" id="showReset"></div>
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="nameWithTitle" class="form-label">Username / Email</label>
+                  <input type="text" id="resetUsername" name="resetUsername" class="form-control" placeholder="Enter your email or username" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="nameWithTitle" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="ResetPassword" name="ResetPassword" placeholder="Password" aria-describedby="password" />
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-danger w-100">ตกลง</button>
+            </div>
+          </form>
+        </div>
+
       </div>
     </div>
   </section>
@@ -351,6 +366,64 @@ include("include/header.php");
               toastr.error(response.msg)
             }
 
+          },
+          error: function(error) {
+            console.log(error)
+          }
+        });
+      },
+    });
+
+    // 
+    $('#resetForm').validate({
+      rules: {
+        resetUsername: {
+          required: true,
+          alphanumeric: true, // เพิ่มกฎ alphanumeric สำหรับตัวเลขและตัวอักษร
+        },
+        ResetPassword: {
+          required: true,
+          alphanumeric: true, // เพิ่มกฎ alphanumeric สำหรับตัวเลขและตัวอักษร
+        },
+      },
+      messages: {
+        resetUsername: {
+          required: "โปรดกรอกรหัสผู้ใช้งาน",
+          alphanumeric: "โปรดกรอกรหัสผู้ใช้งานที่มีเฉพาะตัวเลขและตัวอักษร",
+        },
+        ResetPassword: {
+          required: "โปรดกรอกรหัสผ่าน",
+          alphanumeric: "โปรดกรอกรหัสผ่านที่มีเฉพาะตัวเลขและตัวอักษร",
+        },
+      },
+      errorElement: 'span',
+      errorPlacement: function(error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+      },
+      highlight: function(element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+      },
+      unhighlight: function(element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+      },
+      submitHandler: function(form) {
+        $('#showReset').hide()
+        $.ajax({
+          type: 'POST',
+          url: "services/auth/data.php?v=resetpassword",
+          data: $(form).serialize(),
+          success: function(response) {
+            if (response.status == "ok") {
+              toastr.success(response.msg)
+              $('#resetpasswordModal').modal('hide')
+
+            } else {
+              console.log(response)
+              
+              $('#showReset').text(response.msg)
+              $('#showReset').show()
+            }
           },
           error: function(error) {
             console.log(error)

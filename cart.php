@@ -36,7 +36,7 @@ include("include/header.php");
 
                                     <div class="d-flex align-items-start border-bottom">
                                         <div class="me-4">
-                                            <img src="assets/img/<?= $result['product_image'] ?>" alt="" class="avatar-lg rounded">
+                                            <img src="assets/img/product/<?= $result['product_image'] ?>" alt="" class="avatar-lg rounded">
                                         </div>
                                         <div class="flex-grow-1 align-self-center overflow-hidden">
                                             <div>

@@ -60,18 +60,38 @@ if ($data == "checkauth") {
             echo json_encode(["status" => "no", "msg" => "ไม่สามารถลงทะเบียนผู้ใช้ได้ค่ะ"]);
         }
     }
-}
-else if($data=="updateProfile"){
+} else if ($data == "updateProfile") {
     $post = $_POST;
     $connect->sql = "UPDATE `customers` SET 
-    `customer_fname`='".$post['customer_fname']."',
-    `customer_lname`='".$post['customer_lname']."',
-    `customer_telephone`='".$post['customer_telephone']."',
-    `c_address`='".$post['c_address']."',
-    `c_email`='".$post['c_email']."',
-    `c_password`='".$post['c_password']."',
-    `customer_username`='".$post['customer_username']."'
-     WHERE customer_id='".$_SESSION['customer_id']."'";
+    `customer_fname`='" . $post['customer_fname'] . "',
+    `customer_lname`='" . $post['customer_lname'] . "',
+    `customer_telephone`='" . $post['customer_telephone'] . "',
+    `c_address`='" . $post['c_address'] . "',
+    `c_email`='" . $post['c_email'] . "',
+    `c_password`='" . $post['c_password'] . "',
+    `customer_username`='" . $post['customer_username'] . "'
+     WHERE customer_id='" . $_SESSION['customer_id'] . "'";
     $connect->queryData();
     echo json_encode(["status" => "ok", 'data' => $post]);
+
+} else if ($data == "resetpassword") {
+    $username = $_POST["resetUsername"];
+    $password = $_POST["ResetPassword"];
+    $connect->sql = "SELECT * FROM	customers
+	WHERE	(c_email ='" . $username . "' OR customer_username='" . $username . "') AND c_status=1";
+    $connect->queryData();
+    $row = $connect->num_rows();
+    if ($row > 0) {
+        $rsconnect = $connect->fetch_AssocData();
+        $customer_id = $rsconnect['customer_id'];
+        $connect->sql = "UPDATE customers  SET c_password='".$password."' WHERE customer_id='".$customer_id."'";
+        $connect->queryData();
+        echo json_encode(["status" => "ok", 'msg' => "Reset Password ให้เรียบร้อยแล้วค่ะ"]);
+    }
+    else{
+        echo json_encode(["status" => "no", 'msg' => "Username หรือ Email ไม่ถูกต้องค่ะ !"]);
+        
+    }
+
+    
 }

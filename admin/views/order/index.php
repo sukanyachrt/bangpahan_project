@@ -17,15 +17,10 @@ $connect->connectData();
                     <div class="container-xxl flex-grow-1 container-p-y">
                         <h4 class="py-3 mb-0">ข้อมูลรายการสั่งซื้อทั้งหมด</h4>
                         <div class="row">
-                            <div class="col-md-12">
-
-                                <div class="my-3">
-                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                        <a href="?status=All" class="btn btn-outline-secondary <?php if (!isset($_GET['status']) || $_GET['status'] == "All") echo "active"; ?>">
-                                            <i class="tf-icons bx bx-list-check"></i>
-                                            ทั้งหมด
-
-                                        </a>
+                            <div class="col-12 mb-2">
+                                <div class="table-responsive">
+                                <div class="btn-toolbar demo-inline-spacing" role="toolbar" aria-label="Toolbar with button groups">
+                                    <div class="btn-group" role="group" aria-label="First group">
                                         <a href="?status=1" class="btn btn-outline-danger <?php if (isset($_GET['status']) && $_GET['status'] == "1") echo "active"; ?>">
                                             <i class="tf-icons bx bx-credit-card"></i>
                                             รอชำระเงิน
@@ -43,9 +38,14 @@ $connect->connectData();
                                             ?>
 
                                         </a>
+
+
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="First group">
+
                                         <a href="?status=2" class="btn btn-outline-warning <?php if (isset($_GET['status']) && $_GET['status'] == "2") echo "active"; ?>">
                                             <i class="tf-icons bx bx-check-circle"></i>
-                                            รอยืนยันการชำระเงิน 
+                                            รอยืนยันการชำระเงิน
                                             <?php
                                             $connect->sql = "SELECT
                                             count( * ) AS numberorder 
@@ -59,6 +59,10 @@ $connect->connectData();
                                             }
                                             ?>
                                         </a>
+
+
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="Second group">
                                         <a href="?status=3" class="btn btn-outline-info <?php if (isset($_GET['status']) && $_GET['status'] == "3") echo "active"; ?>">
                                             <i class="tf-icons bx bxs-backpack"></i>
                                             รอจัดส่ง
@@ -75,6 +79,11 @@ $connect->connectData();
                                             }
                                             ?>
                                         </a>
+
+
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="Second group">
+
                                         <a href="?status=4" class="btn btn-outline-success <?php if (isset($_GET['status']) && $_GET['status'] == "4") echo "active"; ?>">
                                             <i class="tf-icons bx bx-check-double"></i>
                                             จัดส่งเรียบร้อยแล้ว
@@ -91,6 +100,10 @@ $connect->connectData();
                                             }
                                             ?>
                                         </a>
+
+                                    </div>
+                                    <div class="btn-group" role="group" aria-label="Second group">
+
                                         <a href="?status=0" class="btn btn-outline-dark <?php if (isset($_GET['status']) && $_GET['status'] == "0") echo "active"; ?>">
                                             <i class="tf-icons bx bx-x"></i>
                                             ข้อมูลการชำระเงินไม่ถูกต้อง
@@ -107,11 +120,32 @@ $connect->connectData();
                                             }
                                             ?>
                                         </a>
+
                                     </div>
+                                    <div class="btn-group" role="group" aria-label="Second group">
+
+                                        <a href="?status=5" class="btn btn-outline-secondary <?php if (isset($_GET['status']) && $_GET['status'] == "5") echo "active"; ?>">
+                                            <i class="tf-icons bx bx-x"></i>
+                                            ยกเลิกออเดอร์
+                                            <?php
+                                            $connect->sql = "SELECT
+                                            count( * ) AS numberorder 
+                                            FROM   orders WHERE order_status='5'";
+                                            $connect->queryData();
+                                            $rsconnect = $connect->fetch_AssocData();
+                                            if ($rsconnect['numberorder'] > 0) {
+                                            ?>
+                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                            <?php
+                                            }
+                                            ?>
+                                        </a>
+
+                                    </div>
+
                                 </div>
-
-
-
+                                </div>
+                               
                             </div>
                         </div>
 
