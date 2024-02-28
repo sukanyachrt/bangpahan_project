@@ -22,10 +22,23 @@ if ($data == "confirmorder") {
         $product->queryData();
         $result = $product->fetch_AssocData();
         $product_price = $result['product_price'];
+        $product_num = $result['product_num'];
+        $remain_num = $product_num - $order_qty; //จำนวนสินค้าคงเหลือ
+
         $order_money += $product_price * $order_qty;
         $connect->sql = "INSERT INTO `orders_detail` VALUES 
         (null,'" . $order_id . "','" . $product_id . "','" . $order_qty . "','" . $product_price . "')";
         $connect->queryData();
+
+        // ตัดข้อมูลจำนวนสินค้าออกจาก product
+        $product->sql = "UPDATE `product` SET 
+            `product_num`='" . $remain_num . "' 
+            WHERE product_id='" . $product_id . "'";
+        $product->queryData();
+
+
+
+
     }
     if ($order_id > 0) {
         unset($_SESSION['cart']);
@@ -96,4 +109,23 @@ if ($data == "confirmorder") {
     $connect->sql = "UPDATE `orders` SET order_status='5' WHERE order_id='" . $_GET['id'] . "'";
     $connect->queryData();
     echo json_encode(["status" => "ok"]);
+} else if ($data == "checkNumberofProduct") {
+    foreach ($_SESSION['cart'] as $index => $order_qty) {
+        $product_id = $index;
+        $product->sql = "SELECT  *  FROM  product  WHERE product_id ='" . $product_id . "'";
+        $product->queryData();
+        $rsproduct = $product->fetch_AssocData();
+        $product_num = $rsproduct['product_num'];
+        $product_name = $rsproduct['product_name'];
+        $remain_num = $product_num - $order_qty;
+        if ($remain_num < 0) {
+            // จำนวนสินค้าไม่พอ
+            $_SESSION['cart'][$product_id] = $remain_num + $order_qty;
+            array_push($result, ['product_id' => $product_id, 'product_name' => $product_name, 'remain_num' => $remain_num + $order_qty]);
+        }
+
+
+    }
+    echo json_encode($result);
+
 }
