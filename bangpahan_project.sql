@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2024 at 05:10 PM
+-- Generation Time: Feb 28, 2024 at 03:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,7 +49,7 @@ INSERT INTO `customers` (`customer_id`, `customer_fname`, `customer_lname`, `cus
 (3, 'สุกัญญา', 'ไชยรัตน์', '0987150308', '85', 'sukanya.chrt@gmail.com', '123456', 'customer1', '1'),
 (4, 'สุกัญญา', 'ไชยรัตน์', '0987150308', '85', 'sukanya.chrt@gmail.com', '123456', 'customer2', '1'),
 (5, 'ปัณ', 'ขำสุข', '0821234567', 'หอพัก', 'wry.2702@gmail.com', 'Pancharat2702', 'pancharat', '1'),
-(6, 'sdad', 'dasfadf', '0000000000', 'daadg', 'testt@mail.com', '0000000000', 'testt', '1'),
+(6, 'sdad', 'dasfadf', '0000000000', 'daadg', 'testt@mail.com', '0000000000', 'testt', '0'),
 (7, 'aaaaa', 'bbbbbbb', '0742822100', 'กกกdd', 'test.ck@gmail.com', '123456', 'test.ck', '0');
 
 -- --------------------------------------------------------
@@ -95,7 +95,12 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `order_status`) VALUES
 (10026, 1, '2024-02-26 21:57:00', '4'),
 (10027, 1, '2024-02-26 22:02:00', '4'),
-(10028, 1, '2024-02-26 22:23:00', '2');
+(10028, 1, '2024-02-26 22:23:00', '2'),
+(10029, 5, '2024-02-27 15:08:00', '4'),
+(10030, 5, '2024-02-27 15:33:00', '0'),
+(10031, 5, '2024-02-27 15:49:00', '2'),
+(10032, 5, '2024-02-27 15:50:00', '4'),
+(10033, 1, '2024-02-28 09:41:00', '1');
 
 -- --------------------------------------------------------
 
@@ -137,7 +142,15 @@ INSERT INTO `orders_detail` (`orderdetail_id`, `order_id`, `product_id`, `order_
 (59, 10027, 7, '3', '53'),
 (60, 10027, 8, '1', '53'),
 (61, 10028, 11, '4', '50'),
-(62, 10028, 7, '1', '53');
+(62, 10028, 7, '1', '53'),
+(63, 10029, 8, '2', '53'),
+(64, 10029, 9, '1', '46'),
+(65, 10029, 4, '1', '74'),
+(66, 10030, 9, '2', '46'),
+(67, 10031, 9, '2', '46'),
+(68, 10032, 6, '2', '36'),
+(69, 10033, 21, '20', '50'),
+(70, 10033, 5, '1', '46');
 
 -- --------------------------------------------------------
 
@@ -163,7 +176,11 @@ CREATE TABLE `payment` (
 INSERT INTO `payment` (`pay_id`, `order_id`, `pay_date`, `pay_total`, `pay_bank`, `pay_image`, `pay_time`, `pay_detail`) VALUES
 (25, 10026, '2024-02-24', '376.00', 'kbank', '176dbd56-ee12-4965-a9d2-ff4c343b5904.jfif', '21:58:00', ''),
 (26, 10027, '2024-02-26', '212', 'kbank', '176dbd56-ee12-4965-a9d2-ff4c343b5904.jfif', '22:02:00', ''),
-(27, 10028, '2024-02-26', '253', 'bbl', '176dbd56-ee12-4965-a9d2-ff4c343b5904.jfif', '22:26:00', '');
+(27, 10028, '2024-02-26', '253', 'bbl', '176dbd56-ee12-4965-a9d2-ff4c343b5904.jfif', '22:26:00', ''),
+(28, 10029, '2024-02-27', '226', 'scb', '429111580_702925185333865_8743884903092698081_n.jpg', '15:08:00', ''),
+(29, 10030, '2024-02-27', '92', 'ktb', '429111580_702925185333865_8743884903092698081_n.jpg', '15:33:00', ''),
+(30, 10031, '2024-02-27', '92', 'ktb', '429111580_702925185333865_8743884903092698081_n.jpg', '15:49:00', ''),
+(31, 10032, '2024-02-27', '72', 'kbank', '429111580_702925185333865_8743884903092698081_n.jpg', '15:50:00', '');
 
 -- --------------------------------------------------------
 
@@ -191,7 +208,7 @@ INSERT INTO `product` (`product_id`, `progroup_id`, `product_name`, `product_det
 (2, 8, 'ตะกร้อมือสแตนเลส M', 'ตะกร้อมือสแตนเลส อย่างหนา ไซส์ M', '80', '20', '1', 'ตะกร้อมือสแตนเลสM.png'),
 (3, 8, 'ตะกร้อมือสแตนเลส S', 'ตะกร้อมือสแตนเลส อย่างหนา ไซส์ S', '65', '20', '1', 'ตะกร้อมือสแตนเลสS.png'),
 (4, 3, 'T55 French Wheat Flour', 'แป้งอเนกประสงค์ฝรั่งเศส 1kg (แบ่งบรรจุ)', '74', '10', '1', 'T55.png'),
-(5, 3, 'แป้งพัดโบก', 'แป้งพัดโบก แป้งเค้ก', '46', '15', '1', 'พัดโบกแป้งเค้ก.png'),
+(5, 3, 'แป้งพัดโบก', 'แป้งพัดโบก แป้งเค้ก', '46', '14', '1', 'พัดโบกแป้งเค้ก.png'),
 (6, 3, 'แป้งยานอวกาศ แป้งขนมปัง', 'แป้งยานอวกาศ แป้งขนมปัง 1kg', '36', '100', '1', 'ยานอวกาศ.png'),
 (7, 3, 'แป้งขนมปัง NS-Venus', 'แป้งขนมปังญี่ปุ่น NS-Venus 1kg (แบ่งบรรจุ)', '53', '100', '1', 'แป้งขนมปัง.png'),
 (8, 3, 'แป้งขนมปัง NS-Great', 'แป้งขนมปังญี่ปุ่น NS-Great 1kg (แบ่งบรรจุ)', '53', '70', '1', 'แป้งขนมปังญี่ปุ่น.png'),
@@ -204,7 +221,8 @@ INSERT INTO `product` (`product_id`, `progroup_id`, `product_name`, `product_det
 (15, 8, 'ถ้วยตวงพลาสติก', 'ถ้วยตวงพลาสติก ขนาด 600 ml', '80', '20', '1', 'ถ้วยตวงพลาสติก600ml.png'),
 (16, 8, 'เซ็ตถ้วยตวง 5 ชิ้น', 'ชุดเซ็ตถ้วยตวงพลาสติก 5 ชิ้น (คละสี)', '60', '15', '1', 'เซ็ตถ้วยตวง.png'),
 (17, 8, 'ชุดช้อนตวง', 'ชุดช้อนตวงสแตนเลส 4 ชิ้น', '60', '50', '1', 'ชุดช้อนตวง.png'),
-(18, 6, 'Barry Cocoa Powder Plein Arome 1kg', 'ผงโกโก้ Barry Cocoa Powder Arome (Dark Brown#2) 1KG', '540', '100', '1', 'barry dark.png');
+(18, 6, 'Barry Cocoa Powder Plein Arome 1kg', 'ผงโกโก้ Barry Cocoa Powder Arome (Dark Brown#2) 1KG', '540', '100', '1', 'barry dark.png'),
+(21, 4, 'เนยเค็ม', 'เนย', '50', '30', '1', 'เนยจืด_เนยเค็ม.jpg');
 
 -- --------------------------------------------------------
 
@@ -326,25 +344,25 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อ', AUTO_INCREMENT=10029;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อ', AUTO_INCREMENT=10034;
 
 --
 -- AUTO_INCREMENT for table `orders_detail`
 --
 ALTER TABLE `orders_detail`
-  MODIFY `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อสินค้า', AUTO_INCREMENT=63;
+  MODIFY `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อสินค้า', AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'เลขที่การชำระเงิน', AUTO_INCREMENT=28;
+  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'เลขที่การชำระเงิน', AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `productgroup`
