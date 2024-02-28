@@ -153,7 +153,7 @@ $connect->connectData();
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li class="d-flex">
+                                            <li class="d-flex mb-4 pb-1">
                                                 <div class="avatar flex-shrink-0 me-3">
                                                     <span class="avatar-initial rounded bg-label-dark"><i class="bx bx-x"></i></span>
                                                 </div>
@@ -167,6 +167,28 @@ $connect->connectData();
                                                             $connect->sql = "SELECT
                                             count( * ) AS numberorder 
                                             FROM   orders WHERE order_status='0'";
+                                                            $connect->queryData();
+                                                            $rsconnect = $connect->fetch_AssocData();
+                                                            echo $rsconnect['numberorder'];
+                                                            ?>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="d-flex">
+                                                <div class="avatar flex-shrink-0 me-3">
+                                                    <span class="avatar-initial rounded bg-label-decondary"><i class="bx bx-x"></i></span>
+                                                </div>
+                                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                                    <div class="me-2">
+                                                        <h6 class="mb-0">ยกเลิกออเดอร์</h6>
+                                                    </div>
+                                                    <div class="user-progress">
+                                                        <h4 class="fw-medium">
+                                                            <?php
+                                                            $connect->sql = "SELECT
+                                            count( * ) AS numberorder 
+                                            FROM   orders WHERE order_status='5'";
                                                             $connect->queryData();
                                                             $rsconnect = $connect->fetch_AssocData();
                                                             echo $rsconnect['numberorder'];
@@ -340,7 +362,7 @@ $connect->connectData();
             series: [],
             chart: {
                 type: 'bar',
-                height: 400,
+                height: 450,
                 stacked: true,
                 toolbar: {
                     show: true
