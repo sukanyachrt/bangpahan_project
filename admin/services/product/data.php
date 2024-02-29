@@ -98,19 +98,23 @@ FROM
         $product_image = $post['product_imageHidden'];
     }
 
+    $product_num = $post['product_num'];
+    if ($post['updateproduct_num'] > 0) {
+        $product_num = $post['product_num'] + $post['updateproduct_num'];
+    }
     $connect->sql = "UPDATE `product` SET 
     `progroup_id`='" . $post['progroup_id'] . "',
     `product_name`='" . $post['product_name'] . "',
     `product_detail`='" . $post['product_detail'] . "',
     `product_price`='" . $post['product_price'] . "',
-    `product_num`='" . $post['product_num'] . "',
+    `product_num`='" . $product_num . "',
     `product_status`='" . $post['product_status'] . "',
     product_image = '" . $product_image . "'
     WHERE product_id='" . $_GET['id'] . "'";
     $connect->queryData();
 
     echo json_encode(["result" => $connect->affected_rows()]);
-  //  echo json_encode($_POST);
+    //  echo json_encode($_POST);
 } else if ($data == "inserteproduct") {
     $post = $_POST;
     $product_image = "";

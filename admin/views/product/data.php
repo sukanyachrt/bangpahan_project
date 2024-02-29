@@ -93,11 +93,24 @@ $connect->connectData();
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <label class="col-sm-2 col-form-label" for="product_num">จำนวนสินค้า </label>
+                                                <label class="col-sm-2 col-form-label" for="product_num">จำนวนสินค้าใน Stock </label>
                                                 <div class="col-sm-10 form-group">
-                                                    <input type="text" class="form-control" id="product_num" name="product_num" placeholder="จำนวนสินค้า" />
+                                                    <input type="text" class="form-control" style="background-color: #FFB5DA; color:red" id="product_num" name="product_num" placeholder="จำนวนสินค้า" />
                                                 </div>
                                             </div>
+                                            <?php
+                                            if (isset($_GET['id'])) {
+                                            ?>
+                                                <div class="row mb-3">
+                                                    <label class="col-sm-2 col-form-label" for="product_num">อัพเดทจำนวนสินค้าใหม่ </label>
+                                                    <div class="col-sm-10 form-group">
+                                                        <input type="text" class="form-control" style="background-color: #50C4ED; color:blue;" id="updateproduct_num" name="updateproduct_num" placeholder="อัพเดทจำนวนสินค้าใหม่" />
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+
                                             <div class="row mb-3">
                                                 <label class="col-sm-2 col-form-label" for="progroup_id">กลุ่มสินค้า </label>
                                                 <div class="col-sm-10 form-group">
@@ -283,7 +296,7 @@ $connect->connectData();
 
             }
 
-          
+
         }
     });
     $("#btnReset").on("click", function() {
@@ -311,6 +324,10 @@ $connect->connectData();
             },
             product_num: {
                 required: true,
+                digits: true,
+            },
+
+            updateproduct_num: {
                 digits: true,
             },
             product_status: {
@@ -342,6 +359,14 @@ $connect->connectData();
             product_price: {
                 required: "โปรดกรอกราคาสินค้า",
             },
+            product_num: {
+                required: "โปรดกรอกจำนวนสินค้าใน STOCK",
+                digits: "กรอกเฉพาะตัวเลขเท่านั้น",
+            },
+            updateproduct_num: {
+                digits: "กรอกเฉพาะตัวเลขเท่านั้น",
+            },
+
             product_status: {
                 required: "โปรดเลือกสถานะสินค้า",
 
