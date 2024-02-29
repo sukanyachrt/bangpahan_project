@@ -26,7 +26,7 @@ for ($i = 0; $i <= $DateDiff; $i++) {
 
     $order->sql = "SELECT	orders.order_id 
     FROM	orders 
-    WHERE	order_status > 0 	AND DATE(order_date)= '" . $datesearch . "'";
+    WHERE	order_status > 0 AND  order_status!=5	AND DATE(order_date)= '" . $datesearch . "'";
 
     $order->queryData();
     $row = $order->num_rows();

@@ -400,8 +400,8 @@
     function printReportofYear() {
 
         var tableContents = $('.tbreportsell_year').prop('outerHTML');
-        var additionalHeader = '<h5 class="text-center">ร้านบางปะหันบรรจุภัณฑ์</h5>';
-        var additionalContent = '<h5 class="text-center">รายงานยอดขายสรุปรายปี</h5>';
+        var additionalHeader = '<div class="text-center mt-4" style="font-size:16px;">ร้านบางปะหันบรรจุภัณฑ์</div>';
+        var additionalContent = '<div class="text-center mb-3" style="font-size:16px;">รายงานยอดขายสรุปรายปี</div>';
         var contentToPrint = additionalHeader+additionalContent + tableContents;
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
@@ -428,8 +428,8 @@
 
     function printReportofMonth() {
         var tableContents = $('.tbreportsell_month').prop('outerHTML');
-        var additionalHeader = '<h5 class="text-center">ร้านบางปะหันบรรจุภัณฑ์</h5>';
-        var additionalContent = '<h5 class="text-center">รายงานยอดขายสรุปรายเดือน</h5>';
+        var additionalHeader = '<div class="text-center mt-4" style="font-size:16px;">ร้านบางปะหันบรรจุภัณฑ์</div>';
+        var additionalContent = '<div class="text-center mb-3" style="font-size:16px;">รายงานยอดขายสรุปรายเดือน</div>';
         var contentToPrint =additionalHeader+ additionalContent + tableContents;
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
@@ -457,8 +457,9 @@
     function printReportofDay() {
 
         var tableContents = $('.tbreportsell_day').prop('outerHTML');
-        var additionalHeader = '<h5 class="text-center">ร้านบางปะหันบรรจุภัณฑ์</h5>';
-        var additionalContent = '<h5 class="text-center">รายงานยอดขายสรุปรายวัน</h5>';
+        var additionalHeader = '<div class="text-center mt-4" style="font-size:16px;">ร้านบางปะหันบรรจุภัณฑ์</div>';
+        var additionalContent = '<div class="text-center mb-3" style="font-size:16px;">รายงานยอดขายสรุปรายวัน</div>';
+       
         var contentToPrint = additionalHeader+additionalContent + tableContents;
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
@@ -485,8 +486,9 @@
     function printReportofbestsell(){
 
         var tableContents = $('.tbreportbestsell').prop('outerHTML');
-        var additionalHeader = '<h5 class="text-center">ร้านบางปะหันบรรจุภัณฑ์</h5>';
-        var additionalContent = '<h5 class="text-center">รายงานสินค้าขายดี</h5>';
+        var additionalHeader = '<div class="text-center mt-4" style="font-size:16px;">ร้านบางปะหันบรรจุภัณฑ์</div>';
+        var additionalContent = '<div class="text-center mb-3" style="font-size:16px;">รายงานสินค้าขายดี</div>';
+        
         var contentToPrint = additionalHeader+additionalContent + tableContents;
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
