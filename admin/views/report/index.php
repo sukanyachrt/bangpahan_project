@@ -416,7 +416,7 @@
         printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />');
         printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />');
         printWindow.document.write('<style>body {        -webkit-print-color-adjust: exact !important;        print-color-adjust: exact !important;    }</style>');
-        printWindow.document.write('<head><title>รายงานยอดขายสรุปรายเดือน</title></head><body>');
+        printWindow.document.write('<head><title>รายงานยอดขายสรุปรายปี</title></head><body>');
         printWindow.document.write(contentToPrint);
         printWindow.document.write('</body></html>');
         printWindow.document.close();
@@ -474,7 +474,7 @@
         printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />');
         printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />');
         printWindow.document.write('<style>body {        -webkit-print-color-adjust: exact !important;        print-color-adjust: exact !important;    }</style>');
-        printWindow.document.write('<head><title>รายงานยอดขายสรุปรายเดือน</title></head><body>');
+        printWindow.document.write('<head><title>รายงานยอดขายสรุปรายวัน</title></head><body>');
         printWindow.document.write(contentToPrint);
         printWindow.document.write('</body></html>');
         printWindow.document.close();
