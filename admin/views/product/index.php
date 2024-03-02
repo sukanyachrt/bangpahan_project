@@ -1,6 +1,18 @@
 <?php include("../../include/header.php"); ?>
 <link rel="stylesheet" href="../../assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="../../assets/plugins/toastr/toastr.min.css">
+<link rel="stylesheet" href="../../assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../../assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../../assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<style>
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_length {
+        float: left !important;
+    }
+</style>
 
 <body>
     <div class="layout-wrapper layout-content-navbar">
@@ -33,7 +45,7 @@
                                     </h5>
                                     <div class="card-body">
                                         <div class="table-responsive text-nowrap">
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered" id="tableProduct">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center">รหัสสินค้า</th>
@@ -91,7 +103,15 @@
 <script src="../../assets/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="../../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="../../assets/plugins/toastr/toastr.min.js"></script>
+<script src="../../assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+
 <script>
+    var table;
     $(document).ready(function() {
         dataProduct();
         if (sessionStorage.getItem('toastrShown') === 'edit') {
@@ -103,11 +123,9 @@
             sessionStorage.removeItem('toastrShown');
         }
     });
-    $("#search").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#tbProduct tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
+    $('#search').on('input', function() {
+        var value = $(this).val().trim();
+        table.search(value).draw();
     });
 
 
@@ -115,7 +133,28 @@
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
+                $('#tableProduct').DataTable().destroy();
                 document.getElementById("tbProduct").innerHTML = this.responseText;
+                $('#tableProduct').DataTable({
+                    "language": {
+                        "lengthMenu": "แสดง _MENU_ รายการ",
+                        "info": "แสดง _START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+                        "infoEmpty": "ไม่พบรายการ",
+                        "infoFiltered": "(กรองจากทั้งหมด _MAX_ รายการ)",
+                        "search": "ค้นหา:",
+                        "paginate": {
+                            "first": "หน้าแรก",
+                            "last": "หน้าสุดท้าย",
+                            "next": "ถัดไป",
+                            "previous": "ก่อนหน้า"
+                        }
+                    },
+                    "lengthMenu": [
+                        [10, 25, 50, 100, -1],
+                        [10, 25, 50, 100, "ทั้งหมด"]
+                    ]
+                });
+                table = $('#tableProduct').DataTable();
 
             }
         };

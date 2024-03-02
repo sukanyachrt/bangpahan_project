@@ -202,10 +202,10 @@ $connect->connectData();
 <script src="../../assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 
 <script>
-    var table; // Declare the 'table' variable globally
+    var table; 
 
     $(document).ready(function() {
-        dataProducttype();
+        dataOrder();
         if (sessionStorage.getItem('toastrShown') === 'edit') {
             toastr.success("แก้ไขข้อมูลแล้วค่ะ !");
             sessionStorage.removeItem('toastrShown');
@@ -221,7 +221,7 @@ $connect->connectData();
         table.search(value).draw();
     });
 
-    function dataProducttype() {
+    function dataOrder() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
