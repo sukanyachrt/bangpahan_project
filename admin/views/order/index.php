@@ -1,6 +1,18 @@
 <?php include("../../include/header.php"); ?>
 <link rel="stylesheet" href="../../assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
 <link rel="stylesheet" href="../../assets/plugins/toastr/toastr.min.css">
+<link rel="stylesheet" href="../../assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../../assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="../../assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+<style>
+    .dataTables_filter {
+        display: none;
+    }
+
+    .dataTables_length {
+        float: left !important;
+    }
+</style>
 <?php
 require_once("../../services/connect_data.php");
 $connect = new Connect_Data();
@@ -19,122 +31,122 @@ $connect->connectData();
                         <div class="row">
                             <div class="col-12 mb-2">
                                 <div class="table-responsive">
-                                <div class="btn-toolbar demo-inline-spacing" role="toolbar" aria-label="Toolbar with button groups">
-                                    <div class="btn-group" role="group" aria-label="First group">
-                                        <a href="?status=1" class="btn btn-outline-danger <?php if (isset($_GET['status']) && $_GET['status'] == "1") echo "active"; ?>">
-                                            <i class="tf-icons bx bx-credit-card"></i>
-                                            รอชำระเงิน
-                                            <?php
-                                            $connect->sql = "SELECT
+                                    <div class="btn-toolbar demo-inline-spacing" role="toolbar" aria-label="Toolbar with button groups">
+                                        <div class="btn-group" role="group" aria-label="First group">
+                                            <a href="?status=1" class="btn btn-outline-danger <?php if (isset($_GET['status']) && $_GET['status'] == "1") echo "active"; ?>">
+                                                <i class="tf-icons bx bx-credit-card"></i>
+                                                รอชำระเงิน
+                                                <?php
+                                                $connect->sql = "SELECT
                                             count( * ) AS numberorder 
                                             FROM   orders WHERE order_status='1'";
-                                            $connect->queryData();
-                                            $rsconnect = $connect->fetch_AssocData();
-                                            if ($rsconnect['numberorder'] > 0) {
-                                            ?>
-                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
-                                            <?php
-                                            }
-                                            ?>
+                                                $connect->queryData();
+                                                $rsconnect = $connect->fetch_AssocData();
+                                                if ($rsconnect['numberorder'] > 0) {
+                                                ?>
+                                                    <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                                <?php
+                                                }
+                                                ?>
 
-                                        </a>
+                                            </a>
 
 
-                                    </div>
-                                    <div class="btn-group" role="group" aria-label="First group">
+                                        </div>
+                                        <div class="btn-group" role="group" aria-label="First group">
 
-                                        <a href="?status=2" class="btn btn-outline-warning <?php if (isset($_GET['status']) && $_GET['status'] == "2") echo "active"; ?>">
-                                            <i class="tf-icons bx bx-check-circle"></i>
-                                            รอยืนยันการชำระเงิน
-                                            <?php
-                                            $connect->sql = "SELECT
+                                            <a href="?status=2" class="btn btn-outline-warning <?php if (isset($_GET['status']) && $_GET['status'] == "2") echo "active"; ?>">
+                                                <i class="tf-icons bx bx-check-circle"></i>
+                                                รอยืนยันการชำระเงิน
+                                                <?php
+                                                $connect->sql = "SELECT
                                             count( * ) AS numberorder 
                                             FROM   orders WHERE order_status='2'";
-                                            $connect->queryData();
-                                            $rsconnect = $connect->fetch_AssocData();
-                                            if ($rsconnect['numberorder'] > 0) {
-                                            ?>
-                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
-                                            <?php
-                                            }
-                                            ?>
-                                        </a>
+                                                $connect->queryData();
+                                                $rsconnect = $connect->fetch_AssocData();
+                                                if ($rsconnect['numberorder'] > 0) {
+                                                ?>
+                                                    <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                                <?php
+                                                }
+                                                ?>
+                                            </a>
 
 
-                                    </div>
-                                    <div class="btn-group" role="group" aria-label="Second group">
-                                        <a href="?status=3" class="btn btn-outline-info <?php if (isset($_GET['status']) && $_GET['status'] == "3") echo "active"; ?>">
-                                            <i class="tf-icons bx bxs-backpack"></i>
-                                            รอจัดส่ง
-                                            <?php
-                                            $connect->sql = "SELECT
+                                        </div>
+                                        <div class="btn-group" role="group" aria-label="Second group">
+                                            <a href="?status=3" class="btn btn-outline-info <?php if (isset($_GET['status']) && $_GET['status'] == "3") echo "active"; ?>">
+                                                <i class="tf-icons bx bxs-backpack"></i>
+                                                รอจัดส่ง
+                                                <?php
+                                                $connect->sql = "SELECT
                                             count( * ) AS numberorder 
                                             FROM   orders WHERE order_status='3'";
-                                            $connect->queryData();
-                                            $rsconnect = $connect->fetch_AssocData();
-                                            if ($rsconnect['numberorder'] > 0) {
-                                            ?>
-                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
-                                            <?php
-                                            }
-                                            ?>
-                                        </a>
+                                                $connect->queryData();
+                                                $rsconnect = $connect->fetch_AssocData();
+                                                if ($rsconnect['numberorder'] > 0) {
+                                                ?>
+                                                    <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                                <?php
+                                                }
+                                                ?>
+                                            </a>
 
 
-                                    </div>
-                                    <div class="btn-group" role="group" aria-label="Second group">
+                                        </div>
+                                        <div class="btn-group" role="group" aria-label="Second group">
 
-                                        <a href="?status=4" class="btn btn-outline-success <?php if (isset($_GET['status']) && $_GET['status'] == "4") echo "active"; ?>">
-                                            <i class="tf-icons bx bx-check-double"></i>
-                                            จัดส่งเรียบร้อยแล้ว
-                                           
-                                        </a>
+                                            <a href="?status=4" class="btn btn-outline-success <?php if (isset($_GET['status']) && $_GET['status'] == "4") echo "active"; ?>">
+                                                <i class="tf-icons bx bx-check-double"></i>
+                                                จัดส่งเรียบร้อยแล้ว
 
-                                    </div>
-                                    <div class="btn-group" role="group" aria-label="Second group">
+                                            </a>
 
-                                        <a href="?status=0" class="btn btn-outline-dark <?php if (isset($_GET['status']) && $_GET['status'] == "0") echo "active"; ?>">
-                                            <i class="tf-icons bx bx-x"></i>
-                                            ข้อมูลการชำระเงินไม่ถูกต้อง
-                                            <?php
-                                            $connect->sql = "SELECT
+                                        </div>
+                                        <div class="btn-group" role="group" aria-label="Second group">
+
+                                            <a href="?status=0" class="btn btn-outline-dark <?php if (isset($_GET['status']) && $_GET['status'] == "0") echo "active"; ?>">
+                                                <i class="tf-icons bx bx-x"></i>
+                                                ข้อมูลการชำระเงินไม่ถูกต้อง
+                                                <?php
+                                                $connect->sql = "SELECT
                                             count( * ) AS numberorder 
                                             FROM   orders WHERE order_status='0'";
-                                            $connect->queryData();
-                                            $rsconnect = $connect->fetch_AssocData();
-                                            if ($rsconnect['numberorder'] > 0) {
-                                            ?>
-                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
-                                            <?php
-                                            }
-                                            ?>
-                                        </a>
+                                                $connect->queryData();
+                                                $rsconnect = $connect->fetch_AssocData();
+                                                if ($rsconnect['numberorder'] > 0) {
+                                                ?>
+                                                    <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                                <?php
+                                                }
+                                                ?>
+                                            </a>
 
-                                    </div>
-                                    <div class="btn-group" role="group" aria-label="Second group">
+                                        </div>
+                                        <div class="btn-group" role="group" aria-label="Second group">
 
-                                        <a href="?status=5" class="btn btn-outline-secondary <?php if (isset($_GET['status']) && $_GET['status'] == "5") echo "active"; ?>">
-                                            <i class="tf-icons bx bx-x"></i>
-                                            ยกเลิกออเดอร์
-                                            <?php
-                                            $connect->sql = "SELECT
+                                            <a href="?status=5" class="btn btn-outline-secondary <?php if (isset($_GET['status']) && $_GET['status'] == "5") echo "active"; ?>">
+                                                <i class="tf-icons bx bx-x"></i>
+                                                ยกเลิกออเดอร์
+                                                <?php
+                                                $connect->sql = "SELECT
                                             count( * ) AS numberorder 
                                             FROM   orders WHERE order_status='5'";
-                                            $connect->queryData();
-                                            $rsconnect = $connect->fetch_AssocData();
-                                            if ($rsconnect['numberorder'] > 0) {
-                                            ?>
-                                                <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
-                                            <?php
-                                            }
-                                            ?>
-                                        </a>
+                                                $connect->queryData();
+                                                $rsconnect = $connect->fetch_AssocData();
+                                                if ($rsconnect['numberorder'] > 0) {
+                                                ?>
+                                                    <div class="badge bg-danger rounded-pill ms-auto"><?= $rsconnect['numberorder'] ?></div>
+                                                <?php
+                                                }
+                                                ?>
+                                            </a>
+
+                                        </div>
 
                                     </div>
+                                </div>
 
-                                </div>
-                                </div>
-                               
                             </div>
                         </div>
 
@@ -148,7 +160,7 @@ $connect->connectData();
                                 </h5>
                                 <div class="card-body">
                                     <div class="table-responsive text-nowrap">
-                                        <table class="table table-bordered">
+                                        <table class="table table-bordered" id="tablePayment">
                                             <thead>
                                                 <tr>
                                                     <th class="text-center">รหัสการสั่งซื้อ</th>
@@ -182,7 +194,16 @@ $connect->connectData();
 <script src="../../assets/plugins/jquery-validation/jquery.validate.min.js"></script>
 <script src="../../assets/plugins/sweetalert2/sweetalert2.min.js"></script>
 <script src="../../assets/plugins/toastr/toastr.min.js"></script>
+<script src="../../assets/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+
 <script>
+    var table; // Declare the 'table' variable globally
+
     $(document).ready(function() {
         dataProducttype();
         if (sessionStorage.getItem('toastrShown') === 'edit') {
@@ -194,20 +215,35 @@ $connect->connectData();
             sessionStorage.removeItem('toastrShown');
         }
     });
-    $("#search").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#tbPayment tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-    });
 
+    $('#search').on('input', function() {
+        var value = $(this).val().trim();
+        table.search(value).draw();
+    });
 
     function dataProducttype() {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
+                $('#tablePayment').DataTable().destroy();
                 document.getElementById("tbPayment").innerHTML = this.responseText;
-
+                $('#tablePayment').DataTable({
+                    "language": {
+                        "lengthMenu": "แสดง _MENU_ รายการ",
+                        "info": "แสดง _START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+                        "infoEmpty": "ไม่พบรายการ",
+                        "infoFiltered": "(กรองจากทั้งหมด _MAX_ รายการ)",
+                        "search": "ค้นหา:",
+                        "paginate": {
+                            "first": "หน้าแรก",
+                            "last": "หน้าสุดท้าย",
+                            "next": "ถัดไป",
+                            "previous": "ก่อนหน้า"
+                        }
+                    },
+                    "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100, "ทั้งหมด"] ]
+                });
+                table = $('#tablePayment').DataTable();
             }
         };
         var status = "<?php echo isset($_GET['status']) ? $_GET['status'] : 'All'; ?>";
