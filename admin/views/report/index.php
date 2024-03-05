@@ -67,7 +67,7 @@
                                             <div class="tab-pane fade show active" id="navs-top-year" role="tabpanel">
                                                 <div class="row mb-2">
                                                     <div class="col-md-12 text-md-end">
-                                                        <button class="btn btn-dark text-end" onclick="printReportofYear()">Print</button>
+                                                        <a class="btn btn-dark text-end" href="ReportofYear.php">Print</a>
                                                     </div>
                                                 </div>
                                                 <div class="table-responsive text-nowrap">
