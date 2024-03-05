@@ -2,7 +2,16 @@
 include("include/header.php");
 ?>
 <style>
+    .dataTables_filter {
+        display: none;
+    }
 
+    .dataTables_length {
+        float: left !important;
+    }
+    .dataTables_paginate {
+        float: right !important;
+    }
 </style>
 <?php
 $order = new Connect_Data();
@@ -23,7 +32,7 @@ $orderdetail->connectData();
                     <?php
                     if (!isset($_SESSION['customer_id'])) {
 
-                    ?>
+                        ?>
                         <div class="card text-center my-4">
                             <div class="card-header bg-danger text-white">
                                 ไม่มีข้อมูลผู้ใช้งาน
@@ -34,12 +43,12 @@ $orderdetail->connectData();
                             </div>
 
                         </div>
-                    <?php
+                        <?php
 
                     } else {
 
 
-                    ?>
+                        ?>
                         <div class="row mb-2 mt-3">
                             <div class="col-md-8 text-start text-md-end">
                                 <p class="pt-1"> ค้นหาข้อมูล : </p>
@@ -56,8 +65,8 @@ $orderdetail->connectData();
                             </div>
 
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped ">
+                        <div class="table-responsive col-md-12">
+                            <table class="table table-bordered table-striped" id="tableorder">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-center">#</th>
@@ -75,7 +84,7 @@ $orderdetail->connectData();
                                     $noid = 1;
                                     $row = $order->num_rows();
                                     if ($row == 0) {
-                                    ?>
+                                        ?>
                                         <tr>
                                             <td colspan="6" class="text-center">
                                                 <div class="card m-5">
@@ -83,7 +92,7 @@ $orderdetail->connectData();
                                                 </div>
                                             </td>
                                         </tr>
-                                    <?php
+                                        <?php
                                     }
                                     while ($rsorder = $order->fetch_AssocData()) {
                                         $sumprice = 0;
@@ -104,12 +113,20 @@ $orderdetail->connectData();
                                         $orderdetail->queryData();
                                         $rsorderdetail = $orderdetail->fetch_AssocData();
                                         $sumprice = $rsorderdetail['sumprice'];
-                                    ?>
+                                        ?>
                                         <tr>
-                                            <td class="text-center"><?= ($noid++) ?></td>
-                                            <td class="text-center"><?= $order_id ?></td>
-                                            <td class="text-center"><?= date('d/m/Y', strtotime($rsorder['order_date'])) ?></td>
-                                            <td class="text-center"><?= "฿" . number_format($sumprice, 2) ?></td>
+                                            <td class="text-center">
+                                                <?= ($noid++) ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?= $order_id ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?= date('d/m/Y', strtotime($rsorder['order_date'])) ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?= "฿" . number_format($sumprice, 2) ?>
+                                            </td>
                                             <td class="text-center status">
                                                 <?php
                                                 if ($rsorder['order_status'] == 1) {
@@ -122,19 +139,21 @@ $orderdetail->connectData();
                                                     echo '<span class="badge rounded-pill bg-success">จัดส่งเรียบร้อยแล้ว</span>';
                                                 } else if ($rsorder['order_status'] == 0) {
                                                     echo '<span class="badge rounded-pill bg-dark">ข้อมูลการขำระเงินไม่ถูกต้อง</span>';
-                                                }
-                                                else if ($rsorder['order_status'] == 5) {
+                                                } else if ($rsorder['order_status'] == 5) {
                                                     echo '<span class="badge rounded-pill bg-dark">ยกเลิกออเดอร์</span>';
                                                 }
                                                 ?>
                                             </td>
                                             <td class="text-center">
 
-                                                <a href="orderdetail.php?id=<?php echo $rsorder['order_id'] ?>" type="button" class="btn btn-outline-danger btn-sm"><i class="bi bi-eye"></i></a>
-                                                <button type="button" onclick="cancelOrder('<?php echo  $rsorder['order_id'] ?>','<?php echo $rsorder['order_status'] ?>')" class="btn btn-outline-dark btn-sm">X</a>
+                                                <a href="orderdetail.php?id=<?php echo $rsorder['order_id'] ?>" type="button"
+                                                    class="btn btn-outline-danger btn-sm"><i class="bi bi-eye"></i></a>
+                                                <button type="button"
+                                                    onclick="cancelOrder('<?php echo $rsorder['order_id'] ?>','<?php echo $rsorder['order_status'] ?>')"
+                                                    class="btn btn-outline-dark btn-sm">X</a>
                                             </td>
                                         </tr>
-                                    <?php
+                                        <?php
                                     }
                                     ?>
                                 </tbody>
@@ -157,7 +176,8 @@ $orderdetail->connectData();
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                        <button type="button" class="btn btn-dark" id="btnidcancelOrder" value="" onclick="confirmCancelorder()">ตกลง</button>
+                        <button type="button" class="btn btn-dark" id="btnidcancelOrder" value=""
+                            onclick="confirmCancelorder()">ตกลง</button>
                     </div>
                 </div>
             </div>
@@ -165,23 +185,44 @@ $orderdetail->connectData();
     </section>
     <?php include("include/footer.php"); ?>
 
-    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
     <div id="preloader"></div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <?php include("include/script.php"); ?>
+    <script src="admin/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="admin/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="admin/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="admin/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="admin/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="admin/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#statusFilter').change(function() {
-                var selectedStatus = $(this).val();
-                $('table tbody tr').each(function() {
-                    var status = $(this).find('.status').text().trim();
-                    if (selectedStatus == 'ทั้งหมด' || status == selectedStatus) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
+        $(document).ready(function () {
+            var table; 
+
+            $('#tableorder').DataTable({
+                "language": {
+                    "lengthMenu": "แสดง _MENU_ รายการ",
+                    "info": "แสดง _START_ ถึง _END_ จากทั้งหมด _TOTAL_ รายการ",
+                    "infoEmpty": "ไม่พบรายการ",
+                    "infoFiltered": "(กรองจากทั้งหมด _MAX_ รายการ)",
+                    "search": "ค้นหา:",
+                    "paginate": {
+                        "first": "หน้าแรก",
+                        "last": "หน้าสุดท้าย",
+                        "next": "ถัดไป",
+                        "previous": "ก่อนหน้า"
                     }
-                });
+                },
+                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "ทั้งหมด"]]
+            });
+            table = $('#tableorder').DataTable();
+
+            $('#statusFilter').change(function () {
+                var selectedStatus = $(this).val();
+                table.search(selectedStatus).draw();
+                
             });
         });
 
@@ -205,12 +246,12 @@ $orderdetail->connectData();
                 $.ajax({
                     type: 'GET',
                     url: "services/cart/order.php?v=cancelOrder&id=" + id,
-                    success: function(response) {
+                    success: function (response) {
                         window.location = "order.php"
                     }
                 });
             }
-            else{
+            else {
                 $('#exampleModal').modal('hide')
             }
 
