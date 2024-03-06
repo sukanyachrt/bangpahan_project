@@ -29,36 +29,48 @@
                             <div class="col-md-12">
                                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                                     <li class="nav-item">
-                                        <a class="nav-link <?php if (!isset($_GET['report']) || $_GET['report'] == "reportsell") echo "active"; ?>" href="?report=reportsell">
-                                            <img width="30" height="30" src="../../assets/img/icons/unicons/bestseller.png" alt="bestseller" />
+                                        <a class="nav-link <?php if (!isset($_GET['report']) || $_GET['report'] == "reportsell")
+                                            echo "active"; ?>"
+                                            href="?report=reportsell">
+                                            <img width="30" height="30"
+                                                src="../../assets/img/icons/unicons/bestseller.png" alt="bestseller" />
                                             รายงานยอดขาย
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link <?php if (isset($_GET['report']) && $_GET['report'] == "bestsell") echo "active"; ?>" href="?report=bestsell">
-                                            <img width="30" height="30" src="../../assets/img/icons/unicons/profit.png" alt="profit" />
+                                        <a class="nav-link <?php if (isset($_GET['report']) && $_GET['report'] == "bestsell")
+                                            echo "active"; ?>"
+                                            href="?report=bestsell">
+                                            <img width="30" height="30" src="../../assets/img/icons/unicons/profit.png"
+                                                alt="profit" />
                                             รายงานสินค้าขายดี
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                             <?php if (!isset($_GET['report']) || $_GET['report'] == "reportsell") {
-                            ?>
+                                ?>
                                 <div class="col-md-12 mb-4 order-0">
                                     <div class="nav-align-top mb-4">
                                         <ul class="nav nav-tabs" role="tablist">
                                             <li class="nav-item">
-                                                <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-year" aria-controls="navs-top-year" aria-selected="true">
+                                                <button type="button" class="nav-link active" role="tab"
+                                                    data-bs-toggle="tab" data-bs-target="#navs-top-year"
+                                                    aria-controls="navs-top-year" aria-selected="true">
                                                     รายปี
                                                 </button>
                                             </li>
                                             <li class="nav-item">
-                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-month" aria-controls="navs-top-month" aria-selected="false">
+                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                    data-bs-target="#navs-top-month" aria-controls="navs-top-month"
+                                                    aria-selected="false">
                                                     รายเดือน
                                                 </button>
                                             </li>
                                             <li class="nav-item">
-                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-day" aria-controls="navs-top-day" aria-selected="false">
+                                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                                    data-bs-target="#navs-top-day" aria-controls="navs-top-day"
+                                                    aria-selected="false">
                                                     รายวัน
                                                 </button>
                                             </li>
@@ -85,8 +97,10 @@
                                             </div>
                                             <div class="tab-pane fade" id="navs-top-month" role="tabpanel">
                                                 <div class="input-group mb-4">
-                                                    <button class="btn btn-outline-primary" type="button">ค้นหาข้อมูล : </button>
-                                                    <select class="form-select" id="serachByYear" aria-label="Example select with button addon">
+                                                    <button class="btn btn-outline-primary" type="button">ค้นหาข้อมูล :
+                                                    </button>
+                                                    <select class="form-select" id="serachByYear"
+                                                        aria-label="Example select with button addon">
                                                         <option selected value="">เลือกปีที่ต้องการ...</option>
                                                         <?php
                                                         $connect->sql = "SELECT YEAR
@@ -97,9 +111,11 @@
                                                         $connect->queryData();
                                                         while ($rsconnect = $connect->fetch_AssocData()) {
                                                             $yearorder = $rsconnect['yearorder'];
-                                                        ?>
-                                                            <option value="<?= $yearorder ?>"><?= $yearorder ?></option>
-                                                        <?php
+                                                            ?>
+                                                            <option value="<?= $yearorder ?>">
+                                                                <?= $yearorder ?>
+                                                            </option>
+                                                            <?php
                                                         }
                                                         ?>
 
@@ -107,7 +123,8 @@
                                                 </div>
                                                 <div class="row mb-2">
                                                     <div class="col-md-12 text-md-end">
-                                                        <button class="btn btn-dark text-end" onclick="printReportofMonth()">Print</button>
+                                                        <button class="btn btn-dark text-end"
+                                                            onclick="printReportofMonth()">Print</button>
                                                     </div>
                                                 </div>
                                                 <div class="table-responsive text-nowrap">
@@ -127,18 +144,22 @@
                                             <div class="tab-pane fade" id="navs-top-day" role="tabpanel">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <input type="text" class="start-date form-control" placeholder="วันที่เริ่มต้น" value="">
+                                                        <input type="text" class="start-date form-control"
+                                                            placeholder="วันที่เริ่มต้น" value="">
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="input-group">
-                                                            <input type="text" class="end-date form-control" value="" placeholder="วันที่สิ้นสุด">
-                                                            <button class="btn btn-outline-primary" onclick="dataDay()" type="button">ค้นหาข้อมูล</button>
+                                                            <input type="text" class="end-date form-control" value=""
+                                                                placeholder="วันที่สิ้นสุด">
+                                                            <button class="btn btn-outline-primary" onclick="dataDay()"
+                                                                type="button">ค้นหาข้อมูล</button>
                                                         </div>
 
                                                     </div>
 
                                                     <div class="col-md-12 text-md-end mt-4">
-                                                        <button class="btn btn-dark text-end" onclick="printReportofDay()">Print</button>
+                                                        <button class="btn btn-dark text-end"
+                                                            onclick="printReportofDay()">Print</button>
                                                     </div>
 
                                                     <div class="col-12 mt-2">
@@ -161,50 +182,53 @@
                                         </div>
                                     </div>
                                 </div>
-                            <?php
+                                <?php
                             } else if (!isset($_GET['report']) || $_GET['report'] == "bestsell") {
 
-                            ?>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="input-group">
-                                            <div id="reportrange" class="pull-left form-control" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
-                                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-                                                <span></span> <b class="caret"></b>
+                                ?>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="input-group">
+                                                <div id="reportrange" class="pull-left form-control"
+                                                    style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc;">
+                                                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                                                    <span></span> <b class="caret"></b>
+                                                </div>
+                                                <select id="sortOrder" class="form-select">
+                                                    <option value="">เรียงลำดับตาม</option>
+                                                    <option value="ยอดขายสินค้า (สูงสุด)">ยอดขายสินค้า (สูงสุด)</option>
+                                                    <option value="ยอดขายสินค้า (ต่ำสุด)">ยอดขายสินค้า (ต่ำสุด)</option>
+                                                    <option value="จำนวนที่ขายได้ (สูงสุด)">จำนวนที่ขายได้ (สูงสุด)</option>
+                                                    <option value="จำนวนที่ขายได้ (ต่ำสุด)">จำนวนที่ขายได้ (ต่ำสุด)</option>
+                                                </select>
+                                                <button class="btn btn-outline-primary" onclick="dataBestsell()"
+                                                    type="button">ค้นหาข้อมูล</button>
                                             </div>
-                                            <select id="sortOrder" class="form-select">
-                                                <option value="">เรียงลำดับตาม</option>
-                                                <option value="ยอดขายสินค้า (สูงสุด)">ยอดขายสินค้า (สูงสุด)</option>
-                                                <option value="ยอดขายสินค้า (ต่ำสุด)">ยอดขายสินค้า (ต่ำสุด)</option>
-                                                <option value="จำนวนที่ขายได้ (สูงสุด)">จำนวนที่ขายได้ (สูงสุด)</option>
-                                                <option value="จำนวนที่ขายได้ (ต่ำสุด)">จำนวนที่ขายได้ (ต่ำสุด)</option>
-                                            </select>
-                                            <button class="btn btn-outline-primary" onclick="dataBestsell()" type="button">ค้นหาข้อมูล</button>
+                                        </div>
+
+                                        <div class="col-md-12 text-md-end mt-4">
+                                            <button class="btn btn-dark text-end"
+                                                onclick="printReportofbestsell()">Print</button>
+                                        </div>
+
+                                        <div class="col-12 mt-2">
+                                            <div class="table-responsive text-nowrap">
+                                                <table class="table table-bordered tbreportbestsell">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-end">วันที่</th>
+                                                            <th class="text-end">กลุ่มสินค้า</th>
+                                                            <th class="text-end">ชื่อสินค้า</th>
+                                                            <th class="text-end">จำนวน</th>
+                                                            <th class="text-end">ยอดขาย</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbreportbestsell">
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div class="col-md-12 text-md-end mt-4">
-                                        <button class="btn btn-dark text-end" onclick="printReportofbestsell()">Print</button>
-                                    </div>
-
-                                    <div class="col-12 mt-2">
-                                        <div class="table-responsive text-nowrap">
-                                            <table class="table table-bordered tbreportbestsell">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-end">วันที่</th>
-                                                        <th class="text-end">กลุ่มสินค้า</th>
-                                                        <th class="text-end">ชื่อสินค้า</th>
-                                                        <th class="text-end">จำนวน</th>
-                                                        <th class="text-end">ยอดขาย</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="tbreportbestsell">
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
 
                             <?php } ?>
 
@@ -218,7 +242,8 @@
                             <div class="modal-content">
                                 <div class="modal-header bg-warning ">
                                     <h4 class="modal-title text-white" id="exampleModalLabel2">แจ้งเตือน</h4>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <h5 class="">เลือกข้อมูลให้ครบถ้วน !</h5>
@@ -227,7 +252,8 @@
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
                                         ยกเลิก
                                     </button>
-                                    <button type="button" id="btnIdProduct" data-bs-dismiss="modal" class="btn btn-warning">ตกลง</button>
+                                    <button type="button" id="btnIdProduct" data-bs-dismiss="modal"
+                                        class="btn btn-warning">ตกลง</button>
                                 </div>
                             </div>
                         </div>
@@ -249,16 +275,20 @@
 <script src="../../assets/datepicker/locales/bootstrap-datepicker.th.min.js" charset="UTF-8"></script>
 <script src="../../assets/js/moment.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js" integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css" integrity="sha512-gp+RQIipEa1X7Sq1vYXnuOW96C4704yI1n0YB9T/KqdvqaEgL6nAuTSrKufUX3VBONq/TPuKiXGLVgBKicZ0KA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.min.js"
+    integrity="sha512-mh+AjlD3nxImTUGisMpHXW03gE6F4WdQyvuFRkjecwuWLwD2yCijw4tKA3NsEFpA1C3neiKhGXPSIGSfCYPMlQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css"
+    integrity="sha512-gp+RQIipEa1X7Sq1vYXnuOW96C4704yI1n0YB9T/KqdvqaEgL6nAuTSrKufUX3VBONq/TPuKiXGLVgBKicZ0KA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         dataYear();
     });
 
     function dataYear() {
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("tbreportsell_year").innerHTML = this.responseText;
 
@@ -267,7 +297,7 @@
         xhttp.open("GET", "../../services/report/tablereportsell_year.php", true);
         xhttp.send();
     }
-    $('#serachByYear').change(function() {
+    $('#serachByYear').change(function () {
         // รับค่าของ option ที่ถูกเลือก
         var selectedValue = $(this).val();
         dataMonth(selectedValue)
@@ -275,7 +305,7 @@
 
     function dataMonth(year) {
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
+        xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById("tbreportsell_month").innerHTML = this.responseText;
 
@@ -293,7 +323,7 @@
         console.log(enddate)
         if (startdate && enddate) {
             var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
+            xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("tbreportsell_day").innerHTML = this.responseText;
 
@@ -338,21 +368,21 @@
     });
 
 
-    $('.start-date').datepicker().on("changeDate", function() {
+    $('.start-date').datepicker().on("changeDate", function () {
         var startDate = $('.start-date').datepicker('getDate');
         var oneDayFromStartDate = moment(startDate).add(0, 'days').toDate();
         $('.end-date').datepicker('setStartDate', oneDayFromStartDate);
         //$('.end-date').datepicker('setDate', oneDayFromStartDate);
     });
 
-    $('.end-date').datepicker().on("show", function() {
+    $('.end-date').datepicker().on("show", function () {
         var startDate = $('.start-date').datepicker('getDate');
-        $('.day.disabled').filter(function(index) {
+        $('.day.disabled').filter(function (index) {
             return $(this).text() === moment(startDate).format('D');
         }).addClass('active');
     });
 
-    $(function() {
+    $(function () {
 
         var start = moment();
         var end = moment();
@@ -384,7 +414,7 @@
         console.log($('#sortOrder').val())
         if ($('#sortOrder').val() != "") {
             var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
+            xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     document.getElementById("tbreportbestsell").innerHTML = this.responseText;
 
@@ -402,7 +432,7 @@
         var tableContents = $('.tbreportsell_year').prop('outerHTML');
         var additionalHeader = '<div class="text-center mt-4" style="font-size:16px;">ร้านบางปะหันบรรจุภัณฑ์</div>';
         var additionalContent = '<div class="text-center mb-3" style="font-size:16px;">รายงานยอดขายสรุปรายปี</div>';
-        var contentToPrint = additionalHeader+additionalContent + tableContents;
+        var contentToPrint = additionalHeader + additionalContent + tableContents;
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
         printWindow.document.write('<html>');
@@ -427,36 +457,19 @@
 
 
     function printReportofMonth() {
-        var tableContents = $('.tbreportsell_month').prop('outerHTML');
-        var additionalHeader = '<div class="text-center mt-4" style="font-size:16px;">ร้านบางปะหันบรรจุภัณฑ์</div>';
-        var additionalContent = '<div class="text-center mb-3" style="font-size:16px;">รายงานยอดขายสรุปรายเดือน</div>';
-        var contentToPrint =additionalHeader+ additionalContent + tableContents;
-        var printWindow = window.open('', '_blank');
-        printWindow.document.open();
-        printWindow.document.write('<html>');
-        printWindow.document.write('<link rel="preconnect" href="https://fonts.googleapis.com" />');
-        printWindow.document.write('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />');
-        printWindow.document.write('<link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />');
-        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/fonts/boxicons.css" />');
-        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/css/core.css" class="template-customizer-core-css" />');
-        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />');
-        printWindow.document.write('<link rel="stylesheet" href="../../assets/css/demo.css" />');
-        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />');
-        printWindow.document.write('<link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />');
-        printWindow.document.write('<style>body {        -webkit-print-color-adjust: exact !important;        print-color-adjust: exact !important;    }</style>');
-        printWindow.document.write('<head><title>รายงานยอดขายสรุปรายเดือน</title></head><body>');
-        printWindow.document.write(contentToPrint);
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.print();
-        printWindow.close();
+        var year = $('#serachByYear').val();
+        window.open("reportMonth.php?year=" + year, '_blank');
+
     }
 
 
 
     function printReportofDay() {
+        var startdate = $('.start-date').val();
+        var enddate = $('.end-date').val();
+        window.open("reportDay.php?start=" + startdate + "&end=" + enddate, '_blank');
 
-        var tableContents = $('.tbreportsell_day').prop('outerHTML');
+        /*var tableContents = $('.tbreportsell_day').prop('outerHTML');
         var additionalHeader = '<div class="text-center mt-4" style="font-size:16px;">ร้านบางปะหันบรรจุภัณฑ์</div>';
         var additionalContent = '<div class="text-center mb-3" style="font-size:16px;">รายงานยอดขายสรุปรายวัน</div>';
        
@@ -479,17 +492,21 @@
         printWindow.document.write('</body></html>');
         printWindow.document.close();
         printWindow.print();
-        printWindow.close();
+        printWindow.close();*/
     }
 
-    
-    function printReportofbestsell(){
 
-        var tableContents = $('.tbreportbestsell').prop('outerHTML');
+    function printReportofbestsell() {
+
+        var reportrange=$('#reportrange span').html()
+       var sortOrder=$('#sortOrder').val()
+        window.open("reportBestofsell.php?sort=" + sortOrder + "&reportrange=" + reportrange, '_blank');
+
+        /*var tableContents = $('.tbreportbestsell').prop('outerHTML');
         var additionalHeader = '<div class="text-center mt-4" style="font-size:16px;">ร้านบางปะหันบรรจุภัณฑ์</div>';
         var additionalContent = '<div class="text-center mb-3" style="font-size:16px;">รายงานสินค้าขายดี</div>';
-        
-        var contentToPrint = additionalHeader+additionalContent + tableContents;
+
+        var contentToPrint = additionalHeader + additionalContent + tableContents;
         var printWindow = window.open('', '_blank');
         printWindow.document.open();
         printWindow.document.write('<html>');
@@ -508,7 +525,7 @@
         printWindow.document.write('</body></html>');
         printWindow.document.close();
         printWindow.print();
-        printWindow.close();
+        printWindow.close();*/
 
     }
 </script>
