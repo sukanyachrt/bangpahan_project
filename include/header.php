@@ -50,7 +50,7 @@ $order->connectData();
 $connect = new Connect_Data();
 $connect->connectData();
 
-$order->sql = "SELECT *  	FROM 	orders  WHERE customer_id ='" . $_SESSION['customer_id'] . "' AND order_status=1";
+$order->sql = "SELECT *  	FROM 	orders  WHERE  order_status=1";
 $order->queryData();
 $noid = 1;
 $row = $order->num_rows();

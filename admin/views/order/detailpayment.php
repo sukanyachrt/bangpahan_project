@@ -232,8 +232,24 @@ WHERE order_id='" . $_GET['id'] . "'";
                                                                     <a href="javascript:void(0);" class="list-group-item list-group-item-action">ยอดในการชำระ : <?= $sumprice ?> บาท</a>
                                                                     <a href="javascript:void(0);" class="list-group-item list-group-item-action bg-transparent">
                                                                         หลักฐานการโอน
-                                                                        <img class="img-fluid d-flex mx-auto mb-4" style="max-width:400px; max-height:400px;" src="../../../assets/img/payment/<?= $rspayment['pay_image'] ?>" alt="Card image cap" />
-                                                                    </a>
+                                                                        <?php
+                                                                        $pay_image = json_decode($rspayment['pay_image']);
+                                                                        if( $pay_image){
+                                                                            foreach ($pay_image as $index=>$image){
+                                                                                ?>
+                                                                              <img class="img-fluid d-flex mx-auto mb-4" style="max-width:400px; max-height:400px;" src="../../../assets/img/payment/<?= $image ?>" alt="Card image cap" />
+                                                                              <p class="text-center text-black"> รูปที่ <?=$index+1?></p>
+                                                                                <?php 
+                                                                            }
+                                                                        }
+                                                                        else{
+                                                                            ?>
+                                                                            <img class="img-fluid d-flex mx-auto mb-4" style="max-width:400px; max-height:400px;" src="../../../assets/img/payment/<?= $rspayment['pay_image'] ?>" alt="Card image cap" />
+                                                                              
+                                                                            <?php
+                                                                        }
+                                                                        
+                                                                    ?>
                                                                     <a href="javascript:void(0);" class="list-group-item list-group-item-action">รายละเอียด : <?= $rspayment['pay_detail'] ?></a>
                                                                     <?php
                                                                     if ($rsorder['order_status'] == 2) {
