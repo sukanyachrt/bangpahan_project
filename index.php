@@ -20,13 +20,13 @@ $connect->connectData();
       <div class="row justify-content-between gy-5">
         <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
           <h2 data-aos="fade-up">บางปะหัน<br>บรรจุภัณฑ์</h2>
-          <p data-aos="fade-up" data-aos-delay="100">เป็นร้านขายอุปรณ์และวัตถุดิบในการทำเบเกอรี่ โดยมีร้านค้าตั้งอยู่ที่ จ.พระนครศรีอยุธยา ต.บางปะหัน อ.บางปะหัน</p>
+          <p data-aos="fade-up" data-aos-delay="100">เป็นร้านขายอุปรณ์และวัตถุดิบในการทำเบเกอรี่ โดยมีร้านค้าตั้งอยู่ที่ จ.พระนครศรีอยุธยา ต.ขวัญเมือง อ.บางปะหัน</p>
           <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
             <a href="#product" class="btn-book-a-table">Shop</a>
           </div>
         </div>
-        <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
-          <img src="assets/img/Bang Pahan.png" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300">
+        <div class="col-lg-7 order-1 order-lg-2 text-center text-lg-start">
+          <img src="assets/img/bakebuddy.png" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300">
         </div>
       </div>
     </div>
@@ -142,8 +142,8 @@ $connect->connectData();
               <i class="icon bi bi-share flex-shrink-0"></i>
               <div>
                 <h3>เวลา เปิด-ปิด ร้าน</h3>
-                <div><strong>จันทร์ - ศุกร์ :</strong> 08.00น. - 18.00น.;
-                  <strong>เสาร์ - อาทิตย์ :</strong> ปิด
+                <div><strong>จันทร์ - ศุกร์ :</strong> 08.00น. - 18.00น.
+                  <br><strong>เสาร์ - อาทิตย์ :</strong> ปิด</br>
                 </div>
               </div>
             </div>

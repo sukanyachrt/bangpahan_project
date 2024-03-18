@@ -77,7 +77,7 @@ include("include/header.php");
               <form id="loginForm">
                 <h1 class="text-center h3 mb-3 fw-normal text-white font-weight-bold fw-bold">ยินดีต้อนรับ</h1>
                 <div class="mb-3 form-group">
-                  <input type="text" class="form-control" id="Username" name="Username" placeholder="Enter your email or username" autofocus />
+                  <input type="text" class="form-control" id="Username" name="Username" placeholder="Username" autofocus />
                 </div>
                 <div class="mb-3 form-password-toggle ">
 
@@ -175,7 +175,7 @@ include("include/header.php");
               <div class="row">
                 <div class="col mb-3">
                   <label for="nameWithTitle" class="form-label">Username / Email</label>
-                  <input type="text" id="resetUsername" name="resetUsername" class="form-control" placeholder="Enter your email or username" />
+                  <input type="text" id="resetUsername" name="resetUsername" class="form-control" placeholder="Username" />
                 </div>
               </div>
               <div class="row">
@@ -243,7 +243,7 @@ include("include/header.php");
       messages: {
         Username: {
           required: "โปรดกรอกรหัสผู้ใช้งาน",
-          alphanumeric: "โปรดกรอกรหัสผู้ใช้งานที่มีเฉพาะตัวเลขและตัวอักษร",
+          alphanumeric: "โปรดกรอก Username ที่สมัครใช้งาน",
         },
         Password: {
           required: "โปรดกรอกรหัสผ่าน",
