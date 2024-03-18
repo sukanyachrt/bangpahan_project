@@ -9,6 +9,7 @@ include("include/header.php");
     .dataTables_length {
         float: left !important;
     }
+
     .dataTables_paginate {
         float: right !important;
     }
@@ -32,7 +33,7 @@ $orderdetail->connectData();
                     <?php
                     if (!isset($_SESSION['customer_id'])) {
 
-                        ?>
+                    ?>
                         <div class="card text-center my-4">
                             <div class="card-header bg-danger text-white">
                                 ไม่มีข้อมูลผู้ใช้งาน
@@ -43,12 +44,12 @@ $orderdetail->connectData();
                             </div>
 
                         </div>
-                        <?php
+                    <?php
 
                     } else {
 
 
-                        ?>
+                    ?>
                         <div class="row mb-2 mt-3">
                             <div class="col-md-8 text-start text-md-end">
                                 <p class="pt-1"> ค้นหาข้อมูล : </p>
@@ -84,7 +85,7 @@ $orderdetail->connectData();
                                     $noid = 1;
                                     $row = $order->num_rows();
                                     if ($row == 0) {
-                                        ?>
+                                    ?>
                                         <tr>
                                             <td colspan="6" class="text-center">
                                                 <div class="card m-5">
@@ -92,7 +93,7 @@ $orderdetail->connectData();
                                                 </div>
                                             </td>
                                         </tr>
-                                        <?php
+                                    <?php
                                     }
                                     while ($rsorder = $order->fetch_AssocData()) {
                                         $sumprice = 0;
@@ -113,7 +114,10 @@ $orderdetail->connectData();
                                         $orderdetail->queryData();
                                         $rsorderdetail = $orderdetail->fetch_AssocData();
                                         $sumprice = $rsorderdetail['sumprice'];
-                                        ?>
+                                        $timestamp = strtotime($rsorder['order_date']);
+                                        $new_timestamp = $timestamp + (24 * 3600); 
+                                        $new_date = date("Y-m-d H:i:s", $new_timestamp);
+                                    ?>
                                         <tr>
                                             <td class="text-center">
                                                 <?= ($noid++) ?>
@@ -130,7 +134,14 @@ $orderdetail->connectData();
                                             <td class="text-center status">
                                                 <?php
                                                 if ($rsorder['order_status'] == 1) {
-                                                    echo '<span class="badge rounded-pill bg-danger">รอชำระเงิน</span>';
+                                                    echo '<span class="badge rounded-pill bg-danger">รอชำระเงิน</span><br/>';
+                                                    echo '<span class="text-danger">โปรดชำระภายใน';
+                                                    if (time() > $new_timestamp) {
+                                                        echo "หมดเขตการชำระ";
+                                                    } else {
+                                                        echo date('d/m/Y H:i:s', strtotime($new_date))." น.";
+                                                    }
+                                                    echo '</span>';
                                                 } else if ($rsorder['order_status'] == 2) {
                                                     echo '<span class="badge rounded-pill bg-warning">รอยืนยันการชำระเงิน</span>';
                                                 } else if ($rsorder['order_status'] == 3) {
@@ -146,14 +157,11 @@ $orderdetail->connectData();
                                             </td>
                                             <td class="text-center">
 
-                                                <a href="orderdetail.php?id=<?php echo $rsorder['order_id'] ?>" type="button"
-                                                    class="btn btn-outline-danger btn-sm"><i class="bi bi-eye"></i></a>
-                                                <button type="button"
-                                                    onclick="cancelOrder('<?php echo $rsorder['order_id'] ?>','<?php echo $rsorder['order_status'] ?>')"
-                                                    class="btn btn-outline-dark btn-sm">X</a>
+                                                <a href="orderdetail.php?id=<?php echo $rsorder['order_id'] ?>" type="button" class="btn btn-outline-danger btn-sm"><i class="bi bi-eye"></i></a>
+                                                <button type="button" onclick="cancelOrder('<?php echo $rsorder['order_id'] ?>','<?php echo $rsorder['order_status'] ?>')" class="btn btn-outline-dark btn-sm">X</a>
                                             </td>
                                         </tr>
-                                        <?php
+                                    <?php
                                     }
                                     ?>
                                 </tbody>
@@ -176,8 +184,7 @@ $orderdetail->connectData();
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                        <button type="button" class="btn btn-dark" id="btnidcancelOrder" value=""
-                            onclick="confirmCancelorder()">ตกลง</button>
+                        <button type="button" class="btn btn-dark" id="btnidcancelOrder" value="" onclick="confirmCancelorder()">ตกลง</button>
                     </div>
                 </div>
             </div>
@@ -185,8 +192,7 @@ $orderdetail->connectData();
     </section>
     <?php include("include/footer.php"); ?>
 
-    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <div id="preloader"></div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -198,8 +204,8 @@ $orderdetail->connectData();
     <script src="admin/assets/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
     <script src="admin/assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
     <script>
-        $(document).ready(function () {
-            var table; 
+        $(document).ready(function() {
+            var table;
 
             $('#tableorder').DataTable({
                 "language": {
@@ -215,14 +221,17 @@ $orderdetail->connectData();
                         "previous": "ก่อนหน้า"
                     }
                 },
-                "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "ทั้งหมด"]]
+                "lengthMenu": [
+                    [10, 25, 50, 100, -1],
+                    [10, 25, 50, 100, "ทั้งหมด"]
+                ]
             });
             table = $('#tableorder').DataTable();
 
-            $('#statusFilter').change(function () {
+            $('#statusFilter').change(function() {
                 var selectedStatus = $(this).val();
                 table.search(selectedStatus).draw();
-                
+
             });
         });
 
@@ -246,12 +255,11 @@ $orderdetail->connectData();
                 $.ajax({
                     type: 'GET',
                     url: "services/cart/order.php?v=cancelOrder&id=" + id,
-                    success: function (response) {
+                    success: function(response) {
                         window.location = "order.php"
                     }
                 });
-            }
-            else {
+            } else {
                 $('#exampleModal').modal('hide')
             }
 

@@ -294,7 +294,7 @@ if ($_GET['id'] <= 9) {
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="exampleInputPassword1">หลักฐานการโอน</label>
-                                                        <input type="file" id="pay_image" accept="image/*" class="form-control" name="pay_image">
+                                                        <input type="file" id="pay_image[]" accept="image/*" multiple="true" class="form-control" name="pay_image[]">
                                                     </div>
                                                 </div>
                                             </div>
