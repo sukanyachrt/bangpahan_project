@@ -55,15 +55,7 @@ $order->queryData();
 $noid = 1;
 $row = $order->num_rows();
 if ($row == 0) {
-?>
-  <tr>
-    <td colspan="6" class="text-center">
-      <div class="card m-5">
-        ยังไม่มีรายการสั่งซื้อ
-      </div>
-    </td>
-  </tr>
-<?php
+
 }
 while ($rsorder = $order->fetch_AssocData()) {
 
@@ -71,7 +63,6 @@ while ($rsorder = $order->fetch_AssocData()) {
   $new_timestamp = $timestamp + (24 * 3600);
   $new_date = date("Y-m-d H:i:s", $new_timestamp);
   if (time() > $new_timestamp) {
-    echo "หมดเขตการชำระ";
     $connect->sql = "UPDATE 	orders SET order_status=5,order_details='หมดเวลาในการชำระเงิน'  WHERE order_id ='" . $rsorder['order_id'] . "'";
     $connect->queryData();
   } else {

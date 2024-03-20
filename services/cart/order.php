@@ -96,7 +96,7 @@ if ($data == "confirmorder") {
         $pay_id = $product->id_insertrows();
         if ($pay_id > 0) {
             $product->sql = "UPDATE `orders` SET 
-            `order_status`='2',order_date='',order_details=''
+            `order_status`='2',order_details=''
             WHERE order_id='" . $id . "'";
             $product->queryData();
             echo json_encode(["status" => "ok", $pay_date]);
@@ -105,7 +105,7 @@ if ($data == "confirmorder") {
         }
     }
 } else if ($data == "cancelOrder") {
-    $connect->sql = "UPDATE `orders` SET order_status='5',order_date='',order_details='' WHERE order_id='" . $_GET['id'] . "'";
+    $connect->sql = "UPDATE `orders` SET order_status='5',order_details='' WHERE order_id='" . $_GET['id'] . "'";
     $connect->queryData();
     echo json_encode(["status" => "ok"]);
 } else if ($data == "checkNumberofProduct") {
