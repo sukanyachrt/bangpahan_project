@@ -56,7 +56,7 @@ $orderdetail->connectData();
                             </div>
                             <div class="col-md-4">
                                 <select class="form-control" id="statusFilter">
-                                    <option>ทั้งหมด</option>
+                                    <option value="">ทั้งหมด</option>
                                     <option value="รอชำระเงิน">รอชำระเงิน</option>
                                     <option value="รอยืนยันการชำระเงิน">รอยืนยันการชำระเงิน</option>
                                     <option value="รอจัดส่ง">รอจัดส่ง</option>
