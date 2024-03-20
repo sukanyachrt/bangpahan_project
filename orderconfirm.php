@@ -293,6 +293,7 @@ $connect->connectData();
                 type: 'POST',
                 url: "services/cart/order.php?v=confirmorder",
                 success: function(response) {
+                    console.log(response)
                     if (response.status == "ok") {
                         $('.order_id').text('เลขที่สั่งซื้อ : ' + response.order_id);
                         $('#orderdetail').val(response.order_id)
