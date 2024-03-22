@@ -70,5 +70,4 @@ while ($rsorder = $order->fetch_AssocData()) {
   }
 }
 
-
 ?>

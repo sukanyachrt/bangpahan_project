@@ -300,9 +300,6 @@ WHERE order_id='" . $_GET['id'] . "'";
                                                                 <a href="javascript:void(0);"
                                                                     class="list-group-item list-group-item-action bg-transparent">
                                                                     หลักฐานการโอน
-<<<<<<< HEAD
-                                                                    <img class="img-fluid d-flex mx-auto mb-4" style="max-width:400px; max-height:400px;" src="../../../assets/img/payment/<?= $rspayment['pay_image'] ?>" alt="Card image cap" />
-=======
                                                                     <?php
                                                                     $pay_image = json_decode($rspayment['pay_image']);
                                                                     if ($pay_image) {
@@ -334,7 +331,6 @@ WHERE order_id='" . $_GET['id'] . "'";
                                                                     class="list-group-item list-group-item-action">รายละเอียด
                                                                     :
                                                                     <?= $rspayment['pay_detail'] ?>
->>>>>>> nong-dev
                                                                 </a>
                                                                 <?php
                                                                 if ($rsorder['order_status'] == 2) {

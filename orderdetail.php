@@ -353,12 +353,8 @@ if ($_GET['id'] <= 9) {
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="exampleInputPassword1">หลักฐานการโอน</label>
-<<<<<<< HEAD
-                                                        <input type="file" id="pay_image" accept="image/*" class="form-control" name="pay_image">
-=======
                                                         <input type="file" id="pay_image" accept="image/*"
                                                             multiple="multiple" class="form-control" name="pay_image[]">
->>>>>>> nong-dev
                                                     </div>
                                                 </div>
                                             </div>
@@ -618,13 +614,8 @@ if ($_GET['id'] <= 9) {
             },
             submitHandler: function (form) {
                 var paymentForm = new FormData($('#paymentForm')[0]);
-<<<<<<< HEAD
-                var files = $('#pay_image')[0].files[0];
-                paymentForm.append('pay_image', files);
-=======
 
 
->>>>>>> nong-dev
                 $.ajax({
                     async: true,
                     url: "services/cart/order.php?v=insertPayment&id=<?php echo $_GET['id'] ?>",

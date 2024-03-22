@@ -35,10 +35,6 @@ if ($data == "confirmorder") {
             `product_num`='" . $remain_num . "' 
             WHERE product_id='" . $product_id . "'";
         $product->queryData();
-
-
-
-
     }
     if ($order_id > 0) {
         unset($_SESSION['cart']);
@@ -51,23 +47,27 @@ if ($data == "confirmorder") {
     $post = $_POST;
     $pay_date_exp = explode("/", $post['pay_date']);
     $pay_date = $pay_date_exp[2] . "-" . $pay_date_exp[1] . "-" . $pay_date_exp[0];
-
-    if ($_FILES["pay_image"]["error"] > 0) {
-        $pay_image = "";
-    } else {
-        $pay_image = $_FILES['pay_image']['name'];
-        $location = "../../assets/img/payment/" . $pay_image;
-        $uploadOk = 1;
-
-        if ($uploadOk == 0) {
-        } else {
-            /* Upload file */
-            if (move_uploaded_file($_FILES['pay_image']['tmp_name'], $location)) {
+    $pay_image = array();
+    if (isset($_FILES['pay_image']) && !empty($_FILES['pay_image'])) {
+        $countFiles = count($_FILES["pay_image"]['name']);
+        for ($i = 0; $i < $countFiles; $i++) {
+            if ($_FILES["pay_image"]["error"][$i] > 0) {
             } else {
+                $name_image = $_FILES['pay_image']['name'][$i];
+                array_push($pay_image, $name_image);
+               
+                $location = "../../assets/img/payment/" . $name_image;
+                $uploadOk = 1;
+
+                if ($uploadOk == 0) {
+                } else {
+                    if (move_uploaded_file($_FILES['pay_image']['tmp_name'][$i], $location)) {
+                    } else {
+                    }
+                }
             }
         }
     }
-
     // check $id
     $product->sql = "SELECT * FROM payment WHERE order_id='" . $id . "'";
     $product->queryData();
@@ -79,7 +79,7 @@ if ($data == "confirmorder") {
         `pay_date`='" . $pay_date . "',
         `pay_total`='" . $post['pay_total'] . "',
         `pay_bank`='" . $post['pay_bank'] . "',
-        `pay_image`='" . $pay_image . "',
+        `pay_image`='" . json_encode($pay_image) . "',
         `pay_time`='" . $post['pay_time'] . "',
         `pay_detail`='" . $pay_detail . "'
          WHERE pay_id='" . $pay_id . "'";
@@ -89,10 +89,9 @@ if ($data == "confirmorder") {
         WHERE order_id='" . $id . "'";
         $product->queryData();
         echo json_encode(["status" => "ok", $pay_date]);
-
     } else {
         $product->sql = "INSERT INTO `payment`(`pay_id`, `order_id`, `pay_date`, `pay_total`, `pay_bank`, `pay_image`, `pay_time`, `pay_detail`) VALUES 
-        (null,'" . $id . "','" . $pay_date . "','" . $post['pay_total'] . "','" . $post['pay_bank'] . "','" . $pay_image . "','" . $post['pay_time'] . "','" . $pay_detail . "')";
+        (null,'" . $id . "','" . $pay_date . "','" . $post['pay_total'] . "','" . $post['pay_bank'] . "','" . json_encode($pay_image) . "','" . $post['pay_time'] . "','" . $pay_detail . "')";
         $product->queryData();
         $pay_id = $product->id_insertrows();
         if ($pay_id > 0) {
@@ -123,9 +122,6 @@ if ($data == "confirmorder") {
             $_SESSION['cart'][$product_id] = $remain_num + $order_qty;
             array_push($result, ['product_id' => $product_id, 'product_name' => $product_name, 'remain_num' => $remain_num + $order_qty]);
         }
-
-
     }
     echo json_encode($result);
-
 }
