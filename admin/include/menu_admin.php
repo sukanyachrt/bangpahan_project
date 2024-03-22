@@ -2,6 +2,33 @@
 require_once("../../services/connect_data.php");
 $order = new Connect_Data();
 $order->connectData();
+
+date_default_timezone_set('Asia/Bangkok');
+$order = new Connect_Data();
+$order->connectData();
+
+$connect = new Connect_Data();
+$connect->connectData();
+
+$order->sql = "SELECT *  	FROM 	orders  WHERE  order_status=1";
+$order->queryData();
+$noid = 1;
+$row = $order->num_rows();
+if ($row == 0) {
+
+}
+while ($rsorder = $order->fetch_AssocData()) {
+
+  $timestamp = strtotime($rsorder['order_date']);
+  $new_timestamp = $timestamp + (24 * 3600);
+  $new_date = date("Y-m-d H:i:s", $new_timestamp);
+  if (time() > $new_timestamp) {
+    $connect->sql = "UPDATE 	orders SET order_status=5,order_details='หมดเวลาในการชำระเงิน'  WHERE order_id ='" . $rsorder['order_id'] . "'";
+    $connect->queryData();
+  } else {
+    echo date('d/m/Y H:i:s', strtotime($new_date));
+  }
+}
 ?>
 <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
