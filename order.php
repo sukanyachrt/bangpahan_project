@@ -55,7 +55,7 @@ $orderdetail->connectData();
                             </div>
                             <div class="col-md-4">
                                 <select class="form-control" id="statusFilter">
-                                    <option>ทั้งหมด</option>
+                                    <option value="">ทั้งหมด</option>
                                     <option value="รอชำระเงิน">รอชำระเงิน</option>
                                     <option value="รอยืนยันการชำระเงิน">รอยืนยันการชำระเงิน</option>
                                     <option value="รอจัดส่ง">รอจัดส่ง</option>
@@ -74,6 +74,7 @@ $orderdetail->connectData();
                                         <th scope="col" class="text-center">วันที่สั่งซื้อ</th>
                                         <th scope="col" class="text-center">ราคารวม</th>
                                         <th scope="col" class="text-center">สถานะ</th>
+                                        <th scope="col" class="text-center">หมายเหตุ</th>
                                         <th scope="col" class="text-center">รายละเอียด</th>
                                     </tr>
                                 </thead>
@@ -143,6 +144,9 @@ $orderdetail->connectData();
                                                     echo '<span class="badge rounded-pill bg-dark">ยกเลิกออเดอร์</span>';
                                                 }
                                                 ?>
+                                            </td>
+                                            <td class="text-center">
+                                                <?=$rsorder['order_details']?>
                                             </td>
                                             <td class="text-center">
 
