@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2024 at 08:56 AM
+-- Generation Time: Mar 22, 2024 at 06:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -104,7 +104,9 @@ INSERT INTO `orders` (`order_id`, `customer_id`, `order_date`, `order_status`, `
 (5, 5, '2024-03-15 15:49:00', '3', ''),
 (6, 1, '2024-03-15 15:51:00', '5', 'หมดเวลาในการชำระเงิน'),
 (7, 1, '2024-03-18 21:14:00', '3', ''),
-(8, 1, '2024-03-20 14:55:50', '5', '');
+(8, 1, '2024-03-20 14:55:50', '5', ''),
+(9, 1, '2024-03-22 11:32:00', '0', '-'),
+(10, 1, '2024-03-22 11:36:00', '2', '');
 
 -- --------------------------------------------------------
 
@@ -141,7 +143,9 @@ INSERT INTO `orders_detail` (`orderdetail_id`, `order_id`, `product_id`, `order_
 (14, 7, 2, '1', '80'),
 (15, 7, 13, '1', '55'),
 (16, 8, 4, '1', '74'),
-(17, 8, 6, '1', '36');
+(17, 8, 6, '1', '36'),
+(18, 9, 4, '1', '74'),
+(19, 10, 4, '1', '74');
 
 -- --------------------------------------------------------
 
@@ -168,7 +172,9 @@ INSERT INTO `payment` (`pay_id`, `order_id`, `pay_date`, `pay_total`, `pay_bank`
 (1, 3, '2024-03-15', '255', 'kbank', '176dbd56-ee12-4965-a9d2-ff4c343b5904.jfif', '15:48:00', ''),
 (2, 5, '2024-03-15', '540', 'bbl', 'ดาวน์โหลด.jpeg', '15:50:00', ''),
 (14, 7, '2024-03-20', '135', 'scb', '[\"beam-check-mark-in-a-circle (1).gif\"]', '14:34:00', ''),
-(15, 8, '2024-03-20', '100', 'kbank', '[\"png-clipart-nurse-nurse-character.png\"]', '14:46:00', '');
+(15, 8, '2024-03-20', '100', 'kbank', '[\"png-clipart-nurse-nurse-character.png\"]', '14:46:00', ''),
+(16, 9, '2024-03-22', '25', 'kbank', '[\"messageImage_1710927242659 - Copy.jpg\",\"Untitled-removebg-preview.png\"]', '11:42:00', ''),
+(17, 10, '2024-03-22', '25', 'kbank', '[\"Untitled.png\",\"messageImage_1710927242659 - Copy.jpg\"]', '11:37:00', '');
 
 -- --------------------------------------------------------
 
@@ -195,7 +201,7 @@ INSERT INTO `product` (`product_id`, `progroup_id`, `product_name`, `product_det
 (1, 8, 'ชุดช้อนตวง', 'ชุดช้อนตวงสแตนเลส 4 ชิ้น', '60', '499', '1', 'ชุดช้อนตวง.png'),
 (2, 8, 'ตะกร้อมือสแตนเลส M', 'ตะกร้อมือสแตนเลส อย่างหนา ไซส์ M', '80', '17', '1', 'ตะกร้อมือสแตนเลสM.png'),
 (3, 8, 'ตะกร้อมือสแตนเลส S', 'ตะกร้อมือสแตนเลส อย่างหนา ไซส์ S', '65', '18', '1', 'ตะกร้อมือสแตนเลสS.png'),
-(4, 3, 'T55 French Wheat Flour', 'แป้งอเนกประสงค์ฝรั่งเศส 1kg (แบ่งบรรจุ)', '74', '5', '1', 'T55.png'),
+(4, 3, 'T55 French Wheat Flour', 'แป้งอเนกประสงค์ฝรั่งเศส 1kg (แบ่งบรรจุ)', '74', '3', '1', 'T55.png'),
 (5, 3, 'แป้งพัดโบก', 'แป้งพัดโบก แป้งเค้ก', '46', '9', '1', 'พัดโบกแป้งเค้ก.png'),
 (6, 3, 'แป้งยานอวกาศ แป้งขนมปัง', 'แป้งยานอวกาศ แป้งขนมปัง 1kg', '36', '95', '1', 'ยานอวกาศ.png'),
 (7, 3, 'แป้งขนมปัง NS-Venus', 'แป้งขนมปังญี่ปุ่น NS-Venus 1kg (แบ่งบรรจุ)', '53', '99', '1', 'แป้งขนมปัง.png'),
@@ -335,19 +341,19 @@ ALTER TABLE `employees`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อ', AUTO_INCREMENT=9;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อ', AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `orders_detail`
 --
 ALTER TABLE `orders_detail`
-  MODIFY `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อสินค้า', AUTO_INCREMENT=18;
+  MODIFY `orderdetail_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสการสั่งซื้อสินค้า', AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'เลขที่การชำระเงิน', AUTO_INCREMENT=16;
+  MODIFY `pay_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'เลขที่การชำระเงิน', AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `product`
