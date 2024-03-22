@@ -44,8 +44,6 @@
 <?php
 session_start();
 include('services/connect_data.php');
-<<<<<<< HEAD
-=======
 $order = new Connect_Data();
 $order->connectData();
 
@@ -71,6 +69,6 @@ while ($rsorder = $order->fetch_AssocData()) {
     echo date('d/m/Y H:i:s', strtotime($new_date));
   }
 }
->>>>>>> nong-dev
+
 
 ?>
